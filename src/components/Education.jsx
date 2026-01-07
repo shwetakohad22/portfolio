@@ -24,8 +24,8 @@ const Education = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
       },
     },
   };
@@ -42,11 +42,23 @@ const Education = () => {
     },
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
+  const leftItemVariants = {
+    hidden: { opacity: 0, x: -80 },
     visible: {
       opacity: 1,
-      y: 0,
+      x: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
+  const rightItemVariants = {
+    hidden: { opacity: 0, x: 80 },
+    visible: {
+      opacity: 1,
+      x: 0,
       transition: {
         duration: 0.8,
         ease: [0.22, 1, 0.36, 1],
@@ -55,9 +67,9 @@ const Education = () => {
   };
 
   const lineVariants = {
-    hidden: { scaleX: 0 },
+    hidden: { scaleY: 0 },
     visible: {
-      scaleX: 1,
+      scaleY: 1,
       transition: {
         duration: 1.5,
         ease: [0.22, 1, 0.36, 1],
@@ -67,67 +79,68 @@ const Education = () => {
   };
 
   const connectorVariants = {
-    hidden: { scaleY: 0 },
+    hidden: { scaleX: 0 },
     visible: {
-      scaleY: 1,
+      scaleX: 1,
       transition: {
-        duration: 0.5,
+        duration: 0.6,
         ease: [0.22, 1, 0.36, 1],
       },
     },
   };
 
   return (
-    <div ref={containerRef} className="relative min-h-[150vh]">
+    <div ref={containerRef} className="relative min-h-[200vh]">
       <motion.section
         ref={sectionRef}
         style={{ opacity, scale, y }}
         id="education-section"
-        className="sticky top-0 bg-black min-h-screen relative overflow-hidden rounded-t-[35px] flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 py-6 sm:py-8 md:py-10"
+        className="sticky top-0 bg-black h-screen relative overflow-hidden rounded-t-[35px] flex items-center justify-center px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20"
       >
         {/* Decorative background elements */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-white to-neutral-400 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-tl from-neutral-300 to-neutral-500 rounded-full blur-3xl"></div>
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 sm:w-80 md:w-96 h-72 sm:h-80 md:h-96 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-72 sm:w-80 md:w-96 h-72 sm:h-80 md:h-96 bg-neutral-400 rounded-full blur-3xl"></div>
         </div>
 
         <motion.div
           ref={contentRef}
-          className="w-full max-w-[1200px] mx-auto relative z-10"
+          className="w-full max-w-[1600px] mx-auto relative z-10 h-full flex items-center py-8"
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
-          {/* HEADER */}
-          <motion.div variants={titleVariants} className="mb-6 md:mb-8">
-            <h1 className="text-white text-[2.5rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem] font-medium leading-[0.95] tracking-tight">
-              EDUCATION
-            </h1>
-          </motion.div>
+          <div className="w-full">
+            {/* HEADER */}
+            <motion.div variants={titleVariants} className="mb-8 md:mb-12">
+              <h2 className="text-[#e8e3da] text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] lg:text-[4rem] xl:text-[5rem] font-medium leading-[0.9] tracking-tight mb-3">
+                EDUCATION
+              </h2>
+              <div className="h-1 w-16 bg-gradient-to-r from-neutral-500 to-transparent"></div>
+            </motion.div>
 
-          {/* HORIZONTAL TIMELINE */}
-          <div className="relative">
-            <div className="w-full">
-              <div className="relative py-12 md:py-16 lg:py-20">
-                {/* Horizontal Main Line - Hidden on mobile */}
-                <motion.div
-                  variants={lineVariants}
-                  className="hidden md:block absolute top-1/2 left-0 right-0 h-[2px] bg-gradient-to-r from-neutral-700 via-neutral-600 to-neutral-700 origin-left transform -translate-y-1/2 z-0"
-                ></motion.div>
+            {/* VERTICAL TIMELINE - Alternating Left/Right */}
+            <div className="relative">
+              {/* Center Vertical Line */}
+              <motion.div
+                variants={lineVariants}
+                className="absolute left-1/2 top-0 bottom-0 w-[2px] transform -translate-x-1/2 bg-gradient-to-b from-neutral-600 via-neutral-500 to-neutral-600 origin-top hidden md:block"
+              ></motion.div>
 
-                {/* Timeline Items Grid - Responsive */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 max-w-5xl mx-auto">
-                  {educationTimeline.map((item, index) => {
-                    const isTop = index % 2 === 0;
+              {/* Timeline Items */}
+              <div className="space-y-12 md:space-y-16">
+                {educationTimeline.map((item, index) => {
+                  const isLeft = index % 2 === 0;
 
-                    return (
-                      <motion.div
-                        key={item.id}
-                        variants={itemVariants}
-                        className="relative flex flex-col items-center justify-center"
-                      >
-                        {/* Content Box */}
-                        <div className={`w-full relative z-20 ${isTop ? 'md:order-1 md:pb-12' : 'md:order-3 md:pt-12'}`}>
+                  return (
+                    <motion.div
+                      key={item.id}
+                      variants={isLeft ? leftItemVariants : rightItemVariants}
+                      className="relative"
+                    >
+                      <div className={`flex items-center ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'} flex-col`}>
+                        {/* Content Card */}
+                        <div className={`w-full md:w-[calc(50%-60px)] ${isLeft ? 'md:pr-0' : 'md:pl-0'}`}>
                           <motion.div
                             whileHover={{ scale: 1.03, y: -3 }}
                             transition={{ duration: 0.3 }}
@@ -145,7 +158,7 @@ const Education = () => {
                             <p className="text-neutral-400 text-[0.75rem] sm:text-[0.8rem] leading-relaxed mb-3">
                               {item.description}
                             </p>
-                            
+
                             {/* Achievement Badge */}
                             {item.achievement && (
                               <div className="mb-3 inline-flex items-center gap-2 bg-neutral-700 px-2.5 py-1.5 rounded-md border border-neutral-600">
@@ -174,52 +187,75 @@ const Education = () => {
                           </motion.div>
                         </div>
 
-                        {/* Vertical Connector Line - Hidden on mobile, z-index lower */}
-                        <motion.div
-                          variants={connectorVariants}
-                          className={`hidden md:block w-[2px] bg-gradient-to-b from-neutral-500 via-neutral-600 to-neutral-700 z-10 ${
-                            isTop ? 'md:order-2 origin-top h-12' : 'md:order-2 origin-bottom h-12'
-                          }`}
-                        ></motion.div>
+                        {/* Horizontal Connector + Circle (Desktop only) */}
+                        <div className="hidden md:flex items-center justify-center w-[120px] relative">
+                          {/* Horizontal Line */}
+                          <motion.div
+                            variants={connectorVariants}
+                            className={`absolute h-[2px] w-[60px] bg-gradient-to-${isLeft ? 'r' : 'l'} from-neutral-500 to-neutral-600 ${
+                              isLeft ? 'origin-left left-0' : 'origin-right right-0'
+                            }`}
+                          ></motion.div>
 
-                        {/* Lollipop Marker - Hidden on mobile, z-index lower */}
+                          {/* Circle with Pulse */}
+                          <motion.div
+                            initial={{ scale: 0, rotate: 180 }}
+                            animate={isInView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: 180 }}
+                            transition={{
+                              duration: 0.6,
+                              delay: 0.8 + index * 0.2,
+                              type: "spring",
+                              stiffness: 180,
+                            }}
+                            className="relative z-20"
+                          >
+                            <div className="relative">
+                              {/* Main Circle */}
+                              <div className="w-10 h-10 rounded-full bg-white border-[3px] border-neutral-800 shadow-xl flex items-center justify-center">
+                                <div className="w-4 h-4 rounded-full bg-neutral-800"></div>
+                              </div>
+
+                              {/* Pulse Ring */}
+                              <motion.div
+                                animate={{
+                                  scale: [1, 1.4, 1],
+                                  opacity: [0.4, 0, 0.4],
+                                }}
+                                transition={{
+                                  duration: 2.5,
+                                  repeat: Infinity,
+                                  ease: "easeInOut",
+                                }}
+                                className="absolute inset-0 w-10 h-10 rounded-full border-2 border-white"
+                              ></motion.div>
+                            </div>
+                          </motion.div>
+                        </div>
+
+                        {/* Empty space on opposite side */}
+                        <div className="hidden md:block w-[calc(50%-60px)]"></div>
+                      </div>
+
+                      {/* Mobile Circle (Center aligned) */}
+                      <div className="md:hidden flex justify-center my-4">
                         <motion.div
-                          initial={{ scale: 0, rotate: -90 }}
-                          animate={isInView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -90 }}
+                          initial={{ scale: 0 }}
+                          animate={isInView ? { scale: 1 } : { scale: 0 }}
                           transition={{
-                            duration: 0.6,
+                            duration: 0.5,
                             delay: 0.8 + index * 0.2,
                             type: "spring",
-                            stiffness: 180,
                           }}
-                          className={`hidden md:block relative z-10 ${isTop ? 'md:order-3' : 'md:order-1'}`}
+                          className="relative"
                         >
-                          <div className="relative">
-                            {/* Main circle */}
-                            <div className="w-7 h-7 rounded-full bg-white border-[3px] border-neutral-800 shadow-xl"></div>
-                            
-                            {/* Subtle pulse ring */}
-                            <motion.div
-                              animate={{
-                                scale: [1, 1.5, 1],
-                                opacity: [0.3, 0, 0.3],
-                              }}
-                              transition={{
-                                duration: 2.5,
-                                repeat: Infinity,
-                                ease: "easeInOut",
-                              }}
-                              className="absolute inset-0 w-7 h-7 rounded-full border-2 border-white"
-                            ></motion.div>
+                          <div className="w-8 h-8 rounded-full bg-white border-[3px] border-neutral-800 shadow-xl flex items-center justify-center">
+                            <div className="w-3 h-3 rounded-full bg-neutral-800"></div>
                           </div>
                         </motion.div>
-
-                        {/* Dot on main line - Hidden on mobile, lowest z-index */}
-                        <div className="hidden md:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-white border-[2px] border-neutral-800 z-5"></div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
           </div>

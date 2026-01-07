@@ -105,7 +105,8 @@ export const educationTimeline = [
     type: "education",
     title: "Bachelor of Engineering",
     institution: "YCCE College",
-    description: "Completed graduation with focus on Computer Science and Engineering fundamentals.",
+    description:
+      "Completed graduation with focus on Computer Science and Engineering fundamentals.",
     skills: ["DSA", "OOP", "DBMS", "Operating Systems"],
   },
   {
@@ -114,8 +115,57 @@ export const educationTimeline = [
     type: "education",
     title: "12th Grade",
     institution: "Taiwade Jr College",
-    description: "Completed higher secondary education with coaching from ICAD School of Learning.",
+    description:
+      "Completed higher secondary education with coaching from ICAD School of Learning.",
     achievement: "Qualified JEE Main & JEE Advanced",
     skills: ["Physics", "Chemistry", "Mathematics"],
   },
+];
+
+export const certifications = [
+  {
+    id: 1,
+    title: "MERN Stack Development",
+    issuer: "GUVI (IIT Madras Incubated)",
+    date: "2024",
+    description:
+      "Comprehensive full-stack development certification covering MongoDB, Express.js, React, and Node.js with real-world project implementations and best practices.",
+    skills: ["MongoDB", "Express.js", "React", "Node.js", "REST APIs"],
+    certificate: sampleCertificate,
+    credentialId: "CERT-2024-MERN-001",
+  },
+  {
+    id: 2,
+    title: "Full Stack Web Development",
+    issuer: "Coursera",
+    date: "2023",
+    description:
+      "Advanced web development course focusing on modern frameworks, responsive design, database management, and deployment strategies.",
+    skills: ["JavaScript", "React", "Node.js", "PostgreSQL"],
+    certificate: sampleCertificate,
+    credentialId: "CERT-2023-FULL-002",
+  },
+  {
+    id: 3,
+    title: "Advanced JavaScript",
+    issuer: "Udemy",
+    date: "2023",
+    description:
+      "Deep dive into ES6+, async programming, design patterns, closures, prototypes, and advanced JavaScript concepts.",
+    skills: ["ES6+", "Async/Await", "Promises", "Design Patterns"],
+    certificate: sampleCertificate,
+    credentialId: "CERT-2023-JS-003",
+  },
+  {
+    id: 4,
+    title: "React Professional",
+    issuer: "Meta",
+    date: "2024",
+    description:
+      "Professional React certification covering hooks, context API, performance optimization, testing, and production-ready applications.",
+    skills: ["React Hooks", "Context API", "Redux", "Performance"],
+    certificate: sampleCertificate,
+    credentialId: "CERT-2024-REACT-004",
+  },
+ 
 ];

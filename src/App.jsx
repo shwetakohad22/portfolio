@@ -5,6 +5,7 @@ import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import About from "./components/About";
 import Education from "./components/Education";
+import Certifications from "./components/Certifications";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
       <div id="experience-section" className="relative z-40">
         <Experience />
       </div>
-
+      <Certifications />
       {/* EDUCATION SECTION */}
       <div id="education-section" className="relative z-43">
         <Education />

@@ -2,4 +2,104 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom Scrollbar Styles */
 
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #404040 #171717;
+}
+
+body {
+  scrollbar-width: thin;
+  scrollbar-color: #404040 #171717;
+}
+
+/* Chrome, Edge, and Safari - Body */
+body::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+body::-webkit-scrollbar-track,
+html::-webkit-scrollbar-track {
+  background: #171717;
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb,
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #404040 0%, #262626 100%);
+  border-radius: 10px;
+  border: 2px solid #171717;
+}
+
+body::-webkit-scrollbar-thumb:hover,
+html::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #525252 0%, #404040 100%);
+}
+
+body::-webkit-scrollbar-thumb:active,
+html::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, #595959 0%, #525252 100%);
+}
+
+/* Modal Scrollbar - More visible and specific */
+.modal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #525252 #0a0a0a;
+}
+
+.modal-scroll::-webkit-scrollbar {
+  width: 10px !important;
+}
+
+.modal-scroll::-webkit-scrollbar-track {
+  background: #0a0a0a !important;
+  border-radius: 10px;
+  margin: 8px 0;
+}
+
+.modal-scroll::-webkit-scrollbar-thumb {
+  background: #525252 !important;
+  background: linear-gradient(180deg, #525252 0%, #404040 100%) !important;
+  border-radius: 10px;
+  border: 2px solid #0a0a0a;
+}
+
+.modal-scroll::-webkit-scrollbar-thumb:hover {
+  background: #666666 !important;
+  background: linear-gradient(180deg, #666666 0%, #525252 100%) !important;
+}
+
+.modal-scroll::-webkit-scrollbar-thumb:active {
+  background: #737373 !important;
+  background: linear-gradient(180deg, #737373 0%, #666666 100%) !important;
+}
+
+/* All scrollable divs */
+div::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+div::-webkit-scrollbar-track {
+  background: #171717;
+  border-radius: 10px;
+}
+
+div::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #404040 0%, #262626 100%);
+  border-radius: 10px;
+  border: 2px solid #171717;
+}
+
+div::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #525252 0%, #404040 100%);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
