@@ -247,8 +247,8 @@ const Hero = () => {
       rounded-none
       overflow-hidden
       grayscale
-       brightness-[1.05]
-      contrast-[1.1]
+       brightness-[0.7]
+      contrast-[0.9]
       sepia-[0.1]
     "
             variants={revealVariants}

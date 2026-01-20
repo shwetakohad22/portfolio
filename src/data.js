@@ -1,5 +1,5 @@
 import chromeVideo from "../src/assets/chrome-extension.mp4";
-import sampleCertificate from "../src/assets/your-photo.jpg";
+import fullstackCertificate from "../src/assets/IITMadras.png";
 import bannerImage from "../src/assets/banner-image.png";
 
 export const navLinks = [
@@ -123,7 +123,7 @@ export const certifications = [
     description:
       "Comprehensive full-stack development certification covering MongoDB, Express.js, React, and Node.js with real-world project implementations and best practices.",
     skills: ["MongoDB", "Express.js", "React", "Node.js", "REST APIs"],
-    certificate: sampleCertificate,
+    certificate: fullstackCertificate,
     credentialId: "CERT-2024-MERN-001",
   },
   {
@@ -134,7 +134,7 @@ export const certifications = [
     description:
       "Advanced web development course focusing on modern frameworks, responsive design, database management, and deployment strategies.",
     skills: ["JavaScript", "React", "Node.js", "PostgreSQL"],
-    certificate: sampleCertificate,
+    certificate: fullstackCertificate,
     credentialId: "CERT-2023-FULL-002",
   },
   {
@@ -145,18 +145,8 @@ export const certifications = [
     description:
       "Deep dive into ES6+, async programming, design patterns, closures, prototypes, and advanced JavaScript concepts.",
     skills: ["ES6+", "Async/Await", "Promises", "Design Patterns"],
-    certificate: sampleCertificate,
+    certificate: fullstackCertificate,
     credentialId: "CERT-2023-JS-003",
   },
-  {
-    id: 4,
-    title: "React Professional",
-    issuer: "Meta",
-    date: "2024",
-    description:
-      "Professional React certification covering hooks, context API, performance optimization, testing, and production-ready applications.",
-    skills: ["React Hooks", "Context API", "Redux", "Performance"],
-    certificate: sampleCertificate,
-    credentialId: "CERT-2024-REACT-004",
-  },
+ 
 ];
