@@ -174,7 +174,7 @@ const Hero = () => {
             >
               {/* LinkedIn */}
               <a
-                href="https://linkedin.com/in/your-profile"
+                href="https://www.linkedin.com/in/shweta-kohad-b15b54169/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
@@ -203,7 +203,7 @@ const Hero = () => {
 
               {/* GitHub */}
               <a
-                href="https://github.com/your-username"
+                href="https://github.com/shwetakohad22"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
@@ -282,7 +282,7 @@ const Hero = () => {
           md:mt-0
         "
         >
-          <span className="block text-[10px] sm:text-[11px] tracking-[2px] text-[#666] mb-2">
+          <span className="block text-[10px] sm:text-[12px] tracking-[2px] text-[#252525] mb-2">
             CRAFTING WEB EXPERIENCES SINCE
           </span>
 
