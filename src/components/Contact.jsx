@@ -656,7 +656,7 @@ const Contact = () => {
                           />
                         </svg>
                         <span className="text-white text-sm font-medium">
-                          Failed to send. Please try again..
+                          Failed to send. Please try again.
                         </span>
                       </motion.div>
                     )}
