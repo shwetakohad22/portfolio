@@ -259,7 +259,7 @@ const About = () => {
                   href="#contact"
                   className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-base tracking-wide hover:bg-neutral-200 transition-all duration-300 hover:scale-105 shadow-xl uppercase whitespace-nowrap"
                 >
-                  Let's Connect.
+                  Let's Connect
                   <span className="text-xl">→</span>
                 </a>
               </motion.div>
