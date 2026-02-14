@@ -1,510 +1,200 @@
-import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { services } from "../data";
 
 const Experience = () => {
-  const containerRef = useRef(null);
-  const sectionRef = useRef(null);
-  const headerHoldRef = useRef(null);
-
+  const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
+    target: targetRef,
+    offset: ["start start", "end end"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.7, 1], [0, 1, 1, 1]);
-  const scale = useTransform(scrollYProgress, [0, 0.2, 0.7, 1], [0.95, 1, 1, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.2, 0.7, 1], [100, 0, 0, 0]);
-
-  const ITEM_OFFSET = 150;
-
   return (
-    <div ref={containerRef} className="relative">
-      {/* HEADER SECTION WITH STOPPING */}
-      <div ref={headerHoldRef} className="relative h-[200vh]">
-        <motion.section
-          ref={sectionRef}
-          style={{ opacity, scale, y }}
-          id="experience-section"
-          className="sticky top-0 bg-black rounded-t-[35px] min-h-screen relative overflow-hidden flex items-center"
-        >
-          {/* Monochromatic Decorative background elements */}
-          <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
-            <motion.div 
-              className="absolute top-20 left-10 w-[500px] h-[500px] bg-white rounded-full blur-3xl"
-              animate={{ 
-                scale: [1, 1.2, 1],
-                opacity: [0.05, 0.08, 0.05]
-              }}
-              transition={{ 
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-            <motion.div 
-              className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-white rounded-full blur-3xl"
-              animate={{ 
-                scale: [1.2, 1, 1.2],
-                opacity: [0.05, 0.08, 0.05]
-              }}
-              transition={{ 
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 4
-              }}
-            />
-            <motion.div 
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-white/5 to-transparent rounded-full blur-2xl"
-              animate={{ 
-                scale: [1, 1.1, 1],
-                opacity: [0.03, 0.06, 0.03]
-              }}
-              transition={{ 
-                duration: 10,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-          </div>
-
-          {/* Subtle grid pattern */}
-          <div className="absolute inset-0 opacity-[0.03]" style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px'
-          }} />
-
-          {/* Diagonal lines pattern */}
-          <div className="absolute inset-0 opacity-[0.02]" style={{
-            backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,0.1) 35px, rgba(255,255,255,0.1) 36px)`
-          }} />
-
-          {/* HERO - Mobile Layout */}
-          <div className="w-full px-5 py-16 md:hidden relative z-10">
-            <div className="space-y-8">
-              {/* Tag */}
-              <motion.div 
-                className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/20 rounded-full"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                <motion.span 
-                  className="w-2 h-2 bg-white rounded-full"
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-                <span className="text-neutral-400 text-[0.65rem] tracking-wider font-medium uppercase">Professional Journey</span>
-              </motion.div>
-
-              {/* Title */}
-              <h1 className="text-white text-[3rem] font-black leading-[0.9] tracking-tighter">
-                EXPERIENCE
-              </h1>
-
-              {/* Since tag */}
-              <span className="text-neutral-500 text-[0.7rem] tracking-widest font-medium uppercase block">Since 2022</span>
-
-              {/* Description */}
-              <p className="text-neutral-400 text-[0.95rem] leading-[1.6] font-light">
-                I build and ship production-ready web applications, working closely with modern frontend frameworks and backend services.
-              </p>
-
-              {/* Stats Grid - Mobile */}
-              <div className="grid grid-cols-3 gap-3 pt-2">
-                <motion.div 
-                  className="px-3 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl text-center"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="text-white text-[1.5rem] font-black tracking-tight leading-none mb-1">100%</div>
-                  <div className="text-neutral-500 text-[0.6rem] font-semibold tracking-wider uppercase">Satisfaction</div>
-                </motion.div>
-                <motion.div 
-                  className="px-3 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl text-center"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="text-white text-[1.5rem] font-black tracking-tight leading-none mb-1">15+</div>
-                  <div className="text-neutral-500 text-[0.6rem] font-semibold tracking-wider uppercase">Projects</div>
-                </motion.div>
-                <motion.div 
-                  className="px-3 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl text-center"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="text-white text-[1.5rem] font-black tracking-tight leading-none mb-1">3</div>
-                  <div className="text-neutral-500 text-[0.6rem] font-semibold tracking-wider uppercase">Specialties</div>
-                </motion.div>
-              </div>
-
-              {/* Tech stack - Mobile */}
-              <div className="flex flex-wrap gap-2 pt-2">
-                {['React', 'Node.js', 'TypeScript', 'MongoDB', 'Docker', 'AWS'].map((tech, i) => (
-                  <motion.div
-                    key={tech}
-                    className="px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-neutral-300 text-[0.7rem] font-semibold"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + i * 0.05 }}
-                  >
-                    {tech}
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            {/* Scroll indicator - Mobile */}
-            <motion.div 
-              className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50"
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <span className="text-white text-[0.65rem] tracking-[0.15em] font-light uppercase">Scroll</span>
-              <motion.div 
-                className="w-[1px] h-12 bg-gradient-to-b from-white via-white/50 to-transparent"
-                animate={{ opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </motion.div>
-          </div>
-
-          {/* HERO - Desktop Layout */}
-          <div className="hidden md:block w-full px-6 md:px-16 lg:px-24 py-20 relative z-10">
-            <div className="w-full max-w-[1600px] mx-auto">
-              {/* Small tag above title */}
-              <motion.div 
-                className="inline-flex items-center gap-2 mb-8 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/20 rounded-full"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                <motion.span 
-                  className="w-2 h-2 bg-white rounded-full"
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-                <span className="text-neutral-400 text-xs tracking-wider font-medium uppercase">Professional Journey</span>
-              </motion.div>
-
-              <h1 className="text-white text-[4rem] lg:text-[5rem] font-medium leading-[0.95] tracking-tight mb-16">
-                EXPERIENCE
-              </h1>
-
-              <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-10 max-w-[1400px]">
-                <div className="flex flex-col gap-4">
-                  <span className="text-neutral-500 text-[0.75rem] tracking-widest pt-2 font-medium uppercase">Since 2022</span>
-                  {/* Stats cards - monochrome */}
-                  <div className="flex flex-col gap-3">
-                    <motion.div 
-                      className="px-5 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="text-white text-3xl font-bold tracking-tight">100%</div>
-                      <div className="text-neutral-500 text-xs font-medium tracking-wider uppercase mt-1">Client Satisfaction</div>
-                    </motion.div>
-                    <motion.div 
-                      className="px-5 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="text-white text-3xl font-bold tracking-tight">15+</div>
-                      <div className="text-neutral-500 text-xs font-medium tracking-wider uppercase mt-1">Projects Delivered</div>
-                    </motion.div>
-                    <motion.div 
-                      className="px-5 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300"
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="text-white text-3xl font-bold tracking-tight">3</div>
-                      <div className="text-neutral-500 text-xs font-medium tracking-wider uppercase mt-1">Core Specialties</div>
-                    </motion.div>
-                  </div>
-                </div>
-
-                <div>
-                  <p className="text-neutral-400 text-[1.15rem] md:text-[1.45rem] lg:text-[1.6rem] leading-[1.55] font-light max-w-[54ch] mb-10">
-                    I build and ship production-ready web applications, working closely with modern frontend frameworks and backend services. I emphasize clean architecture, performance optimization, and creating intuitive user experiences that drive results.
-                  </p>
-
-                  {/* Tech stack - monochrome */}
-                  <div className="flex flex-wrap gap-3">
-                    {['React', 'Node.js', 'TypeScript', 'MongoDB', 'Docker', 'AWS'].map((tech, i) => (
-                      <motion.div
-                        key={tech}
-                        className="px-5 py-2.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-neutral-300 text-sm font-medium hover:bg-white/10 hover:text-white hover:border-white/20 transition-all duration-300"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 + i * 0.05 }}
-                        whileHover={{ scale: 1.05, y: -2 }}
-                      >
-                        {tech}
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Large decorative number */}
-            <motion.div 
-              className="absolute bottom-20 right-6 md:right-16 lg:right-24 text-white/[0.03] text-[12rem] md:text-[16rem] lg:text-[20rem] font-black leading-none pointer-events-none select-none"
-              animate={{ opacity: [0.02, 0.04, 0.02] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            >
-              15+
-            </motion.div>
-
-            {/* Scroll indicator */}
-            <motion.div 
-              className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-60"
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <span className="text-white text-xs tracking-[0.15em] font-light uppercase">Scroll</span>
-              <motion.div 
-                className="w-[1px] h-16 bg-gradient-to-b from-white via-white/50 to-transparent"
-                animate={{ opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </motion.div>
-
-            {/* Floating minimal shapes */}
-            <motion.div
-              className="absolute top-40 right-[12%] w-20 h-20 border border-white/10 rounded-lg backdrop-blur-sm"
-              animate={{ 
-                y: [0, -15, 0],
-                rotate: [0, 45, 0],
-                opacity: [0.1, 0.2, 0.1]
-              }}
-              transition={{ 
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-            <motion.div
-              className="absolute bottom-40 left-[8%] w-16 h-16 border border-white/10 rounded-full backdrop-blur-sm"
-              animate={{ 
-                y: [0, 15, 0],
-                scale: [1, 1.1, 1],
-                opacity: [0.1, 0.2, 0.1]
-              }}
-              transition={{ 
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-          </div>
-        </motion.section>
-      </div>
-
-      {/* SERVICES STACK - Natural scroll with sticky overlap */}
-      <div className="relative bg-black">
-        {services.map((service, index) => (
-          <ServiceItem
-            key={index}
-            service={service}
-            index={index}
-            ITEM_OFFSET={ITEM_OFFSET}
+    <section
+      ref={targetRef}
+      className="relative h-[250vh]"
+      id="experience-section"
+    >
+      <div className="sticky top-0 h-screen overflow-hidden bg-black text-white flex items-center justify-center">
+        {/* Background Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Subtle Grid */}
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+              backgroundSize: "60px 60px",
+            }}
           />
-        ))}
+          {/* Radial Vignette */}
+          <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/80 to-black z-10" />
+        </div>
 
-        {/* PUSH SPACE */}
-        <div className="h-screen bg-black" />
+        {/* Massive Background Typography - Subtle Layer */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center z-0 pointer-events-none">
+          <h1 className="text-[18vw] font-black text-white/[0.02] leading-none tracking-tighter select-none">
+            HISTORY
+          </h1>
+        </div>
+
+        {/* Content Container */}
+        <div className="container mx-auto px-6 relative z-20 h-full flex flex-col items-center justify-center">
+
+          {/* Main Heading - Skills Style */}
+          <motion.div
+            className="absolute top-12 md:top-16 flex flex-col items-center text-center z-30"
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-[#e8e3da] text-[2rem] sm:text-[2.25rem] md:text-[2.75rem] lg:text-[3.25rem] xl:text-[3.5rem] font-black tracking-tight leading-none">
+              Experience
+            </h2>
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: "100%" }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="h-[2px] bg-gradient-to-r from-transparent via-white to-transparent mx-auto max-w-[140px] sm:max-w-[150px] md:max-w-[180px] mt-3"
+            />
+          </motion.div>
+
+          {/* Cards Stack - Increased Height */}
+          <div className="relative w-full max-w-6xl h-[65vh] md:h-[600px] flex items-center justify-center mt-32 md:mt-24">
+            {services.map((service, index) => (
+              <SpotlightCard
+                key={index}
+                service={service}
+                index={index}
+                scrollYProgress={scrollYProgress}
+                total={services.length}
+              />
+            ))}
+          </div>
+
+          {/* Pagination / Progress Indicator */}
+          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-3 z-30">
+            {services.map((_, i) => (
+              <ProgressDot key={i} index={i} scrollYProgress={scrollYProgress} />
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-const ServiceItem = ({ service, index, ITEM_OFFSET }) => {
-  const stickyTopOffset = index * ITEM_OFFSET;
-
-  // Extract company name from title (text after "—")
-  const getCompanyName = (title) => {
-    const parts = title.split('—');
-    if (parts.length > 1) {
-      return parts[1].trim().replace('Technologies', 'Tech');
-    }
-    return title;
-  };
+const ProgressDot = ({ index, scrollYProgress }) => {
+  // Range for this index: [start, end]
+  // Normalized check
+  const isActive = useTransform(scrollYProgress, (v) => {
+    const threshold = 0.55;
+    if (index === 0) return v < threshold ? 1 : 0.3;
+    return v >= threshold ? 1 : 0.3;
+  });
 
   return (
-    <>
-      {/* Mobile Layout - Sticky with 100% overlap */}
-      <div 
-        className="block md:hidden sticky bg-black relative overflow-hidden"
-        style={{
-          top: '0px',
-          zIndex: index + 1,
-          marginTop: index === 0 ? '0' : '100vh', // Add full viewport spacing between sections
-        }}
-      >
-        {/* Background gradient for depth */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] via-transparent to-white/[0.01] pointer-events-none" />
-        
-        {/* Subtle radial gradient */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/[0.02] rounded-full blur-3xl pointer-events-none" />
-        
-        {/* Decorative corner accents */}
-        <div className="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-white/5 rounded-tl-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-32 h-32 border-b-2 border-r-2 border-white/5 rounded-br-3xl pointer-events-none" />
-        
-        <div className="min-h-screen relative z-10 px-5 pt-24 pb-16 border-t border-white/10">
-          <div className="max-w-[500px] mx-auto space-y-6">
-            {/* Number & Title */}
-            <div className="flex items-center gap-3">
-              <motion.span 
-                className="text-neutral-600 text-[1.1rem] font-light"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                ({String(index + 1).padStart(2, "0")})
-              </motion.span>
-              
-              <motion.h3 
-                className="text-white text-[1.4rem] font-black leading-[1.1] tracking-tight"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-              >
-                {getCompanyName(service.title)}
-              </motion.h3>
-            </div>
+    <motion.div
+      style={{ opacity: isActive }}
+      className="w-2 h-2 rounded-full bg-white transition-opacity duration-300"
+    />
+  )
+}
 
-            {/* Description Card */}
-            <motion.div 
-              className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <p className="text-neutral-300 text-[0.88rem] leading-[1.6] font-light">
-                {service.description}
-              </p>
-            </motion.div>
+const SpotlightCard = ({ service, index, scrollYProgress, total }) => {
+  // Logic: 
+  // Index 0: Visible [0->0.55], Fade out & Scale down [0.55->0.65]
+  // Index 1: Fade in & Scale up [0.55->0.65], Visible [0.65->1]
 
-            {/* Technologies */}
-            <motion.div 
-              className="space-y-3"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <div className="flex items-center gap-2">
-                <div className="h-[1px] w-8 bg-white/20"></div>
-                <span className="text-neutral-500 text-[0.6rem] tracking-[0.2em] uppercase font-bold">Technologies</span>
+  const fadeStart = 0.55;
+  const fadeEnd = 0.65;
+
+  const opacity = useTransform(scrollYProgress, [0, fadeStart, fadeEnd, 1],
+    index === 0 ? [1, 1, 0, 0] : [0, 0, 1, 1]
+  );
+
+  const scale = useTransform(scrollYProgress, [0, fadeStart, fadeEnd, 1],
+    index === 0 ? [1, 1, 0.9, 0.9] : [0.9, 0.9, 1, 1]
+  );
+
+  const y = useTransform(scrollYProgress, [0, fadeStart, fadeEnd, 1],
+    index === 0 ? [0, 0, -50, -50] : [50, 50, 0, 0]
+  );
+
+  const pointerEvents = useTransform(scrollYProgress, (v) => {
+    if (index === 0) return v < 0.6 ? "auto" : "none";
+    return v >= 0.6 ? "auto" : "none";
+  });
+
+  return (
+    <motion.div
+      style={{ opacity, scale, y, pointerEvents }}
+      className="absolute inset-0 w-full"
+    >
+      <div className="w-full h-full bg-neutral-900/60 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] p-8 md:p-14 flex flex-col justify-between shadow-[0_0_50px_-12px_rgba(255,255,255,0.05)] relative overflow-hidden group">
+
+        {/* Card Background Glow */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/[0.03] rounded-full blur-[120px] pointer-events-none group-hover:bg-white/[0.05] transition-colors duration-500 -translate-y-1/2 translate-x-1/2" />
+
+        <div className="relative z-10 flex flex-col md:flex-row justify-between gap-10 h-full">
+
+          {/* Left: Role & Desc */}
+          <div className="flex-1 flex flex-col justify-center space-y-10">
+            <div>
+              <div className="flex items-center gap-4 mb-6">
+                <span className="px-5 py-2 text-sm font-mono text-neutral-300 bg-white/5 rounded-full border border-white/10">
+                  {service.period}
+                </span>
+                <div className="h-[1px] flex-1 bg-white/10" />
               </div>
-              
-              <div className="space-y-2.5 max-h-[50vh] overflow-y-auto pr-2">
-                {service.technologies.map((tech, i) => (
-                  <motion.div
-                    key={i}
-                    className="flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-4 py-2.5"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 + (i * 0.05), duration: 0.4 }}
-                  >
-                    <span className="text-neutral-600 font-mono text-[0.65rem] font-bold min-w-[1.5rem]">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="text-neutral-200 text-[0.82rem] font-medium">
-                      {tech}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
 
-      {/* Desktop Layout - Sticky behavior */}
-      <div 
-        className="hidden md:block sticky bg-black border-t border-white/10 relative overflow-hidden"
-        style={{
-          top: `${stickyTopOffset}px`,
-          zIndex: index + 1,
-          marginTop: index === 0 ? '0' : '100vh', // Add full viewport spacing between sections
-        }}
-      >
-        {/* Background gradient for depth */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.015] via-transparent to-white/[0.008] pointer-events-none" />
-        
-        {/* Subtle vignette effect */}
-        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/20 pointer-events-none" />
-        
-        {/* Decorative elements */}
-        <motion.div 
-          className="absolute top-10 right-10 w-40 h-40 border border-white/5 rounded-full"
-          animate={{ 
-            scale: [1, 1.1, 1],
-            opacity: [0.03, 0.05, 0.03]
-          }}
-          transition={{ 
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        
-        <div className="w-full px-6 md:px-16 lg:px-24 min-h-screen relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 max-w-[1600px] mx-auto">
-            {/* NUMBER */}
-            <div className="md:col-span-3 pt-10 md:pt-14">
-              <motion.span 
-                className="text-neutral-600 text-[2.5rem] md:text-[3.5rem] font-light inline-block hover:text-white transition-colors duration-300"
-                whileHover={{ scale: 1.05, x: 5 }}
-                transition={{ duration: 0.2 }}
-              >
-                ({String(index + 1).padStart(2, "0")})
-              </motion.span>
-            </div>
-
-            {/* CONTENT */}
-            <div className="md:col-span-9 pt-10 md:pt-14 pb-28">
-              <h3 className="text-white text-[2rem] md:text-[2.8rem] lg:text-[3.2rem] font-medium leading-[1.1] tracking-tight mb-12">
-                {service.title}
+              <h3 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-3 tracking-tight">
+                {service.title.split("—")[0].trim()}
               </h3>
+              <p className="text-xl md:text-3xl text-neutral-400 font-light">
+                {service.title.split("—")[1]?.trim()}
+              </p>
+            </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 md:gap-24">
-                <p className="text-neutral-400 text-[1.1rem] md:text-[1.25rem] leading-[1.7] font-light">
-                  {service.description}
-                </p>
+            <p className="text-lg md:text-xl text-neutral-300 leading-relaxed font-light max-w-3xl">
+              {service.description}
+            </p>
 
-                <div className="space-y-5">
-                  {service.technologies.map((tech, i) => (
-                    <motion.div
-                      key={i}
-                      className="flex items-start gap-4 border-b border-white/10 pb-5 group cursor-pointer"
-                      whileHover={{ x: 8, borderColor: "rgba(255,255,255,0.2)" }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <span className="text-neutral-600 font-mono text-sm pt-1 group-hover:text-neutral-400 transition-colors">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span className="text-neutral-300 text-lg font-light group-hover:text-white transition-colors">
-                        {tech}
-                      </span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+            {/* Tech Tags */}
+            <div className="flex flex-wrap gap-3">
+              {service.technologies.slice(0, 6).map((tech, i) => (
+                <span key={i} className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium text-neutral-300 hover:bg-white/10 transition-colors">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: Achievements / Visuals */}
+          <div className="flex-1 md:max-w-xs flex flex-col justify-center border-t md:border-t-0 md:border-l border-white/10 pt-8 md:pt-0 md:pl-12">
+            <ul className="space-y-6">
+              {service.achievements && service.achievements.map((item, i) => (
+                <li key={i} className="flex items-start gap-4 group/item">
+                  <span className="mt-2 w-1.5 h-1.5 bg-neutral-500 rounded-full flex-shrink-0 group-hover/item:bg-white transition-colors" />
+                  <span className="text-neutral-400 text-base leading-relaxed group-hover/item:text-neutral-200 transition-colors">{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-auto pt-10 flex justify-end opacity-50">
+              <span className="text-[10rem] font-black text-white/[0.05] select-none leading-none -mb-8 -mr-8">
+                0{index + 1}
+              </span>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 };
 

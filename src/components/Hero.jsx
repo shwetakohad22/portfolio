@@ -16,7 +16,7 @@ const Hero = () => {
   const blur = useTransform(
     scrollYProgress,
     [0, 0.35],
-    ["blur(0px)", "blur(12px)"]
+    ["blur(0px)", "blur(8px)"]
   );
   const opacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.35], [1, 0.95]);
@@ -84,7 +84,7 @@ const Hero = () => {
           >
             <h1
               className="text-[#0a0a0a] font-black leading-[0.82] mb-3"
-              style={{ 
+              style={{
                 fontFamily: "Arial, sans-serif",
                 fontSize: "clamp(3.5rem, 18vw, 6rem)",
                 letterSpacing: "-0.05em"
@@ -109,7 +109,7 @@ const Hero = () => {
           >
             {/* Background Image */}
             <div className="absolute inset-0">
-              <div 
+              <div
                 className="w-full h-full grayscale brightness-[0.7] contrast-[0.9] sepia-[0.1]"
                 style={{ mixBlendMode: "multiply" }}
               >
@@ -123,7 +123,7 @@ const Hero = () => {
 
             {/* Gradient Overlays */}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60" />
-            
+
             {/* Content Overlay - Bottom */}
             <div className="absolute bottom-0 left-0 right-0 p-6">
               <motion.p
@@ -135,7 +135,7 @@ const Hero = () => {
                   textShadow: "0 2px 15px rgba(0,0,0,0.6)"
                 }}
               >
-                Open to opportunities worldwide.<br/>
+                Open to opportunities worldwide.<br />
                 Crafting polished, intuitive digital experiences.
               </motion.p>
 
@@ -205,8 +205,8 @@ const Hero = () => {
       </div>
 
       {/* DESKTOP LAYOUT (>= md) - UNCHANGED */}
-      <motion.div 
-        className="hidden md:block"
+      <motion.div
+        className="hidden md:block will-change-[transform,opacity,filter]"
         style={{ filter: blur, opacity, scale }}
       >
         <h1
