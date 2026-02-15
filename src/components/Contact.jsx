@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import yourPhoto from "../assets/your-photo.jpg";
+import yourPhoto from "../assets/your-photo.jpg"; // Ensure this path is correct
 
 const Contact = () => {
   const containerRef = useRef(null);
@@ -23,14 +23,7 @@ const Contact = () => {
   });
 
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.7, 1], [0, 1, 1, 1]);
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.7, 1],
-    [0.95, 1, 1, 1],
-  );
   const y = useTransform(scrollYProgress, [0, 0.2, 0.7, 1], [100, 0, 0, 0]);
-
-  const isInView = useInView(contentRef, { once: false, amount: 0.1 });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -43,18 +36,6 @@ const Contact = () => {
     },
   };
 
-  const titleVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
-
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -62,7 +43,7 @@ const Contact = () => {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: [0.22, 1, 0.36, 1],
+        ease: "easeOut",
       },
     },
   };
@@ -71,600 +52,277 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // EmailJS Configuration
     const serviceId = "service_d5ldgpo";
     const templateId = "template_8zlsizc";
     const publicKey = "sTOD1DDmGcS1chEsJ";
 
-    // Template parameters
     const templateParams = {
       from_name: formData.name,
       from_email: formData.email,
       message: formData.message,
-      to_email: "shwetakohad22@gmail.com", // Your email
+      to_email: "shwetakohad22@gmail.com",
     };
 
-    // Send email using EmailJS
     emailjs
       .send(serviceId, templateId, templateParams, publicKey)
-      .then((response) => {
-        console.log("SUCCESS!", response.status, response.text);
+      .then(() => {
         setIsSubmitting(false);
         setSubmitStatus("success");
-        setFormData({
-          name: "",
-          email: "",
-          message: "",
-        });
-
-        setTimeout(() => {
-          setSubmitStatus(null);
-        }, 5000);
+        setFormData({ name: "", email: "", message: "" });
+        setTimeout(() => setSubmitStatus(null), 5000);
       })
-      .catch((error) => {
-        console.error("FAILED...", error);
+      .catch(() => {
         setIsSubmitting(false);
         setSubmitStatus("error");
-
-        setTimeout(() => {
-          setSubmitStatus(null);
-        }, 5000);
+        setTimeout(() => setSubmitStatus(null), 5000);
       });
   };
 
   const contactInfo = [
     {
-      icon: (
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-          />
-        </svg>
-      ),
-      value: "shwetakohad22@gmail.com",
       label: "Email",
+      value: "shwetakohad22@gmail.com",
+      href: "mailto:shwetakohad22@gmail.com",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+      )
     },
     {
-      icon: (
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-          />
-        </svg>
-      ),
-      value: "8669988621",
       label: "Phone",
+      value: "+91 86699 88621",
+      href: "tel:8669988621",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+      )
     },
     {
+      label: "Format",
+      value: "Hybrid / Remote",
+      href: null,
       icon: (
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-        </svg>
-      ),
-      value: "Nagpur, Maharashtra",
-      label: "Location",
-    },
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+      )
+    }
   ];
 
   const socialLinks = [
-    {
-      name: "LinkedIn",
-      icon: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z",
-      url: "https://linkedin.com",
-    },
-    {
-      name: "GitHub",
-      icon: "M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z",
-      url: "https://github.com",
-    },
-    {
-      name: "Twitter",
-      icon: "M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z",
-      url: "https://twitter.com",
-    },
-    {
-      name: "Instagram",
-      icon: "M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z",
-      url: "https://instagram.com",
-    },
+    { name: "LinkedIn", url: "https://linkedin.com", icon: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z" },
+    { name: "GitHub", url: "https://github.com", icon: "M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" },
+    { name: "Twitter", url: "https://twitter.com", icon: "M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" },
   ];
 
   return (
-    <div ref={containerRef} className="relative min-h-[200vh]">
+    <div ref={containerRef} className="relative min-h-screen lg:h-screen w-full bg-black overflow-x-hidden flex flex-col justify-center">
+
+      {/* Background Ambience */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-[10%] left-[20%] w-[40%] h-[40%] bg-purple-900/10 rounded-full blur-[100px]" />
+        <div className="absolute bottom-[10%] right-[20%] w-[30%] h-[30%] bg-blue-900/10 rounded-full blur-[80px]" />
+      </div>
+
+      {/* Layered Header Text (CERTIFICATIONS Style) */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none flex items-center justify-center opacity-10 select-none z-0">
+        <span className="text-[25vw] md:text-[20vw] font-black text-white/5 whitespace-nowrap tracking-tighter shimmer-text">
+          CONTACT
+        </span>
+      </div>
+
       <motion.section
         ref={sectionRef}
-        style={{ opacity, scale, y }}
+        style={{ opacity, y }}
         id="contact-section"
-        className="sticky top-0 bg-black min-h-screen relative overflow-hidden rounded-t-[35px]"
+        className="w-full h-full relative z-10 flex items-center justify-center px-4 md:px-8 lg:px-16 py-20 lg:py-0"
       >
-        {/* Decorative background elements */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 sm:w-80 md:w-96 h-72 sm:h-80 md:h-96 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-72 sm:w-80 md:w-96 h-72 sm:h-80 md:h-96 bg-neutral-400 rounded-full blur-3xl"></div>
-        </div>
+        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
 
-        {/* MOBILE LAYOUT */}
-        <div className="block lg:hidden w-full min-h-screen relative z-10">
-          <div className="flex items-center justify-center min-h-screen px-5 py-16">
-            <motion.div
-              ref={contentRef}
-              variants={containerVariants}
-              initial="visible"
-              animate="visible"
-              className="w-full max-w-[600px] space-y-8"
-            >
-              {/* MOBILE TITLE */}
-              <motion.div variants={titleVariants} className="text-center">
-                <h2 className="text-[#e8e3da] text-[2.5rem] font-black leading-[0.9] tracking-tight mb-3">
-                  Contact
-                </h2>
-                <div className="h-[2px] w-16 bg-gradient-to-r from-transparent via-white to-transparent mx-auto mb-4"></div>
-                <p className="text-neutral-400 text-sm leading-relaxed px-4">
-                  Let's work together to bring your ideas to life
-                </p>
-              </motion.div>
-
-              {/* MOBILE PROFILE IMAGE */}
-              <motion.div
-                variants={itemVariants}
-                className="flex justify-center"
-              >
-                <div className="relative w-32 h-32">
-                  <img
-                    src={yourPhoto}
-                    alt="Profile"
-                    className="w-full h-full rounded-2xl object-cover shadow-2xl"
-                  />
-                  <div className="absolute inset-0 rounded-2xl ring-2 ring-white/20"></div>
-                </div>
-              </motion.div>
-
-              {/* MOBILE CONTACT INFO CARDS */}
-              <motion.div variants={itemVariants} className="space-y-3">
-                {contactInfo.map((info, index) => (
-                  <div
-                    key={index}
-                    className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 flex items-center gap-4"
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-white flex-shrink-0">
-                      {info.icon}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-neutral-500 text-xs font-semibold uppercase tracking-wider mb-1">
-                        {info.label}
-                      </p>
-                      <p className="text-white text-sm font-medium truncate">
-                        {info.value}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-
-              {/* MOBILE SOCIAL LINKS */}
-              <motion.div variants={itemVariants} className="text-center">
-                <p className="text-neutral-500 text-xs font-semibold uppercase tracking-wider mb-4">
-                  Follow Me
-                </p>
-                <div className="flex justify-center gap-3">
-                  {socialLinks.map((social, index) => (
-                    <a
-                      key={index}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300"
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d={social.icon} />
-                      </svg>
-                    </a>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* MOBILE FORM */}
-              <motion.div variants={itemVariants}>
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5">
-                  <h3 className="text-white text-xl font-bold mb-6 text-center">
-                    Send Message
-                  </h3>
-
-                  <form
-                    ref={formRef}
-                    onSubmit={handleSubmit}
-                    className="space-y-4"
-                  >
-                    {/* Name */}
-                    <div>
-                      <input
-                        type="text"
-                        name="from_name"
-                        value={formData.name}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name: e.target.value })
-                        }
-                        required
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-white/20 transition-all"
-                        placeholder="Your name"
-                      />
-                    </div>
-
-                    {/* Email */}
-                    <div>
-                      <input
-                        type="email"
-                        name="from_email"
-                        value={formData.email}
-                        onChange={(e) =>
-                          setFormData({ ...formData, email: e.target.value })
-                        }
-                        required
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-white/20 transition-all"
-                        placeholder="your.email@example.com"
-                      />
-                    </div>
-
-                    {/* Message */}
-                    <div>
-                      <textarea
-                        rows="4"
-                        name="message"
-                        value={formData.message}
-                        onChange={(e) =>
-                          setFormData({ ...formData, message: e.target.value })
-                        }
-                        required
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-white/20 transition-all resize-none"
-                        placeholder="Your message..."
-                      ></textarea>
-                    </div>
-
-                    {/* Submit Button */}
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full py-3.5 bg-white text-black rounded-xl font-bold text-sm hover:bg-neutral-200 transition-all duration-300 disabled:opacity-50"
-                    >
-                      {isSubmitting ? "Sending..." : "SEND MESSAGE"}
-                    </button>
-
-                    {/* Success Message */}
-                    {submitStatus === "success" && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="flex items-center justify-center gap-2 p-3 bg-green-500/20 border border-green-500/30 rounded-xl"
-                      >
-                        <svg
-                          className="w-4 h-4 text-green-500"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        <span className="text-white text-xs font-medium">
-                          Message sent successfully!
-                        </span>
-                      </motion.div>
-                    )}
-
-                    {/* Error Message */}
-                    {submitStatus === "error" && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="flex items-center justify-center gap-2 p-3 bg-red-500/20 border border-red-500/30 rounded-xl"
-                      >
-                        <svg
-                          className="w-4 h-4 text-red-500"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                        <span className="text-white text-xs font-medium">
-                          Failed to send. Please try again.
-                        </span>
-                      </motion.div>
-                    )}
-                  </form>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* DESKTOP LAYOUT */}
-        <div className="hidden lg:flex w-full min-h-screen items-center justify-center px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-8 relative z-10">
+          {/* LEFT COLUMN: VISUALS (Image & Info) */}
           <motion.div
-            ref={contentRef}
-            className="w-full max-w-[1600px] mx-auto"
             variants={containerVariants}
             initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+            whileInView="visible"
+            viewport={{ once: false }}
+            className="w-full lg:w-5/12 flex flex-col gap-8 lg:gap-10 order-2 lg:order-1"
           >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center w-full">
-              {/* LEFT SIDE - CONTACT INFO */}
-              <div className="order-1 space-y-6 lg:space-y-8">
-                {/* Title */}
-                <motion.div variants={titleVariants}>
-                  <h2 className="text-[#e8e3da] text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] lg:text-[4rem] xl:text-[5rem] font-medium leading-[0.9] tracking-tight mb-3">
-                    Contact
-                  </h2>
-                  <div className="h-1 w-16 bg-gradient-to-r from-neutral-500 to-transparent mb-6"></div>
-                  <p className="text-neutral-300 text-sm md:text-base lg:text-lg leading-relaxed">
-                    Let's work together to bring your ideas to life. Feel free
-                    to reach out for collaborations or just a friendly hello.
-                  </p>
-                </motion.div>
+            {/* User Image Card */}
+            <motion.div variants={itemVariants} className="relative group mx-auto lg:mx-0 w-64 h-64 md:w-80 md:h-80 lg:w-[340px] lg:h-[340px] xl:w-[400px] xl:h-[400px]">
 
-                {/* Profile Image */}
-                <motion.div variants={itemVariants}>
-                  <div className="relative w-36 h-36 lg:w-40 lg:h-40">
-                    <img
-                      src={yourPhoto}
-                      alt="Profile"
-                      className="w-full h-full rounded-2xl object-cover shadow-2xl"
-                    />
-                    <div className="absolute inset-0 rounded-2xl ring-2 ring-neutral-700"></div>
-                  </div>
-                </motion.div>
+              {/* Tech Halo & Grid Background */}
+              <div className="absolute inset-[-10%] z-0 hidden lg:block">
+                <div className="absolute inset-0 bg-gradient-radial from-white/10 to-transparent opacity-30 blur-2xl" />
 
-                {/* Contact Info */}
-                <motion.div variants={itemVariants} className="space-y-4">
-                  {contactInfo.map((info, index) => (
-                    <motion.div
-                      key={index}
-                      whileHover={{ x: 5 }}
-                      className="flex items-center gap-4 group"
-                    >
-                      <div className="w-12 h-12 rounded-xl bg-neutral-900 border border-neutral-700 flex items-center justify-center text-neutral-400 group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300 flex-shrink-0">
-                        {info.icon}
-                      </div>
-                      <span className="text-neutral-300 text-base lg:text-lg font-medium">
-                        {info.value}
-                      </span>
-                    </motion.div>
-                  ))}
-                </motion.div>
+                {/* Rotating Dashed Ring */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 border border-dashed border-white/20 rounded-full opacity-30"
+                />
 
-                {/* Social Links */}
-                <motion.div variants={itemVariants} className="pt-4">
-                  <p className="text-neutral-500 text-xs font-semibold uppercase tracking-wider mb-4">
-                    Follow Me
-                  </p>
-                  <div className="flex gap-3">
-                    {socialLinks.map((social, index) => (
-                      <motion.a
-                        key={index}
-                        href={social.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ y: -5, scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="w-12 h-12 rounded-xl bg-neutral-900 border border-neutral-700 flex items-center justify-center text-neutral-400 hover:bg-white hover:text-black hover:border-white transition-all duration-300"
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d={social.icon} />
-                        </svg>
-                      </motion.a>
-                    ))}
-                  </div>
-                </motion.div>
+                {/* Reverse Rotating Dotted Ring */}
+                <motion.div
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-[10%] border border-dotted border-white/20 rounded-full opacity-30"
+                />
+
+                {/* Corner Accents */}
+                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/20 rounded-tl-3xl opacity-50" />
+                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-white/20 rounded-tr-3xl opacity-50" />
+                <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-white/20 rounded-bl-3xl opacity-50" />
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/20 rounded-br-3xl opacity-50" />
               </div>
 
-              {/* RIGHT SIDE - MESSAGE FORM */}
-              <motion.div variants={itemVariants} className="order-2">
-                <div className="bg-neutral-900/80 backdrop-blur-sm border border-neutral-700 rounded-2xl p-6 md:p-8 lg:p-10 shadow-2xl">
-                  <h3 className="text-white text-2xl md:text-3xl font-bold mb-8">
-                    Send a Message
-                  </h3>
-
-                  <form
-                    ref={formRef}
-                    onSubmit={handleSubmit}
-                    className="space-y-6"
-                  >
-                    {/* Name */}
-                    <div>
-                      <label className="block text-neutral-400 text-sm font-medium mb-2">
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        name="from_name"
-                        value={formData.name}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name: e.target.value })
-                        }
-                        required
-                        className="w-full px-5 py-3.5 bg-neutral-800/50 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:border-neutral-500 focus:bg-neutral-800 transition-all"
-                        placeholder="Your name"
-                      />
-                    </div>
-
-                    {/* Email */}
-                    <div>
-                      <label className="block text-neutral-400 text-sm font-medium mb-2">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        name="from_email"
-                        value={formData.email}
-                        onChange={(e) =>
-                          setFormData({ ...formData, email: e.target.value })
-                        }
-                        required
-                        className="w-full px-5 py-3.5 bg-neutral-800/50 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:border-neutral-500 focus:bg-neutral-800 transition-all"
-                        placeholder="your.email@example.com"
-                      />
-                    </div>
-
-                    {/* Message */}
-                    <div>
-                      <label className="block text-neutral-400 text-sm font-medium mb-2">
-                        Message
-                      </label>
-                      <textarea
-                        rows="5"
-                        name="message"
-                        value={formData.message}
-                        onChange={(e) =>
-                          setFormData({ ...formData, message: e.target.value })
-                        }
-                        required
-                        className="w-full px-5 py-3.5 bg-neutral-800/50 border border-neutral-700 rounded-xl text-white placeholder-neutral-500 focus:outline-none focus:border-neutral-500 focus:bg-neutral-800 transition-all resize-none"
-                        placeholder="Your message..."
-                      ></textarea>
-                    </div>
-
-                    {/* Submit Button */}
-                    <motion.button
-                      type="submit"
-                      disabled={isSubmitting}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full py-4 bg-white text-black rounded-xl font-bold text-base hover:bg-neutral-200 transition-all duration-300 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isSubmitting ? (
-                        <span className="flex items-center justify-center gap-2">
-                          <svg
-                            className="animate-spin h-5 w-5"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="4"
-                            ></circle>
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                            ></path>
-                          </svg>
-                          Sending...
-                        </span>
-                      ) : (
-                        "SEND MESSAGE"
-                      )}
-                    </motion.button>
-
-                    {/* Success Message */}
-                    {submitStatus === "success" && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="flex items-center justify-center gap-2 p-4 bg-green-500/20 border border-green-500/30 rounded-xl"
-                      >
-                        <svg
-                          className="w-5 h-5 text-green-500"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        <span className="text-white text-sm font-medium">
-                          Message sent successfully!
-                        </span>
-                      </motion.div>
-                    )}
-
-                    {/* Error Message */}
-                    {submitStatus === "error" && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="flex items-center justify-center gap-2 p-4 bg-red-500/20 border border-red-500/30 rounded-xl"
-                      >
-                        <svg
-                          className="w-5 h-5 text-red-500"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                        <span className="text-white text-sm font-medium">
-                          Failed to send. Please try again.
-                        </span>
-                      </motion.div>
-                    )}
-                  </form>
+              <div className="w-full h-full rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl relative z-10 bg-neutral-900 group-hover:border-white/20 transition-colors duration-500">
+                <img
+                  src={yourPhoto}
+                  alt="Shweta Kohad"
+                  className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                />
+                {/* Status */}
+                <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-2 z-20">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                  </span>
+                  <span className="text-[10px] font-bold text-white uppercase tracking-wider">Open to Work</span>
                 </div>
-              </motion.div>
-            </div>
+              </div>
+            </motion.div>
+
+            {/* Contact Details */}
+            <motion.div variants={itemVariants} className="bg-neutral-900/30 backdrop-blur-sm border border-white/5 rounded-2xl p-6 lg:p-8 space-y-6">
+              {contactInfo.map((item, i) => (
+                <div key={i} className="flex items-center gap-4 group">
+                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-neutral-400 group-hover:text-white group-hover:bg-white/10 transition-colors">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <p className="text-neutral-500 text-[10px] uppercase font-bold tracking-widest mb-0.5">{item.label}</p>
+                    {item.href ? (
+                      <a href={item.href} className="text-white text-base md:text-lg font-medium hover:underline decoration-white/30 underline-offset-4 transition-all">
+                        {item.value}
+                      </a>
+                    ) : (
+                      <p className="text-white text-base md:text-lg font-medium">{item.value}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
+
+
+          {/* RIGHT COLUMN: ACTION (Header & Form) */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false }}
+            className="w-full lg:w-7/12 flex flex-col justify-center order-1 lg:order-2"
+          >
+            {/* Header */}
+            <div className="mb-10 text-center lg:text-left">
+              <motion.h2 variants={itemVariants} className="text-[#e8e3da] text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[0.9] mb-4">
+                Get in Touch
+              </motion.h2>
+              <motion.div variants={itemVariants} className="h-1 w-24 bg-gradient-to-r from-white via-white/50 to-transparent mx-auto lg:mx-0 mb-6" />
+              <motion.p variants={itemVariants} className="text-neutral-400 text-lg font-light max-w-lg mx-auto lg:mx-0">
+                Have a project in mind or just want to say hi? I'm always open to discussing new opportunities and ideas.
+              </motion.p>
+            </div>
+
+            {/* Compact Form */}
+            <motion.div variants={itemVariants}>
+              <form ref={formRef} onSubmit={handleSubmit} className="bg-neutral-900/20 backdrop-blur-md border border-white/10 rounded-3xl p-6 md:p-8 lg:p-10 space-y-6">
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Name */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1">Name</label>
+                    <input
+                      type="text"
+                      name="from_name"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder="John Doe"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-neutral-600 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all font-light"
+                    />
+                  </div>
+                  {/* Email */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1">Email</label>
+                    <input
+                      type="email"
+                      name="from_email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="john@example.com"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-neutral-600 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all font-light"
+                    />
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1">Message</label>
+                  <textarea
+                    name="message"
+                    required
+                    rows="4"
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    placeholder="Tell me about your project..."
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-neutral-600 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all font-light resize-none"
+                  ></textarea>
+                </div>
+
+                {/* Footer (Submit & Socials) */}
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-2">
+
+                  {/* Socials Row */}
+                  <div className="flex gap-4 order-2 md:order-1">
+                    {socialLinks.map((link, i) => (
+                      <a
+                        key={i}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-10 h-10 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-neutral-400 hover:bg-white hover:text-black hover:scale-110 transition-all duration-300"
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d={link.icon} /></svg>
+                      </a>
+                    ))}
+                  </div>
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full md:w-auto px-8 py-3 bg-white text-black font-bold uppercase tracking-wider rounded-full hover:bg-neutral-200 transition-colors disabled:opacity-50 order-1 md:order-2 flex items-center justify-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <span>Send Message</span>
+                    )}
+                  </button>
+                </div>
+
+                {/* Status Message */}
+                {submitStatus && (
+                  <div className={`text-center text-sm font-bold ${submitStatus === 'success' ? 'text-green-500' : 'text-red-500'}`}>
+                    {submitStatus === 'success' ? "Message sent successfully!" : "Something went wrong. Please try again."}
+                  </div>
+                )}
+
+              </form>
+            </motion.div>
+          </motion.div>
+
         </div>
       </motion.section>
     </div>

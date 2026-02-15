@@ -5,20 +5,16 @@ import yourPhoto from "../assets/your-photo.jpg";
 const About = () => {
   const containerRef = useRef(null);
   const sectionRef = useRef(null);
-  const contentRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.7, 1], [0, 1, 1, 1]);
-  const scale = useTransform(scrollYProgress, [0, 0.2, 0.7, 1], [0.95, 1, 1, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.2, 0.7, 1], [100, 0, 0, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [100, 0, 0, -100]);
+  const textParallax = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
 
-  const isInView = useInView(contentRef, { once: false, amount: 0.1 });
-
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -30,243 +26,157 @@ const About = () => {
     },
   };
 
-  const titleVariants = {
-    hidden: { opacity: 0, y: 40 },
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.8,
         ease: [0.22, 1, 0.36, 1],
       },
     },
   };
 
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
-
-  const textVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
+  const stats = [
+    { value: "2+", label: "Years Exp" },
+    { value: "15+", label: "Projects" },
+    { value: "10+", label: "Tech Stack" },
+    { value: "100%", label: "Satisfaction" },
+  ];
 
   return (
-    <div ref={containerRef} className="relative min-h-[200vh]">
-      <motion.section
-        ref={sectionRef}
-        style={{ opacity, scale, y }}
-        id="about-section"
-        className="sticky top-0 bg-black min-h-screen relative overflow-hidden rounded-t-[35px] flex items-center justify-center"
-      >
-        {/* Decorative background elements - Subtle for desktop, more vibrant for mobile */}
+    <div ref={containerRef} className="relative min-h-[150vh] lg:min-h-[200vh] w-full">
+      <div className="sticky top-0 h-screen w-full bg-black overflow-hidden flex flex-col justify-center py-20 lg:py-0">
+
+        {/* Background Ambience */}
         <div className="absolute inset-0 pointer-events-none">
-          {/* Mobile backgrounds - colorful */}
-          <div className="block lg:hidden opacity-10">
-            <div className="absolute top-20 left-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-500 rounded-full blur-3xl"></div>
-          </div>
-          
-          {/* Desktop backgrounds - subtle */}
-          <div className="hidden lg:block opacity-5">
-            <div className="absolute top-20 left-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-neutral-400 rounded-full blur-3xl"></div>
-          </div>
+          <div className="absolute top-[20%] right-[10%] w-[50%] h-[50%] bg-purple-900/10 rounded-full blur-[120px]" />
+          <div className="absolute bottom-[10%] left-[10%] w-[40%] h-[40%] bg-blue-900/10 rounded-full blur-[100px]" />
         </div>
 
+        {/* Layered Header Text (Parallax) */}
         <motion.div
-          ref={contentRef}
-          className="w-full max-w-[1600px] mx-auto relative z-10 px-5 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-12 md:py-16"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          style={{ x: textParallax }}
+          className="absolute top-[10%] left-[-10%] w-[120%] overflow-hidden pointer-events-none opacity-5 select-none z-0"
         >
-          {/* MOBILE LAYOUT */}
-          <div className="block lg:hidden space-y-8">
-            {/* Title Section */}
-            <motion.div variants={titleVariants} className="text-center">
-              <h2 className="text-white text-[3rem] sm:text-[3.5rem] font-black leading-[0.9] tracking-tighter mb-4">
-                ABOUT<br/>ME
-              </h2>
-              <div className="h-1 w-16 bg-gradient-to-r from-white to-transparent mx-auto"></div>
-            </motion.div>
+          <span className="text-[30vw] font-black text-white whitespace-nowrap tracking-tighter leading-none">
+            ABOUT ME
+          </span>
+        </motion.div>
 
-            {/* Image Section */}
-            <motion.div variants={imageVariants} className="flex justify-center">
-              <div className="relative w-full max-w-[300px]">
-                <div className="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[3/4]">
-                  <img
-                    src={yourPhoto}
-                    alt="About Me"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-                </div>
-                
-                {/* Decorative corner accents */}
-                <div className="absolute -top-3 -left-3 w-12 h-12 border-t-2 border-l-2 border-white/30 rounded-tl-2xl"></div>
-                <div className="absolute -bottom-3 -right-3 w-12 h-12 border-b-2 border-r-2 border-white/30 rounded-br-2xl"></div>
-              </div>
-            </motion.div>
+        <motion.section
+          ref={sectionRef}
+          style={{ opacity, y }}
+          id="about-section"
+          className="w-full relative z-10 px-6 md:px-12 lg:px-20"
+        >
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
-            {/* Description */}
-            <motion.div variants={textVariants} className="space-y-4 text-center">
-              <p className="text-neutral-200 text-[0.95rem] leading-relaxed font-light px-2">
-                Hey there! I'm a passionate developer with over 2 years of experience 
-                building innovative web applications. I love transforming ideas into 
-                elegant, user-friendly digital experiences.
-              </p>
-
-              <p className="text-neutral-400 text-[0.9rem] leading-relaxed px-2">
-                I specialize in building scalable applications using modern technologies 
-                like React, Node.js, and Python. My goal is to create products that not 
-                only look great but also solve real-world problems.
-              </p>
-            </motion.div>
-
-            {/* Stats Grid - Enhanced Mobile */}
+            {/* LEFT COLUMN: VISUALS (Tech Halo Image) */}
             <motion.div
-              variants={textVariants}
-              className="grid grid-cols-2 gap-4 max-w-[320px] mx-auto"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
+              className="relative order-2 lg:order-1 flex justify-center lg:justify-start"
             >
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-5 border border-white/10 text-center">
-                <h3 className="text-[2.5rem] font-black text-white leading-none mb-2 bg-gradient-to-br from-white to-neutral-400 bg-clip-text text-transparent">2+</h3>
-                <p className="text-neutral-400 text-[0.7rem] font-semibold tracking-wider uppercase">Years</p>
-              </div>
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-5 border border-white/10 text-center">
-                <h3 className="text-[2.5rem] font-black text-white leading-none mb-2 bg-gradient-to-br from-white to-neutral-400 bg-clip-text text-transparent">15+</h3>
-                <p className="text-neutral-400 text-[0.7rem] font-semibold tracking-wider uppercase">Projects</p>
-              </div>
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-5 border border-white/10 text-center">
-                <h3 className="text-[2.5rem] font-black text-white leading-none mb-2 bg-gradient-to-br from-white to-neutral-400 bg-clip-text text-transparent">10+</h3>
-                <p className="text-neutral-400 text-[0.7rem] font-semibold tracking-wider uppercase">Technologies</p>
-              </div>
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-5 border border-white/10 text-center">
-                <h3 className="text-[2.5rem] font-black text-white leading-none mb-2 bg-gradient-to-br from-white to-neutral-400 bg-clip-text text-transparent">100%</h3>
-                <p className="text-neutral-400 text-[0.7rem] font-semibold tracking-wider uppercase">Satisfaction</p>
-              </div>
-            </motion.div>
+              {/* Image Container */}
+              <motion.div variants={itemVariants} className="relative group w-72 h-72 md:w-96 md:h-96 lg:w-[450px] lg:h-[550px]">
 
-            {/* CTA Button */}
-            <motion.div variants={textVariants} className="flex justify-center pt-2">
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-bold text-sm tracking-wide hover:bg-neutral-200 transition-all duration-300 hover:scale-105 shadow-xl uppercase"
-              >
-                Let's Connect
-                <span className="text-lg">→</span>
-              </a>
-            </motion.div>
-          </div>
+                {/* Tech Halo & Grid Background */}
+                <div className="absolute inset-[-15%] z-0 hidden lg:block">
+                  {/* Rotating Dashed Ring */}
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 border border-dashed border-white/10 rounded-full opacity-40"
+                  />
 
-          {/* DESKTOP LAYOUT (>= lg) */}
-          <div className="hidden lg:grid grid-cols-2 gap-12 xl:gap-16 items-center min-h-[80vh]">
-            {/* LEFT SIDE - IMAGE */}
-            <motion.div variants={imageVariants} className="flex items-center justify-start">
-              <div className="relative w-full max-w-[420px] xl:max-w-[480px]">
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[3/4]">
+                  {/* Reverse Rotating Dotted Ring */}
+                  <motion.div
+                    animate={{ rotate: -360 }}
+                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-[10%] border border-dotted border-white/10 rounded-full opacity-40"
+                  />
+
+                  {/* Corner Accents - Architectural feel */}
+                  <div className="absolute top-0 left-0 w-12 h-12 border-t border-l border-white/20" />
+                  <div className="absolute top-0 right-0 w-12 h-12 border-t border-r border-white/20" />
+                  <div className="absolute bottom-0 left-0 w-12 h-12 border-b border-l border-white/20" />
+                  <div className="absolute bottom-0 right-0 w-12 h-12 border-b border-r border-white/20" />
+                </div>
+
+                {/* Main Image Frame */}
+                <div className="w-full h-full rounded-2xl lg:rounded-none overflow-hidden border border-white/10 relative z-10 bg-neutral-900 group-hover:border-white/30 transition-all duration-700">
+                  <div className="absolute inset-0 bg-neutral-950/20 z-10 group-hover:bg-transparent transition-colors duration-500 mix-blend-multiply" />
                   <img
                     src={yourPhoto}
-                    alt="About Me"
-                    className="w-full h-full object-cover"
+                    alt="About Shweta"
+                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                </div>
 
-                {/* Decorative element */}
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={isInView ? { width: "60%" } : { width: 0 }}
-                  transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute -bottom-4 -left-4 h-full border-2 border-neutral-700 rounded-3xl -z-10"
-                ></motion.div>
-              </div>
+                  {/* Floating Badge */}
+                  <div className="absolute bottom-8 right-8 bg-white/10 backdrop-blur-md border border-white/10 px-6 py-3 hidden lg:flex items-center gap-3 z-20">
+                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-xs font-bold text-white uppercase tracking-widest">Available for hire</span>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
 
-            {/* RIGHT SIDE - CONTENT */}
-            <div className="space-y-6 xl:space-y-8 pb-8">
-              {/* Title */}
-              <motion.div variants={titleVariants}>
-                <h2 className="text-white text-[3.5rem] xl:text-[4.5rem] font-black leading-[0.85] tracking-tighter mb-4">
-                  ABOUT ME
-                </h2>
-                <div className="h-1 w-20 bg-gradient-to-r from-white to-transparent"></div>
-              </motion.div>
 
-              {/* Description */}
-              <motion.div variants={textVariants} className="space-y-4 xl:space-y-5">
-                <p className="text-neutral-200 text-lg xl:text-xl leading-relaxed font-light">
-                  Hey there! I'm a passionate developer with over 2 years of experience 
-                  building innovative web applications. I love transforming ideas into 
-                  elegant, user-friendly digital experiences.
+            {/* RIGHT COLUMN: CONTENT (Editorial Style) */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
+              className="flex flex-col justify-center order-1 lg:order-2 space-y-10"
+            >
+              {/* Header */}
+              <div>
+                <motion.h2 variants={itemVariants} className="text-[#e8e3da] text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-6">
+                  CRAFTING<br /><span className="text-neutral-500">DIGITAL</span><br />REALITY.
+                </motion.h2>
+                <motion.div variants={itemVariants} className="h-0.5 w-32 bg-white/20" />
+              </div>
+
+              {/* Bio */}
+              <motion.div variants={itemVariants} className="space-y-6 text-lg lg:text-xl font-light text-neutral-300 leading-relaxed max-w-xl">
+                <p>
+                  I am a creative developer who bridges the gap between <strong className="text-white font-bold">design</strong> and <strong className="text-white font-bold">technology</strong>. My passion lies in building immersive web experiences that are not just functional, but memorable.
                 </p>
-
-                <p className="text-neutral-400 text-base xl:text-lg leading-relaxed">
-                  When I'm not coding, you'll find me exploring the latest tech trends, 
-                  contributing to open-source projects, or enjoying a good cup of coffee 
-                  while brainstorming my next big project.
-                </p>
-
-                <p className="text-neutral-400 text-base xl:text-lg leading-relaxed">
-                  I specialize in building scalable applications using modern technologies 
-                  like React, Node.js, and Python. My goal is to create products that not 
-                  only look great but also solve real-world problems.
+                <p className="text-neutral-500 text-base lg:text-lg">
+                  With a deep understanding of modern frameworks and a keen eye for aesthetics, I transform complex problems into elegant, scalable solutions.
                 </p>
               </motion.div>
 
-              {/* Stats Grid */}
-              <motion.div
-                variants={textVariants}
-                className="grid grid-cols-2 gap-6 pt-2"
-              >
-                <div className="space-y-1">
-                  <h3 className="text-5xl font-black text-white leading-none">2+</h3>
-                  <p className="text-neutral-400 text-sm font-medium">Years Experience</p>
-                </div>
-                <div className="space-y-1">
-                  <h3 className="text-5xl font-black text-white leading-none">15+</h3>
-                  <p className="text-neutral-400 text-sm font-medium">Projects Completed</p>
-                </div>
-                <div className="space-y-1">
-                  <h3 className="text-5xl font-black text-white leading-none">10+</h3>
-                  <p className="text-neutral-400 text-sm font-medium">Technologies</p>
-                </div>
-                <div className="space-y-1">
-                  <h3 className="text-5xl font-black text-white leading-none">100%</h3>
-                  <p className="text-neutral-400 text-sm font-medium">Client Satisfaction</p>
-                </div>
+              {/* Stats Ribbon - Glassmorphic */}
+              <motion.div variants={itemVariants} className="grid grid-cols-2 lg:grid-cols-4 gap-4 border-t border-white/10 pt-10">
+                {stats.map((stat, i) => (
+                  <div key={i} className="space-y-1">
+                    <h4 className="text-3xl lg:text-4xl font-black text-white">{stat.value}</h4>
+                    <p className="text-xs font-bold text-neutral-500 uppercase tracking-widest">{stat.label}</p>
+                  </div>
+                ))}
               </motion.div>
 
-              {/* CTA Button */}
-              <motion.div variants={textVariants} className="pt-4">
+              {/* Signature / CTA */}
+              <motion.div variants={itemVariants} className="pt-4">
                 <a
                   href="#contact"
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-base tracking-wide hover:bg-neutral-200 transition-all duration-300 hover:scale-105 shadow-xl uppercase whitespace-nowrap"
+                  className="inline-block border-b border-white text-white text-sm font-bold uppercase tracking-widest pb-1 hover:text-neutral-300 hover:border-neutral-300 transition-colors"
                 >
-                  Let's Connect
-                  <span className="text-xl">→</span>
+                  Read My Story
                 </a>
               </motion.div>
-            </div>
+
+            </motion.div>
+
           </div>
-        </motion.div>
-      </motion.section>
+        </motion.section>
+      </div>
     </div>
   );
 };
