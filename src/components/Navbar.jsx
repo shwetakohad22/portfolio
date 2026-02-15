@@ -1,193 +1,160 @@
 import { heroContent, navLinks } from "../data";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const navVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: {
+  // Scroll Logic
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Variants
+  const navbarVariants = {
+    visible: { y: 0, opacity: 1, transition: { duration: 0.3, ease: "easeOut" } },
+    hidden: { y: -100, opacity: 0, transition: { duration: 0.3, ease: "easeIn" } },
+  };
+
+  const floatingBtnVariants = {
+    visible: { scale: 1, opacity: 1, transition: { duration: 0.3, ease: "backOut" } },
+    hidden: { scale: 0, opacity: 0, transition: { duration: 0.3, ease: "easeIn" } },
+  };
+
+  const overlayVariants = {
+    closed: { opacity: 0, pointerEvents: "none" },
+    open: { opacity: 1, pointerEvents: "auto" },
+  };
+
+  const listVariants = {
+    closed: { x: -20, opacity: 0 },
+    open: {
+      x: 0,
       opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
-    },
-  };
-
-  const mobileMenuVariants = {
-    closed: { opacity: 0, height: 0 },
-    open: {
-      opacity: 1,
-      height: "auto",
-      transition: {
-        duration: 0.3,
-        ease: [0.22, 1, 0.36, 1],
-        staggerChildren: 0.05,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const mobileItemVariants = {
-    closed: { opacity: 0, x: -20 },
-    open: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
-    },
+    closed: { x: -20, opacity: 0 },
+    open: { x: 0, opacity: 1 },
   };
 
   return (
     <>
+      {/* ----------------------------------------------------
+          STATE 1: FULL NAVBAR (Visible at Top)
+      ---------------------------------------------------- */}
       <motion.nav
-        variants={navVariants}
-        initial="hidden"
-        animate="visible"
-        className="
-          sticky
-          top-0
-          z-[100]
-          w-full
-          flex
-          items-center
-          justify-between
-          px-6
-          sm:px-8
-          md:px-12
-          lg:px-16
-          xl:px-24
-          pt-6
-          md:pt-8
-          lg:pt-10
-          pb-4
-          md:pb-5
-          uppercase
-          text-[10px]
-          md:text-[11px]
-          tracking-[0.3em]
-          text-[#666]
-          bg-[#e8e3da]/95
-          backdrop-blur-sm
-          border-b
-          border-[#d0c9bc]/40
-        "
+        variants={navbarVariants}
+        initial="visible"
+        animate={scrolled ? "hidden" : "visible"}
+        className="fixed top-0 left-0 w-full z-[100] px-6 md:px-12 lg:px-16 py-8 flex items-center justify-between pointer-events-none"
       >
-        {/* LEFT */}
-        <motion.div
-          variants={itemVariants}
-          className="text-[0.85rem] md:text-[0.95rem] font-medium tracking-[0.3px] uppercase text-[#1a1a1a] relative group"
-        >
-          {heroContent.role}
-          <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#2a2a2a] group-hover:w-full transition-all duration-500 ease-out"></span>
-        </motion.div>
+        {/* LOGO (Pointer Events Auto to allow clicking) */}
+        <div className="pointer-events-auto">
+          {/* <a
+            href="#"
+            className="text-sm font-black tracking-tighter text-[#1a1a1a] font-playfair uppercase mix-blend-difference"
+          >
+            {heroContent.role}
+          </a> */}
+        </div>
 
-        {/* DESKTOP MENU - Hidden on mobile */}
-        <motion.ul
-          variants={navVariants}
-          className="hidden md:flex items-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 list-none"
-        >
+        {/* DESKTOP LINKS (Pointer Events Auto) */}
+        <ul className="hidden md:flex items-center gap-8 list-none pointer-events-auto">
           {navLinks.map((link) => (
-            <motion.li key={link.id} variants={itemVariants}>
+            <li key={link.id}>
               <a
                 href={link.href}
-                className="
-                  text-[0.75rem]
-                  md:text-[0.8rem]
-                  font-medium
-                  tracking-[0.3px]
-                  text-[#666]
-                  hover:text-[#1a1a1a]
-                  transition-all
-                  duration-300
-                  relative
-                  group
-                  block
-                "
+                className="text-xs font-bold tracking-widest text-[#1a1a1a] hover:text-[#555] uppercase transition-colors relative group"
               >
                 {link.title}
-                <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#2a2a2a] group-hover:w-full transition-all duration-300 ease-out"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#1a1a1a] transition-all duration-300 group-hover:w-full"></span>
               </a>
-            </motion.li>
+            </li>
           ))}
-        </motion.ul>
+        </ul>
 
-        {/* MOBILE MENU BUTTON */}
-        <motion.button
-          variants={itemVariants}
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden flex flex-col gap-1.5 w-6 h-5 justify-center items-center relative z-[110]"
-          aria-label="Toggle menu"
+        {/* MOBILE MENU TOGGLE (Standard) */}
+        <button
+          onClick={() => setMobileMenuOpen(true)}
+          className="md:hidden flex flex-col gap-1.5 pointer-events-auto"
         >
-          <span
-            className={`w-full h-[2px] bg-[#1a1a1a] transition-all duration-300 ${
-              mobileMenuOpen ? "rotate-45 translate-y-[7px]" : ""
-            }`}
-          ></span>
-          <span
-            className={`w-full h-[2px] bg-[#1a1a1a] transition-all duration-300 ${
-              mobileMenuOpen ? "opacity-0" : ""
-            }`}
-          ></span>
-          <span
-            className={`w-full h-[2px] bg-[#1a1a1a] transition-all duration-300 ${
-              mobileMenuOpen ? "-rotate-45 -translate-y-[7px]" : ""
-            }`}
-          ></span>
-        </motion.button>
+          <span className="w-6 h-[2px] bg-[#1a1a1a]"></span>
+          <span className="w-6 h-[2px] bg-[#1a1a1a]"></span>
+        </button>
       </motion.nav>
 
-      {/* MOBILE MENU DROPDOWN */}
-      <motion.div
-        initial="closed"
-        animate={mobileMenuOpen ? "open" : "closed"}
-        variants={mobileMenuVariants}
-        className="md:hidden sticky top-[72px] z-[99] w-full bg-[#e8e3da]/98 backdrop-blur-md border-b border-[#d0c9bc]/40 overflow-hidden"
+      {/* ----------------------------------------------------
+          STATE 2: FLOATING MENU BUTTON (Visible on Scroll)
+      ---------------------------------------------------- */}
+      <motion.button
+        variants={floatingBtnVariants}
+        initial="hidden"
+        animate={scrolled ? "visible" : "hidden"}
+        onClick={() => setMobileMenuOpen(true)}
+        className="fixed top-6 right-6 z-[120] w-14 h-14 bg-[#1a1a1a] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 pointer-events-auto"
       >
-        <motion.ul
-          variants={mobileMenuVariants}
-          className="flex flex-col py-4 px-6 list-none"
-        >
-          {navLinks.map((link) => (
-            <motion.li key={link.id} variants={mobileItemVariants}>
-              <a
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="
-                  block
-                  py-4
-                  text-[0.85rem]
-                  font-medium
-                  tracking-[0.3px]
-                  uppercase
-                  text-[#666]
-                  hover:text-[#1a1a1a]
-                  transition-all
-                  duration-300
-                  border-b
-                  border-[#d0c9bc]/30
-                  last:border-b-0
-                "
-              >
-                {link.title}
-              </a>
-            </motion.li>
-          ))}
-        </motion.ul>
-      </motion.div>
+        <div className="flex flex-col gap-1.5 p-1">
+          <span className="w-5 h-[1.5px] bg-white"></span>
+          <span className="w-5 h-[1.5px] bg-white"></span>
+        </div>
+      </motion.button>
+
+      {/* ----------------------------------------------------
+          SHARED OVERLAY MENU (Fullscreen)
+      ---------------------------------------------------- */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="fixed inset-0 z-[200] bg-[#f4f1ea]/95 backdrop-blur-xl flex flex-col items-center justify-center"
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={overlayVariants}
+            transition={{ duration: 0.4 }}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="absolute top-8 right-8 w-12 h-12 flex items-center justify-center rounded-full border border-black/10 hover:bg-black/5 transition-colors"
+            >
+              <span className="text-xl font-light font-inter">✕</span>
+            </button>
+
+            {/* Menu Links */}
+            <motion.ul
+              className="flex flex-col items-center gap-10"
+              variants={listVariants}
+            >
+              {navLinks.map((link) => (
+                <motion.li key={link.id} variants={itemVariants}>
+                  <a
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="font-playfair font-black text-5xl md:text-6xl text-[#1a1a1a] hover:text-gray-500 transition-colors tracking-tight"
+                  >
+                    {link.title}
+                  </a>
+                </motion.li>
+              ))}
+            </motion.ul>
+
+            <motion.div
+              className="absolute bottom-12 text-xs font-mono text-gray-400 uppercase tracking-widest"
+              variants={itemVariants}
+            >
+              Menu
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

@@ -176,28 +176,4 @@ export const certifications = [
     credentialId: "CERT-2024-MERN-001",
     verifyLink: "#",
   },
-  {
-    id: 2,
-    title: "MERN Stack Development",
-    issuer: "GUVI (IIT Madras Incubated)",
-    date: "2024",
-    description:
-      "Comprehensive full-stack development certification covering MongoDB, Express.js, React, and Node.js with real-world project implementations and best practices.",
-    skills: ["MongoDB", "Express.js", "React", "Node.js", "REST APIs"],
-    certificate: fullstackCertificate,
-    credentialId: "CERT-2024-MERN-001",
-    verifyLink: "#",
-  },
-  {
-    id: 3,
-    title: "Advanced React Patterns",
-    issuer: "Frontend Masters",
-    date: "2023",
-    description:
-      "Deep dive into advanced React patterns, performance optimization, and state management techniques for building scalable applications.",
-    skills: ["React", "Redux", "Performance", "Hooks"],
-    certificate: fullstackCertificate,
-    credentialId: "CERT-2023-REACT-ADV",
-    verifyLink: "#",
-  },
 ];  
