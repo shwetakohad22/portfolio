@@ -38,6 +38,14 @@ const Skills = () => {
   ]);
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef(null);
+  const terminalBodyRef = useRef(null);
+
+  // Auto-scroll to bottom when history updates
+  useEffect(() => {
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
+    }
+  }, [history]);
 
   const handleCommand = (e) => {
     if (e.key === 'Enter') {
@@ -80,9 +88,7 @@ const Skills = () => {
       setInputValue("");
 
       // Keep focus
-      setTimeout(() => {
-        inputRef.current?.scrollIntoView({ behavior: "smooth" });
-      }, 10);
+      inputRef.current?.focus();
     }
   };
 
@@ -144,6 +150,9 @@ const Skills = () => {
       { name: "Postman", icon: SiPostman, color: "#FF6C37" },
     ]
   ];
+
+  // Flatten for mobile view
+  const allSkills = skillRows.flat();
 
   // Animation Variants
   const containerVariants = {
@@ -242,66 +251,99 @@ const Skills = () => {
           viewport={{ once: false, amount: 0.2 }}
           className="relative z-10 flex flex-col items-center gap-4 lg:gap-5 w-full max-w-6xl px-4"
         >
-          {skillRows.map((row, rowIndex) => (
-            <motion.div
-              key={rowIndex}
-              variants={rowVariants}
-              className="relative flex justify-center gap-3 lg:gap-4"
-            >
-              {/* Visual Connector Line (Vertical drop from previous row) */}
-              {rowIndex > 0 && (
-                <motion.div
-                  initial={{ height: 0 }}
-                  whileInView={{ height: "32px" }} // Height of gap
-                  transition={{ duration: 0.5, delay: rowIndex * 0.2 }}
-                  className="absolute -top-8 left-1/2 -translate-x-1/2 w-px bg-gradient-to-b from-white/20 to-white/5"
-                />
-              )}
-
-              {row.map((skill, skillIndex) => {
-                const Icon = skill.icon;
-                return (
+          {/* Desktop View: Inverted Pyramid */}
+          <motion.div className="hidden lg:flex flex-col items-center gap-5 w-full">
+            {skillRows.map((row, rowIndex) => (
+              <motion.div
+                key={rowIndex}
+                variants={rowVariants}
+                className="relative flex justify-center gap-4"
+              >
+                {/* Visual Connector Line (Vertical drop from previous row) */}
+                {rowIndex > 0 && (
                   <motion.div
-                    key={skillIndex}
-                    variants={itemVariants}
-                    whileHover={{ y: -5, scale: 1.05 }}
-                    className="group relative"
-                  >
-                    {/* Glowing Connector (Horizontal) - optional enhancement */}
+                    initial={{ height: 0 }}
+                    whileInView={{ height: "32px" }} // Height of gap
+                    transition={{ duration: 0.5, delay: rowIndex * 0.2 }}
+                    className="absolute -top-8 left-1/2 -translate-x-1/2 w-px bg-gradient-to-b from-white/20 to-white/5"
+                  />
+                )}
 
-                    {/* Tech Tile */}
-                    <div className="
-                                    relative flex flex-col items-center justify-center 
-                                    w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 
-                                    backdrop-blur-md bg-white/5 border border-white/10 
-                                    rounded-xl overflow-hidden
-                                    transition-all duration-500
-                                    group-hover:border-white/30 group-hover:bg-white/10 group-hover:shadow-[0_0_30px_-10px_rgba(255,255,255,0.1)]
-                                ">
-                      {/* Icon */}
-                      <div
-                        className="text-2xl sm:text-3xl md:text-4xl mb-2 transition-transform duration-300 group-hover:scale-110"
-                        style={{ color: skill.color }}
-                      >
-                        <Icon />
+                {row.map((skill, skillIndex) => {
+                  const Icon = skill.icon;
+                  return (
+                    <motion.div
+                      key={skillIndex}
+                      variants={itemVariants}
+                      whileHover={{ y: -5, scale: 1.05 }}
+                      className="group relative"
+                    >
+                      {/* Tech Tile */}
+                      <div className="
+                                      relative flex flex-col items-center justify-center 
+                                      w-28 h-28 
+                                      backdrop-blur-md bg-white/5 border border-white/10 
+                                      rounded-xl overflow-hidden
+                                      transition-all duration-500
+                                      group-hover:border-white/30 group-hover:bg-white/10 group-hover:shadow-[0_0_30px_-10px_rgba(255,255,255,0.1)]
+                                  ">
+                        {/* Icon */}
+                        <div
+                          className="text-4xl mb-2 transition-transform duration-300 group-hover:scale-110"
+                          style={{ color: skill.color }}
+                        >
+                          <Icon />
+                        </div>
+
+                        {/* Label */}
+                        <span className="text-xs font-semibold text-neutral-400 group-hover:text-white uppercase tracking-wider transition-colors">
+                          {skill.name}
+                        </span>
+
+                        {/* Hover Glow Gradient */}
+                        <div
+                          className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500"
+                          style={{ background: `radial-gradient(circle at center, ${skill.color}, transparent 70%)` }}
+                        />
                       </div>
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            ))}
+          </motion.div>
 
-                      {/* Label */}
-                      <span className="text-[0.6rem] sm:text-xs font-semibold text-neutral-400 group-hover:text-white uppercase tracking-wider transition-colors">
-                        {skill.name}
-                      </span>
-
-                      {/* Hover Glow Gradient */}
-                      <div
-                        className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500"
-                        style={{ background: `radial-gradient(circle at center, ${skill.color}, transparent 70%)` }}
-                      />
+          {/* Mobile View: Responsive Grid */}
+          <motion.div className="flex lg:hidden flex-wrap justify-center gap-3 w-full">
+            {allSkills.map((skill, index) => {
+              const Icon = skill.icon;
+              return (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className="group relative"
+                >
+                  <div className="
+                        relative flex flex-col items-center justify-center 
+                        w-20 h-20 
+                        backdrop-blur-md bg-white/5 border border-white/10 
+                        rounded-xl overflow-hidden
+                        transition-all duration-300
+                    ">
+                    <div
+                      className="text-2xl mb-1"
+                      style={{ color: skill.color }}
+                    >
+                      <Icon />
                     </div>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          ))}
+                    <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">
+                      {skill.name}
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </motion.div>
 
         {/* Functional Terminal (Right Aligned) */}
@@ -332,7 +374,7 @@ const Skills = () => {
 
             {/* Terminal Body */}
             {terminalStep === 'open' && (
-              <div className="p-3 font-mono text-xs h-[calc(100%-2rem)] overflow-y-auto flex flex-col" onClick={() => inputRef.current?.focus()}>
+              <div ref={terminalBodyRef} className="p-3 font-mono text-xs h-[calc(100%-2rem)] overflow-y-auto flex flex-col" onClick={() => inputRef.current?.focus()}>
                 {history.map((line, i) => (
                   <div key={i} className={`mb-1 ${line.type === 'user' ? 'text-white' : 'text-green-400'}`}>
                     <span className="opacity-50 mr-2">{line.type === 'user' ? '>' : '#'}</span>

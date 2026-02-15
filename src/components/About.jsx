@@ -46,8 +46,8 @@ const About = () => {
   ];
 
   return (
-    <div ref={containerRef} className="relative min-h-[150vh] lg:min-h-[200vh] w-full">
-      <div className="sticky top-0 h-screen w-full bg-black overflow-hidden flex flex-col justify-center py-20 lg:py-0">
+    <div ref={containerRef} className="relative min-h-screen lg:min-h-[200vh] w-full">
+      <div className="relative h-auto lg:sticky lg:top-0 lg:h-screen w-full bg-black overflow-hidden flex flex-col justify-center py-20 lg:py-0">
 
         {/* Background Ambience */}
         <div className="absolute inset-0 pointer-events-none">
@@ -71,7 +71,13 @@ const About = () => {
           id="about-section"
           className="w-full relative z-10 px-6 md:px-12 lg:px-20"
         >
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          {/* Mobile Heading */}
+          <div className="lg:hidden mb-12 text-center">
+            <h2 className="text-4xl font-black text-[#e8e3da] tracking-tighter">ABOUT ME</h2>
+            <div className="h-1 w-24 bg-gradient-to-r from-transparent via-white/50 to-transparent mx-auto mt-4" />
+          </div>
+
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center">
 
             {/* LEFT COLUMN: VISUALS (Tech Halo Image) */}
             <motion.div
@@ -79,10 +85,10 @@ const About = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.3 }}
-              className="relative order-2 lg:order-1 flex justify-center lg:justify-start"
+              className="relative flex justify-center lg:justify-start"
             >
               {/* Image Container */}
-              <motion.div variants={itemVariants} className="relative group w-72 h-72 md:w-96 md:h-96 lg:w-[450px] lg:h-[550px]">
+              <motion.div variants={itemVariants} className="relative group w-full max-w-[320px] aspect-square md:w-96 md:h-96 lg:w-[450px] lg:h-[550px]">
 
                 {/* Tech Halo & Grid Background */}
                 <div className="absolute inset-[-15%] z-0 hidden lg:block">
@@ -132,18 +138,18 @@ const About = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.3 }}
-              className="flex flex-col justify-center order-1 lg:order-2 space-y-10"
+              className="flex flex-col justify-center space-y-8 lg:space-y-10"
             >
               {/* Header */}
               <div>
-                <motion.h2 variants={itemVariants} className="text-[#e8e3da] text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-6">
+                <motion.h2 variants={itemVariants} className="text-[#e8e3da] text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-4 lg:mb-6">
                   CRAFTING<br /><span className="text-neutral-500">DIGITAL</span><br />REALITY.
                 </motion.h2>
                 <motion.div variants={itemVariants} className="h-0.5 w-32 bg-white/20" />
               </div>
 
               {/* Bio */}
-              <motion.div variants={itemVariants} className="space-y-6 text-lg lg:text-xl font-light text-neutral-300 leading-relaxed max-w-xl">
+              <motion.div variants={itemVariants} className="space-y-4 lg:space-y-6 text-base lg:text-xl font-light text-neutral-300 leading-relaxed max-w-xl">
                 <p>
                   I am a creative developer who bridges the gap between <strong className="text-white font-bold">design</strong> and <strong className="text-white font-bold">technology</strong>. My passion lies in building immersive web experiences that are not just functional, but memorable.
                 </p>
