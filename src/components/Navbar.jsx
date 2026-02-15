@@ -113,32 +113,45 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-[200] bg-[#f4f1ea]/95 backdrop-blur-xl flex flex-col items-center justify-center"
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={overlayVariants}
+            className="fixed inset-0 z-[200] bg-[#0a0a0a]/98 backdrop-blur-2xl flex flex-col items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
             {/* Close Button */}
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="absolute top-8 right-8 w-12 h-12 flex items-center justify-center rounded-full border border-black/10 hover:bg-black/5 transition-colors"
+              className="absolute top-8 right-8 w-12 h-12 flex items-center justify-center rounded-full border border-white/10 text-white hover:bg-white/10 transition-colors"
             >
               <span className="text-xl font-light font-inter">✕</span>
             </button>
 
             {/* Menu Links */}
             <motion.ul
-              className="flex flex-col items-center gap-10"
-              variants={listVariants}
+              className="flex flex-col items-center gap-8"
+              variants={{
+                closed: { opacity: 0 },
+                open: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+                }
+              }}
+              initial="closed"
+              animate="open"
             >
               {navLinks.map((link) => (
-                <motion.li key={link.id} variants={itemVariants}>
+                <motion.li
+                  key={link.id}
+                  variants={{
+                    closed: { y: 20, opacity: 0 },
+                    open: { y: 0, opacity: 1 }
+                  }}
+                >
                   <a
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-playfair font-black text-5xl md:text-6xl text-[#1a1a1a] hover:text-gray-500 transition-colors tracking-tight"
+                    className="font-playfair font-black text-4xl text-[#f4f1ea] hover:text-gray-400 transition-colors tracking-tight uppercase"
                   >
                     {link.title}
                   </a>
@@ -147,10 +160,12 @@ const Navbar = () => {
             </motion.ul>
 
             <motion.div
-              className="absolute bottom-12 text-xs font-mono text-gray-400 uppercase tracking-widest"
-              variants={itemVariants}
+              className="absolute bottom-12 text-[10px] font-mono text-white/30 uppercase tracking-[0.3em]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
             >
-              Menu
+              Shweta Kohad • 2024
             </motion.div>
           </motion.div>
         )}
