@@ -88,7 +88,7 @@ const About = () => {
               className="relative flex justify-center lg:justify-start"
             >
               {/* Image Container */}
-              <motion.div variants={itemVariants} className="relative group w-full max-w-[320px] aspect-square md:w-96 md:h-96 lg:w-[450px] lg:h-[550px]">
+              <motion.div variants={itemVariants} className="relative group w-full max-w-[420px] aspect-square md:w-96 md:h-96 lg:w-[500px] lg:h-[550px]">
 
                 {/* Tech Halo & Grid Background */}
                 <div className="absolute inset-[-15%] z-0 hidden lg:block">
