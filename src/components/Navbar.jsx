@@ -15,6 +15,17 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Smooth scroll navigation
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    const targetId = href.replace("#", "");
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    setMobileMenuOpen(false);
+  };
+
   // Variants
   const navbarVariants = {
     visible: {
@@ -88,6 +99,7 @@ const Navbar = () => {
             <li key={link.id}>
               <a
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="text-xs font-bold tracking-widest text-[#1a1a1a] hover:text-[#555] uppercase transition-colors relative group"
               >
                 {link.title}
@@ -166,7 +178,7 @@ const Navbar = () => {
                 >
                   <a
                     href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={(e) => handleNavClick(e, link.href)}
                     className="font-playfair font-black text-4xl text-[#f4f1ea] hover:text-gray-400 transition-colors tracking-tight uppercase"
                   >
                     {link.title}

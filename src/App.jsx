@@ -24,12 +24,12 @@ function App() {
       <ReactLenis root>
         <div className="bg-[#e8e3da] text-gray-900 font-sans antialiased">
           {/* HERO SECTION */}
-          <div className="relative z-50">
+          <div id="hero" className="relative z-50">
             <Navbar />
             <Hero />
           </div>
 
-          <div id="about-section" className="relative z-45">
+          <div id="about" className="relative z-45">
             <About />
           </div>
           {/* SKILLS SECTION */}
@@ -37,21 +37,23 @@ function App() {
             <Skills />
           </div>
           {/* EXPERIENCE SECTION */}
-          <div id="experience-section" className="relative z-40">
+          <div id="experience" className="relative z-40">
             <Experience />
           </div>
           {/* EDUCATION SECTION */}
-          {/* <div id="education-section" className="relative z-43">
+          {/* <div id="education" className="relative z-43">
             <Education />
           </div> */}
 
           {/* PROJECTS SECTION */}
-          <div id="projects-section" className="relative z-30">
+          <div id="projects" className="relative z-30">
             <Projects />
           </div>
           <Certifications />
 
-          <Contact />
+          <div id="contact">
+            <Contact />
+          </div>
         </div>
       </ReactLenis>
     </>

@@ -3,10 +3,11 @@ import fullstackCertificate from "../src/assets/IITMadras.png";
 import bannerImage from "../src/assets/banner-image.png";
 
 export const navLinks = [
-  { id: 1, title: "Services", href: "#services" },
-  { id: 2, title: "Works", href: "#works" },
-  { id: 3, title: "About", href: "#about" },
-  { id: 4, title: "Contact", href: "#contact" },
+  { id: 1, title: "Home", href: "#hero" },
+  { id: 2, title: "About", href: "#about" },
+  { id: 3, title: "Experience", href: "#experience" },
+  { id: 4, title: "Projects", href: "#projects" },
+  { id: 5, title: "Contact", href: "#contact" },
 ];
 
 export const heroContent = {
@@ -37,8 +38,8 @@ export const services = [
     achievements: [
       "Built complex multi-level workflow system handling 1000+ daily transactions",
       "Implemented role-based access control for 5+ user types",
-      "Reduced system response time by 40% through optimization"
-    ]
+      "Reduced system response time by 40% through optimization",
+    ],
   },
   {
     title: "Software Engineering Intern — IFMS",
@@ -56,8 +57,8 @@ export const services = [
     achievements: [
       "Developed food delivery platform serving 500+ users",
       "Implemented secure authentication system with JWT",
-      "Created reusable React components library"
-    ]
+      "Created reusable React components library",
+    ],
   },
 ];
 
@@ -89,9 +90,10 @@ export const projects = [
       "Real-time inventory tracking",
       "Responsive design optimized for all devices",
       "Shopping cart with persistent state",
-      "User authentication and profile management"
+      "User authentication and profile management",
     ],
-    media: "https://images.unsplash.com/photo-1557821552-17105176677c?w=1920&h=1080&fit=crop&q=80",
+    media:
+      "https://images.unsplash.com/photo-1557821552-17105176677c?w=1920&h=1080&fit=crop&q=80",
     type: "image",
     liveLink: "#",
     githubLink: "#",
@@ -109,9 +111,10 @@ export const projects = [
       "Real-time notifications for job applications",
       "Resume builder and parser",
       "Interview scheduling and calendar integration",
-      "Analytics dashboard with hiring metrics"
+      "Analytics dashboard with hiring metrics",
     ],
-    media: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&h=1080&fit=crop&q=80",
+    media:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&h=1080&fit=crop&q=80",
     type: "image",
     liveLink: "#",
     githubLink: "#",
@@ -129,9 +132,10 @@ export const projects = [
       "Dynamic project showcase with filtering",
       "Contact form with email integration",
       "Performance optimized with lazy loading",
-      "SEO optimized for better discoverability"
+      "SEO optimized for better discoverability",
     ],
-    media: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=1920&h=1080&fit=crop&q=80",
+    media:
+      "https://images.unsplash.com/photo-1547658719-da2b51169166?w=1920&h=1080&fit=crop&q=80",
     type: "image",
     liveLink: "#",
     githubLink: "#",
@@ -176,4 +180,4 @@ export const certifications = [
     credentialId: "CERT-2024-MERN-001",
     verifyLink: "#",
   },
-];  
+];

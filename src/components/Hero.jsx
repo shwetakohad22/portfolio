@@ -271,15 +271,7 @@ const Hero = () => {
             <div className="absolute inset-3 lg:inset-4 border border-white/20 pointer-events-none"></div>
           </motion.div>
 
-          {/* Floating Role Label */}
-          <motion.div
-            className="absolute -bottom-6 lg:-bottom-8 right-0 font-playfair italic text-2xl lg:text-4xl text-[#1a1a1a] opacity-10 select-none z-0"
-            initial={{ x: 20, opacity: 0 }}
-            animate={{ x: 0, opacity: 0.1 }}
-            transition={{ delay: 1 }}
-          >
-            Portfolio
-          </motion.div>
+
         </div>
       </div>
     </motion.section>
