@@ -96,14 +96,14 @@ const Hero = () => {
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 bg-noise mix-blend-overlay"></div>
 
       {/* LEFT COLUMN - CONTENT */}
-      <div className="flex-1 h-full flex flex-col justify-center px-6 md:px-12 lg:px-20 relative z-10 pt-32 md:pt-0 pb-12 md:pb-0">
-        {/* Content Container (Fixed Overlap: mt-8) */}
+      <div className="md:w-[55%] lg:w-[55%] h-full flex flex-col justify-center px-6 md:px-10 lg:px-20 relative z-10 pt-32 md:pt-0 pb-12 md:pb-0">
+        {/* Content Container */}
         <motion.div
           variants={itemVariants}
-          className="relative z-10 mt-8 md:mt-8"
+          className="relative z-10 mt-8 md:mt-4"
         >
           {/* Header Tag */}
-          <div className="flex items-center gap-3 mb-4 md:mb-6">
+          <div className="flex items-center gap-3 mb-5 md:mb-6">
             <div className="w-8 md:w-12 h-[1px] bg-[#1a1a1a]"></div>
             <span className="font-inter text-[10px] md:text-xs font-bold tracking-[0.25em] uppercase text-[#1a1a1a]">
               Digital Experience Designer
@@ -113,13 +113,13 @@ const Hero = () => {
           {/* MAIN NAME */}
           <h1
             className="font-playfair font-black text-[#1a1a1a] leading-[0.9] tracking-tighter mb-6 md:mb-8 whitespace-nowrap scale-y-110 origin-left"
-            style={{ fontSize: "clamp(1.8rem, 9vw, 7.5rem)" }}
+            style={{ fontSize: "clamp(1.8rem, 5.5vw, 7.5rem)" }}
           >
             SHWETA KOHAD
           </h1>
 
           {/* GLASS TERMINAL (Redesigned) */}
-          <div className="mb-8 w-full max-w-lg bg-gradient-to-br from-[#1a1a1a]/95 to-black/95 backdrop-blur-2xl rounded-xl p-4 md:p-6 font-mono text-[10px] md:text-xs text-green-400 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5 ring-1 ring-white/5 relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500">
+          <div className="mb-7 md:mb-8 w-full max-w-lg bg-gradient-to-br from-[#1a1a1a]/95 to-black/95 backdrop-blur-2xl rounded-xl p-4 md:p-6 font-mono text-[10px] md:text-xs text-green-400 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5 ring-1 ring-white/5 relative overflow-hidden group hover:scale-[1.02] transition-transform duration-500">
             {/* ... terminal header ... */}
             <div className="absolute top-0 left-0 w-full h-8 bg-white/[0.03] flex items-center justify-between px-4 border-b border-white/5">
               <div className="flex space-x-2">
@@ -133,14 +133,14 @@ const Hero = () => {
             </div>
 
             {/* Terminal Body */}
-            <div className="mt-6 md:mt-8 h-16 md:h-20 whitespace-pre-line leading-relaxed opacity-90 font-medium font-mono text-green-400/90 drop-shadow-[0_0_8px_rgba(74,222,128,0.3)]">
+            <div className="mt-6 md:mt-7 h-16 md:h-16 whitespace-pre-line leading-relaxed opacity-90 font-medium font-mono text-green-400/90 drop-shadow-[0_0_8px_rgba(74,222,128,0.3)]">
               {text}
               <span className="animate-pulse w-1.5 h-3 md:w-2 md:h-4 bg-green-500 inline-block ml-1 align-middle shadow-[0_0_10px_#22c55e]"></span>
             </div>
           </div>
 
           {/* DEVELOPMENT TEXT */}
-          <div className="mb-8 md:mb-10 max-w-md border-l-2 border-[#1a1a1a] pl-4 md:pl-6 py-1 md:py-2">
+          <div className="mb-7 md:mb-8 max-w-md border-l-2 border-[#1a1a1a] pl-4 md:pl-6 py-2 md:py-2">
             <p className="font-inter text-[#444] text-[13px] md:text-base leading-relaxed">
               Building{" "}
               <span className="font-bold text-[#1a1a1a]">
@@ -152,7 +152,7 @@ const Hero = () => {
           </div>
 
           {/* CTA BUTTONS - FLEX ROW FOR MOBILE */}
-          <div className="flex flex-row flex-wrap gap-4 md:gap-8 items-center mb-12">
+          <div className="flex flex-row flex-wrap gap-4 md:gap-6 items-center mb-8 md:mb-10">
             <button className="group relative px-6 py-3 md:px-8 md:py-4 bg-[#1a1a1a] text-white text-[10px] md:text-xs font-bold tracking-[2px] rounded-full overflow-hidden hover:bg-[#333] transition-all duration-300 shadow-xl flex items-center gap-2">
               <span className="relative z-10 whitespace-nowrap">
                 WORK WITH ME
@@ -211,13 +211,13 @@ const Hero = () => {
       </div>
 
       {/* RIGHT COLUMN - IMAGE (Refined Background - Abstract/Artistic) */}
-      <div className="hidden md:flex flex-1 h-full relative items-center justify-center bg-transparent z-10">
-        <div className="relative w-[90%] aspect-[3/4]">
+      <div className="hidden md:flex md:w-[45%] lg:w-[45%] h-full relative items-center justify-center bg-transparent z-10 py-8">
+        <div className="relative w-[85%] max-w-[480px] h-[75vh] max-h-[600px] mx-auto">
           {/* ABSTRACT ART BACKGROUND LAYERS */}
 
           {/* Layer 1: Soft Organic Circle */}
           <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[80%] bg-[#e3ddd1] rounded-full blur-3xl opacity-60 z-0"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[75%] bg-[#e3ddd1] rounded-full blur-3xl opacity-60 z-0"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 0.6 }}
             transition={{ duration: 2, ease: "easeOut" }}
@@ -225,7 +225,7 @@ const Hero = () => {
 
           {/* Layer 2: Sharp Geometric Outline (Rotated Square) */}
           <motion.div
-            className="absolute top-0 -right-8 w-full h-full border border-[#1a1a1a]/20 z-0"
+            className="absolute -top-3 -right-3 lg:-top-4 lg:-right-4 w-full h-full border border-[#1a1a1a]/15 z-0"
             initial={{ rotate: 0, opacity: 0 }}
             animate={{ rotate: 3, opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.2 }}
@@ -233,11 +233,28 @@ const Hero = () => {
 
           {/* Layer 3: Solid Minimalist Block accent */}
           <motion.div
-            className="absolute -bottom-6 -left-6 w-24 h-24 bg-[#1a1a1a] z-0"
+            className="absolute -bottom-4 -left-4 lg:-bottom-5 lg:-left-5 w-16 h-16 lg:w-20 lg:h-20 bg-[#1a1a1a] z-0"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           />
+
+          {/* Layer 4: Subtle dot pattern accent */}
+          <motion.div
+            className="absolute -top-6 -left-6 lg:-top-8 lg:-left-8 w-20 h-20 lg:w-24 lg:h-24 z-0 opacity-20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.2 }}
+            transition={{ duration: 1, delay: 0.8 }}
+          >
+            <div
+              className="w-full h-full"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle, #1a1a1a 1.5px, transparent 1.5px)",
+                backgroundSize: "8px 8px",
+              }}
+            />
+          </motion.div>
 
           {/* Main Image Container */}
           <motion.div
@@ -247,16 +264,16 @@ const Hero = () => {
             <img
               src={heroContent.image}
               alt="Shweta Kohad"
-              className="w-full h-full object-cover object-top filter grayscale-[20%] contrast-[1.1] hover:grayscale-0 transition-all duration-700 ease-in-out"
+              className="w-full h-full object-cover object-[center_20%] filter grayscale-[20%] contrast-[1.1] hover:grayscale-0 transition-all duration-700 ease-in-out"
             />
 
             {/* Internal Frame Line (Gallery Style) */}
-            <div className="absolute inset-4 border border-white/20 pointer-events-none"></div>
+            <div className="absolute inset-3 lg:inset-4 border border-white/20 pointer-events-none"></div>
           </motion.div>
 
           {/* Floating Role Label */}
           <motion.div
-            className="absolute -bottom-8 right-0 font-playfair italic text-4xl text-[#1a1a1a] opacity-10 select-none z-0"
+            className="absolute -bottom-6 lg:-bottom-8 right-0 font-playfair italic text-2xl lg:text-4xl text-[#1a1a1a] opacity-10 select-none z-0"
             initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 0.1 }}
             transition={{ delay: 1 }}

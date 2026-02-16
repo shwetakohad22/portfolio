@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { services } from "../data";
+import { FiChevronDown } from "react-icons/fi";
 
 const Experience = () => {
   const targetRef = useRef(null);
@@ -8,6 +9,8 @@ const Experience = () => {
     target: targetRef,
     offset: ["start start", "end end"],
   });
+
+  const arrowOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
   return (
     <section
@@ -40,7 +43,6 @@ const Experience = () => {
 
         {/* Content Container */}
         <div className="container mx-auto px-6 relative z-20 h-full flex flex-col items-center justify-center">
-
           {/* Main Heading - Skills Style */}
           <motion.div
             className="absolute top-12 md:top-16 flex flex-col items-center text-center z-30"
@@ -75,12 +77,36 @@ const Experience = () => {
                 total={services.length}
               />
             ))}
+
+            {/* Scroll Indicator (Relocated to Bottom Right) */}
+            <motion.div
+              style={{ opacity: arrowOpacity }}
+              className="absolute -bottom-16 right-4 md:-right-4 flex flex-col items-center gap-2 z-30"
+            >
+              <span className="text-xs font-bold text-white uppercase tracking-widest writing-vertical-rl">
+                Scroll
+              </span>
+              <motion.div
+                animate={{ y: [0, 8, 0] }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <FiChevronDown className="text-white text-2xl" />
+              </motion.div>
+            </motion.div>
           </div>
 
-          {/* Pagination / Progress Indicator */}
-          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-3 z-30">
+          {/* Pagination / Progress Indicator (Vertical Right) */}
+          <div className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-30">
             {services.map((_, i) => (
-              <ProgressDot key={i} index={i} scrollYProgress={scrollYProgress} />
+              <ProgressDot
+                key={i}
+                index={i}
+                scrollYProgress={scrollYProgress}
+              />
             ))}
           </div>
         </div>
@@ -103,27 +129,33 @@ const ProgressDot = ({ index, scrollYProgress }) => {
       style={{ opacity: isActive }}
       className="w-2 h-2 rounded-full bg-white transition-opacity duration-300"
     />
-  )
-}
+  );
+};
 
 const SpotlightCard = ({ service, index, scrollYProgress, total }) => {
-  // Logic: 
+  // Logic:
   // Index 0: Visible [0->0.55], Fade out & Scale down [0.55->0.65]
   // Index 1: Fade in & Scale up [0.55->0.65], Visible [0.65->1]
 
   const fadeStart = 0.55;
   const fadeEnd = 0.65;
 
-  const opacity = useTransform(scrollYProgress, [0, fadeStart, fadeEnd, 1],
-    index === 0 ? [1, 1, 0, 0] : [0, 0, 1, 1]
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, fadeStart, fadeEnd, 1],
+    index === 0 ? [1, 1, 0, 0] : [0, 0, 1, 1],
   );
 
-  const scale = useTransform(scrollYProgress, [0, fadeStart, fadeEnd, 1],
-    index === 0 ? [1, 1, 0.9, 0.9] : [0.9, 0.9, 1, 1]
+  const scale = useTransform(
+    scrollYProgress,
+    [0, fadeStart, fadeEnd, 1],
+    index === 0 ? [1, 1, 0.9, 0.9] : [0.9, 0.9, 1, 1],
   );
 
-  const y = useTransform(scrollYProgress, [0, fadeStart, fadeEnd, 1],
-    index === 0 ? [0, 0, -50, -50] : [50, 50, 0, 0]
+  const y = useTransform(
+    scrollYProgress,
+    [0, fadeStart, fadeEnd, 1],
+    index === 0 ? [0, 0, -50, -50] : [50, 50, 0, 0],
   );
 
   const pointerEvents = useTransform(scrollYProgress, (v) => {
@@ -137,12 +169,20 @@ const SpotlightCard = ({ service, index, scrollYProgress, total }) => {
       className="absolute inset-0 w-full"
     >
       <div className="w-full h-full bg-neutral-900/60 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] p-8 md:p-14 flex flex-col justify-between shadow-[0_0_50px_-12px_rgba(255,255,255,0.05)] relative overflow-hidden group">
-
         {/* Card Background Glow */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/[0.03] rounded-full blur-[120px] pointer-events-none group-hover:bg-white/[0.05] transition-colors duration-500 -translate-y-1/2 translate-x-1/2" />
 
-        <div className="relative z-10 flex flex-col md:flex-row justify-between gap-10 h-full">
+        {/* NEW: Top Right Numbering */}
+        <div className="absolute top-6 right-8 md:top-10 md:right-12 z-0">
+          <span
+            className="text-6xl md:text-8xl font-black text-white/5 stroke-text select-none"
+            style={{ WebkitTextStroke: "1px rgba(255,255,255,0.3)" }}
+          >
+            0{index + 1}
+          </span>
+        </div>
 
+        <div className="relative z-10 flex flex-col md:flex-row justify-between gap-10 h-full">
           {/* Left: Role & Desc */}
           <div className="flex-1 flex flex-col justify-center space-y-10">
             <div>
@@ -168,7 +208,10 @@ const SpotlightCard = ({ service, index, scrollYProgress, total }) => {
             {/* Tech Tags */}
             <div className="flex flex-wrap gap-3">
               {service.technologies.slice(0, 6).map((tech, i) => (
-                <span key={i} className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium text-neutral-300 hover:bg-white/10 transition-colors">
+                <span
+                  key={i}
+                  className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm font-medium text-neutral-300 hover:bg-white/10 transition-colors"
+                >
                   {tech}
                 </span>
               ))}
@@ -178,19 +221,16 @@ const SpotlightCard = ({ service, index, scrollYProgress, total }) => {
           {/* Right: Achievements / Visuals */}
           <div className="flex-1 md:max-w-xs flex flex-col justify-center border-t md:border-t-0 md:border-l border-white/10 pt-8 md:pt-0 md:pl-12">
             <ul className="space-y-6">
-              {service.achievements && service.achievements.map((item, i) => (
-                <li key={i} className="flex items-start gap-4 group/item">
-                  <span className="mt-2 w-1.5 h-1.5 bg-neutral-500 rounded-full flex-shrink-0 group-hover/item:bg-white transition-colors" />
-                  <span className="text-neutral-400 text-base leading-relaxed group-hover/item:text-neutral-200 transition-colors">{item}</span>
-                </li>
-              ))}
+              {service.achievements &&
+                service.achievements.map((item, i) => (
+                  <li key={i} className="flex items-start gap-4 group/item">
+                    <span className="mt-2 w-1.5 h-1.5 bg-neutral-500 rounded-full flex-shrink-0 group-hover/item:bg-white transition-colors" />
+                    <span className="text-neutral-400 text-base leading-relaxed group-hover/item:text-neutral-200 transition-colors">
+                      {item}
+                    </span>
+                  </li>
+                ))}
             </ul>
-
-            <div className="mt-auto pt-10 flex justify-end opacity-50">
-              <span className="text-[10rem] font-black text-white/[0.05] select-none leading-none -mb-8 -mr-8">
-                0{index + 1}
-              </span>
-            </div>
           </div>
         </div>
       </div>

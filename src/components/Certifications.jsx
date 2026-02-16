@@ -1,5 +1,11 @@
 import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+  useMotionValueEvent,
+} from "framer-motion";
 import { certifications } from "../data";
 
 const Certifications = () => {
@@ -13,19 +19,25 @@ const Certifications = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const index = Math.min(Math.ceil(latest * certifications.length), certifications.length);
+    const index = Math.min(
+      Math.ceil(latest * certifications.length),
+      certifications.length,
+    );
     setCurrentIndex(Math.max(1, index));
   });
 
   return (
-    <div ref={targetRef} className="relative h-[300vh] bg-neutral-900">
-
+    <div
+      ref={targetRef}
+      className="relative bg-neutral-900"
+      style={{ height: `${100 + certifications.length * 50}vh` }}
+    >
       {/* STICKY CONTAINER - LOCKED TO 100VH */}
       <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
-
         {/* BACKGROUND ELEMENTS */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute inset-0 opacity-[0.03]"
+          <div
+            className="absolute inset-0 opacity-[0.03]"
             style={{
               backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
@@ -63,7 +75,9 @@ const Certifications = () => {
             </span>
             <div className="w-full h-px bg-white/10 my-1"></div>
             <span className="text-sm font-bold text-neutral-500">
-              {certifications.length < 10 ? `0${certifications.length}` : certifications.length}
+              {certifications.length < 10
+                ? `0${certifications.length}`
+                : certifications.length}
             </span>
           </div>
         </div>
@@ -97,7 +111,6 @@ const Certifications = () => {
         >
           Scroll to Explore
         </motion.div>
-
       </div>
 
       {/* CERTIFICATE DETAIL MODAL */}
@@ -123,8 +136,18 @@ const Certifications = () => {
                 className="absolute top-6 right-6 z-20 text-white flex items-center gap-2 text-sm font-medium bg-black/50 backdrop-blur-xl px-4 py-2 rounded-full border border-white/10 hover:bg-white hover:text-black transition-all duration-300"
               >
                 <span>Close</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
 
@@ -143,20 +166,31 @@ const Certifications = () => {
                 <div className="w-full md:w-1/2 p-8 md:p-12 bg-neutral-900 flex flex-col justify-center">
                   <div className="mb-6">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="px-2 py-1 bg-white/10 rounded text-xs text-white font-medium">{selectedCertificate.date}</span>
-                      <span className="text-neutral-500 text-xs uppercase tracking-wider">{selectedCertificate.issuer}</span>
+                      <span className="px-2 py-1 bg-white/10 rounded text-xs text-white font-medium">
+                        {selectedCertificate.date}
+                      </span>
+                      <span className="text-neutral-500 text-xs uppercase tracking-wider">
+                        {selectedCertificate.issuer}
+                      </span>
                     </div>
-                    <h3 className="text-3xl font-bold text-white mb-4 leading-tight">{selectedCertificate.title}</h3>
+                    <h3 className="text-3xl font-bold text-white mb-4 leading-tight">
+                      {selectedCertificate.title}
+                    </h3>
                     <p className="text-neutral-400 leading-relaxed text-sm md:text-base">
                       {selectedCertificate.description}
                     </p>
                   </div>
 
                   <div className="pt-6 border-t border-white/10">
-                    <h4 className="text-sm font-bold text-neutral-500 uppercase tracking-wider mb-3">Skills Verified</h4>
+                    <h4 className="text-sm font-bold text-neutral-500 uppercase tracking-wider mb-3">
+                      Skills Verified
+                    </h4>
                     <div className="flex flex-wrap gap-2">
-                      {selectedCertificate.skills.map(skill => (
-                        <span key={skill} className="px-3 py-1 bg-black border border-white/10 rounded text-xs text-neutral-300">
+                      {selectedCertificate.skills.map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-3 py-1 bg-black border border-white/10 rounded text-xs text-neutral-300"
+                        >
                           {skill}
                         </span>
                       ))}
@@ -165,7 +199,9 @@ const Certifications = () => {
 
                   {selectedCertificate.credentialId && (
                     <div className="mt-6">
-                      <p className="text-xs text-neutral-600 font-mono">ID: {selectedCertificate.credentialId}</p>
+                      <p className="text-xs text-neutral-600 font-mono">
+                        ID: {selectedCertificate.credentialId}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -178,7 +214,14 @@ const Certifications = () => {
   );
 };
 
-const PinnedCard = ({ cert, index, range, progress, total, setSelectedCertificate }) => {
+const PinnedCard = ({
+  cert,
+  index,
+  range,
+  progress,
+  total,
+  setSelectedCertificate,
+}) => {
   // Logic: "Solid Stack"
   // - Enter: Creates a "stacking" effect. The card slides UP from bottom to cover the existing ones.
   // - Active: Sits in the center.
@@ -189,35 +232,23 @@ const PinnedCard = ({ cert, index, range, progress, total, setSelectedCertificat
   // - 1 immediately when it starts entering (so it covers solid)
   // - 1 while active
   // - 0 only after it's fully gone or if we want to fade out the stack at the very end
-  const opacity = useTransform(progress,
-    [range[0] - 0.2, range[0]],
-    [0, 1]
-  );
+  const opacity = useTransform(progress, [range[0] - 0.2, range[0]], [0, 1]);
 
   // Y Position:
   // - Starts offset downwards (100px or more)
   // - Slides to 0 during 'start' phase
   // - Stays at 0 until 'end'
-  const y = useTransform(progress,
-    [range[0] - 0.2, range[0]],
-    [100, 0]
-  );
+  const y = useTransform(progress, [range[0] - 0.2, range[0]], [100, 0]);
 
   // Scale:
   // - Active: 1
   // - When NEXT card enters (which corresponds to current card's 'end' phase),
   //   this card scales down slightly to create depth behind the new card.
-  const scale = useTransform(progress,
-    [range[0], range[1]],
-    [1, 0.95]
-  );
+  const scale = useTransform(progress, [range[0], range[1]], [1, 0.95]);
 
   // Filter/Brightness:
   // - Darken slightly when pushing back
-  const brightness = useTransform(progress,
-    [range[0], range[1]],
-    [1, 0.5]
-  );
+  const brightness = useTransform(progress, [range[0], range[1]], [1, 0.5]);
 
   // Z-index: explicit
   const zIndex = index * 10;
@@ -226,10 +257,10 @@ const PinnedCard = ({ cert, index, range, progress, total, setSelectedCertificat
     <motion.div
       style={{
         opacity, // Controls visibility
-        y,       // Controls slide-up entry
-        scale,   // Controls depth when being covered
-        zIndex,  // Stacking order
-        filter: useTransform(brightness, b => `brightness(${b})`)
+        y, // Controls slide-up entry
+        scale, // Controls depth when being covered
+        zIndex, // Stacking order
+        filter: useTransform(brightness, (b) => `brightness(${b})`),
       }}
       className="absolute w-full max-w-5xl transition-shadow duration-300 origin-bottom"
     >
@@ -254,9 +285,13 @@ const PinnedCard = ({ cert, index, range, progress, total, setSelectedCertificat
         {/* Content (60%) */}
         <div className="relative w-full md:w-3/5 p-6 md:p-10 flex flex-col justify-center bg-neutral-900/50 backdrop-blur-sm">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-4xl font-black text-white/[0.05]">0{index + 1}</span>
+            <span className="text-4xl font-black text-white/[0.05]">
+              0{index + 1}
+            </span>
             <div className="h-px w-10 bg-white/20" />
-            <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest">{cert.issuer}</span>
+            <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest">
+              {cert.issuer}
+            </span>
           </div>
 
           <h3 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight">
@@ -268,8 +303,11 @@ const PinnedCard = ({ cert, index, range, progress, total, setSelectedCertificat
           </p>
 
           <div className="flex flex-wrap gap-2 mb-6">
-            {cert.skills.slice(0, 3).map(skill => (
-              <span key={skill} className="px-2.5 py-1 border border-white/10 rounded-lg text-xs text-neutral-300 bg-white/5">
+            {cert.skills.slice(0, 3).map((skill) => (
+              <span
+                key={skill}
+                className="px-2.5 py-1 border border-white/10 rounded-lg text-xs text-neutral-300 bg-white/5"
+              >
                 {skill}
               </span>
             ))}
@@ -277,8 +315,18 @@ const PinnedCard = ({ cert, index, range, progress, total, setSelectedCertificat
 
           <div className="flex items-center gap-2 text-white text-sm font-bold group-hover:translate-x-2 transition-transform">
             <span>View Details</span>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
             </svg>
           </div>
         </div>
