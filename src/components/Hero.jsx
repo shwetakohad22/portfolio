@@ -9,7 +9,8 @@ const Hero = () => {
      TERMINAL LOGIC
   ---------------------------------- */
   const [text, setText] = useState("");
-  const fullText = ">> SYSTEM ONLINE\n>> WELCOME USER\n>> INITIALIZING PORTFOLIO_V2...";
+  const fullText =
+    ">> SYSTEM ONLINE\n>> WELCOME USER\n>> INITIALIZING PORTFOLIO_V2...";
 
   useEffect(() => {
     let i = 0;
@@ -28,7 +29,13 @@ const Hero = () => {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setTime(now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }));
+      setTime(
+        now.toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        }),
+      );
     };
     updateTime();
     const timer = setInterval(updateTime, 1000);
@@ -90,25 +97,11 @@ const Hero = () => {
 
       {/* LEFT COLUMN - CONTENT */}
       <div className="flex-1 h-full flex flex-col justify-center px-6 md:px-12 lg:px-20 relative z-10 pt-32 md:pt-0 pb-12 md:pb-0">
-
-        {/* TOP STATUS BADGE (Fixed Overlap: top-20) */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-          className="absolute top-24 md:top-20 left-6 md:left-12 lg:left-20 flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-[#1a1a1a]/10 bg-white/80 backdrop-blur-md shadow-sm z-50"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-          </span>
-          <span className="font-inter text-[9px] md:text-[10px] font-bold tracking-widest text-[#1a1a1a] uppercase">
-            Available for Work
-          </span>
-        </motion.div>
-
         {/* Content Container (Fixed Overlap: mt-8) */}
-        <motion.div variants={itemVariants} className="relative z-10 mt-8 md:mt-8">
+        <motion.div
+          variants={itemVariants}
+          className="relative z-10 mt-8 md:mt-8"
+        >
           {/* Header Tag */}
           <div className="flex items-center gap-3 mb-4 md:mb-6">
             <div className="w-8 md:w-12 h-[1px] bg-[#1a1a1a]"></div>
@@ -118,8 +111,10 @@ const Hero = () => {
           </div>
 
           {/* MAIN NAME */}
-          <h1 className="font-playfair font-black text-[#1a1a1a] leading-[0.9] tracking-tighter mb-6 md:mb-8 whitespace-nowrap scale-y-110 origin-left"
-            style={{ fontSize: "clamp(1.8rem, 9vw, 7.5rem)" }}>
+          <h1
+            className="font-playfair font-black text-[#1a1a1a] leading-[0.9] tracking-tighter mb-6 md:mb-8 whitespace-nowrap scale-y-110 origin-left"
+            style={{ fontSize: "clamp(1.8rem, 9vw, 7.5rem)" }}
+          >
             SHWETA KOHAD
           </h1>
 
@@ -132,7 +127,9 @@ const Hero = () => {
                 <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#ffbd2e] shadow-sm"></div>
                 <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#27c93f] shadow-sm"></div>
               </div>
-              <div className="text-[9px] md:text-[10px] text-white/20 font-bold tracking-widest uppercase">BASH // v2.4</div>
+              <div className="text-[9px] md:text-[10px] text-white/20 font-bold tracking-widest uppercase">
+                BASH // v2.4
+              </div>
             </div>
 
             {/* Terminal Body */}
@@ -145,19 +142,28 @@ const Hero = () => {
           {/* DEVELOPMENT TEXT */}
           <div className="mb-8 md:mb-10 max-w-md border-l-2 border-[#1a1a1a] pl-4 md:pl-6 py-1 md:py-2">
             <p className="font-inter text-[#444] text-[13px] md:text-base leading-relaxed">
-              Building <span className="font-bold text-[#1a1a1a]">scalable, pixel-perfect</span> web experiences with modern architecture.
-              Bridging the gap between design and engineering.
+              Building{" "}
+              <span className="font-bold text-[#1a1a1a]">
+                scalable, pixel-perfect
+              </span>{" "}
+              web experiences with modern architecture. Bridging the gap between
+              design and engineering.
             </p>
           </div>
 
           {/* CTA BUTTONS - FLEX ROW FOR MOBILE */}
           <div className="flex flex-row flex-wrap gap-4 md:gap-8 items-center mb-12">
             <button className="group relative px-6 py-3 md:px-8 md:py-4 bg-[#1a1a1a] text-white text-[10px] md:text-xs font-bold tracking-[2px] rounded-full overflow-hidden hover:bg-[#333] transition-all duration-300 shadow-xl flex items-center gap-2">
-              <span className="relative z-10 whitespace-nowrap">WORK WITH ME</span>
+              <span className="relative z-10 whitespace-nowrap">
+                WORK WITH ME
+              </span>
               <FiArrowUpRight className="w-3 h-3 md:w-4 md:h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </button>
 
-            <a href="/resume.pdf" className="group flex items-center gap-2 text-[#1a1a1a] text-[10px] md:text-xs font-bold tracking-[2px] border-b border-[#1a1a1a] pb-1 hover:text-[#555] hover:border-[#555] transition-all duration-300 whitespace-nowrap">
+            <a
+              href="/resume.pdf"
+              className="group flex items-center gap-2 text-[#1a1a1a] text-[10px] md:text-xs font-bold tracking-[2px] border-b border-[#1a1a1a] pb-1 hover:text-[#555] hover:border-[#555] transition-all duration-300 whitespace-nowrap"
+            >
               <span>DOWNLOAD CV</span>
               <FiDownload className="w-3 h-3 md:w-4 md:h-4 transition-transform duration-300 group-hover:translate-y-1" />
             </a>
@@ -167,13 +173,26 @@ const Hero = () => {
 
             {/* Social Icons */}
             <div className="flex gap-5 text-[#1a1a1a] w-full sm:w-auto mt-2 sm:mt-0 justify-start">
-              <a href="https://github.com/shwetakohad22" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform duration-300">
+              <a
+                href="https://github.com/shwetakohad22"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:scale-110 transition-transform duration-300"
+              >
                 <SiGithub size={18} className="md:w-5 md:h-5" />
               </a>
-              <a href="https://www.linkedin.com/in/shweta-kohad-b15b54169/" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform duration-300 text-[#0077b5]">
+              <a
+                href="https://www.linkedin.com/in/shweta-kohad-b15b54169/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:scale-110 transition-transform duration-300 text-[#0077b5]"
+              >
                 <SiLinkedin size={18} className="md:w-5 md:h-5" />
               </a>
-              <a href="mailto:your.email@example.com" className="hover:scale-110 transition-transform duration-300 text-[#ea4335]">
+              <a
+                href="mailto:your.email@example.com"
+                className="hover:scale-110 transition-transform duration-300 text-[#ea4335]"
+              >
                 <SiGmail size={18} className="md:w-5 md:h-5" />
               </a>
             </div>
@@ -189,13 +208,11 @@ const Hero = () => {
             <span>LOCAL TIME: {time} (IST)</span>
           </div>
         </div>
-
       </div>
 
       {/* RIGHT COLUMN - IMAGE (Refined Background - Abstract/Artistic) */}
       <div className="hidden md:flex flex-1 h-full relative items-center justify-center bg-transparent z-10">
         <div className="relative w-[90%] aspect-[3/4]">
-
           {/* ABSTRACT ART BACKGROUND LAYERS */}
 
           {/* Layer 1: Soft Organic Circle */}
@@ -246,10 +263,8 @@ const Hero = () => {
           >
             Portfolio
           </motion.div>
-
         </div>
       </div>
-
     </motion.section>
   );
 };
