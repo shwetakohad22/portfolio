@@ -17,13 +17,29 @@ const Navbar = () => {
 
   // Variants
   const navbarVariants = {
-    visible: { y: 0, opacity: 1, transition: { duration: 0.3, ease: "easeOut" } },
-    hidden: { y: -100, opacity: 0, transition: { duration: 0.3, ease: "easeIn" } },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.3, ease: "easeOut" },
+    },
+    hidden: {
+      y: -100,
+      opacity: 0,
+      transition: { duration: 0.3, ease: "easeIn" },
+    },
   };
 
   const floatingBtnVariants = {
-    visible: { scale: 1, opacity: 1, transition: { duration: 0.3, ease: "backOut" } },
-    hidden: { scale: 0, opacity: 0, transition: { duration: 0.3, ease: "easeIn" } },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: { duration: 0.3, ease: "backOut" },
+    },
+    hidden: {
+      scale: 0,
+      opacity: 0,
+      transition: { duration: 0.3, ease: "easeIn" },
+    },
   };
 
   const overlayVariants = {
@@ -36,7 +52,7 @@ const Navbar = () => {
     open: {
       x: 0,
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
     },
   };
 
@@ -97,7 +113,7 @@ const Navbar = () => {
       <motion.button
         variants={floatingBtnVariants}
         initial="hidden"
-        animate={scrolled ? "visible" : "hidden"}
+        animate={scrolled && !mobileMenuOpen ? "visible" : "hidden"}
         onClick={() => setMobileMenuOpen(true)}
         className="fixed top-6 right-6 z-[120] w-14 h-14 bg-[#1a1a1a] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 pointer-events-auto"
       >
@@ -113,7 +129,7 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-[200] bg-[#0a0a0a]/98 backdrop-blur-2xl flex flex-col items-center justify-center"
+            className="fixed inset-0 z-[200] bg-[#0a0a0a] flex flex-col items-center justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -122,7 +138,7 @@ const Navbar = () => {
             {/* Close Button */}
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="absolute top-8 right-8 w-12 h-12 flex items-center justify-center rounded-full border border-white/10 text-white hover:bg-white/10 transition-colors"
+              className="absolute top-6 right-6 w-14 h-14 flex items-center justify-center rounded-full border border-white/10 text-white hover:bg-white/10 transition-colors pointer-events-auto z-[210]"
             >
               <span className="text-xl font-light font-inter">✕</span>
             </button>
@@ -134,8 +150,8 @@ const Navbar = () => {
                 closed: { opacity: 0 },
                 open: {
                   opacity: 1,
-                  transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-                }
+                  transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+                },
               }}
               initial="closed"
               animate="open"
@@ -145,7 +161,7 @@ const Navbar = () => {
                   key={link.id}
                   variants={{
                     closed: { y: 20, opacity: 0 },
-                    open: { y: 0, opacity: 1 }
+                    open: { y: 0, opacity: 1 },
                   }}
                 >
                   <a
