@@ -80,24 +80,33 @@ export const skills = [
 export const projects = [
   {
     id: 1,
-    title: "Nura E-commerce Website",
+    title: "Doctor Appointment Booking System",
     description:
-      "A modern e-commerce platform featuring an intuitive product catalog, seamless checkout flow, and real-time inventory management. Built with focus on performance optimization and user experience.",
-    technologies: ["React", "Tailwind CSS", "Framer Motion", "Stripe API"],
-    features: [
-      "Dynamic product filtering and search functionality",
-      "Secure payment integration with Stripe",
-      "Real-time inventory tracking",
-      "Responsive design optimized for all devices",
-      "Shopping cart with persistent state",
-      "User authentication and profile management",
+      "A full-stack doctor appointment booking platform built with the MERN stack. The system includes three panels — Admin, Doctor, and User — enabling seamless appointment scheduling, doctor application management, and role-based access control.",
+    technologies: [
+      "MongoDB",
+      "Express.js",
+      "React",
+      "Node.js",
+      "Tailwind CSS",
+      "Ant Design",
     ],
-    media:
-      "https://images.unsplash.com/photo-1557821552-17105176677c?w=1920&h=1080&fit=crop&q=80",
+    features: [
+      "Role-based authentication (Admin, Doctor, User)",
+      "Users can apply to become a doctor",
+      "Admin can review and approve/reject doctor applications",
+      "Approved users automatically gain Doctor access",
+      "Users can browse doctors and book appointments",
+      "Doctors can manage availability and view appointments",
+      "Admin dashboard for managing users, doctors, and appointments",
+      "Responsive UI built with Tailwind CSS and Ant Design",
+    ],
+    media: "../src/assets/appointmentProject.png",
     type: "image",
-    liveLink: "#",
-    githubLink: "#",
+    liveLink: "https://appointment.shwetakohad.in/",
+    githubLink: "https://github.com/shwetakohad22/dr-appointment-frontend.git",
   },
+
   {
     id: 2,
     title: "Job Portal Dashboard",

@@ -1,5 +1,10 @@
 import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
 import { projects } from "../data";
 
 const Projects = () => {
@@ -7,12 +12,12 @@ const Projects = () => {
 
   return (
     <div className="relative bg-neutral-900">
-
       {/* HEADER SECTION - Standard Style */}
       <section className="relative min-h-[60vh] flex flex-col items-center justify-center pt-32 pb-20">
         {/* Background Elements */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 opacity-[0.03]"
+          <div
+            className="absolute inset-0 opacity-[0.03]"
             style={{
               backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
@@ -51,7 +56,8 @@ const Projects = () => {
             className="h-[2px] bg-gradient-to-r from-transparent via-white to-transparent mx-auto max-w-[180px] sm:max-w-[200px] md:max-w-[250px] mt-4"
           />
           <p className="text-neutral-400 mt-6 max-w-lg text-lg font-light opacity-70 px-4">
-            A curated selection of projects that define my journey in digital product design and engineering.
+            A curated selection of projects that define my journey in digital
+            product design and engineering.
           </p>
         </motion.div>
       </section>
@@ -65,7 +71,7 @@ const Projects = () => {
             index={index}
             setSelectedProject={setSelectedProject}
             range={[index * 0.25, 1]}
-            targetScale={1 - ((projects.length - index) * 0.05)}
+            targetScale={1 - (projects.length - index) * 0.05}
           />
         ))}
       </div>
@@ -94,8 +100,18 @@ const Projects = () => {
                 className="absolute top-6 right-6 z-20 text-white flex items-center gap-2 text-sm font-medium bg-black/50 backdrop-blur-xl px-5 py-3 rounded-full border border-white/10 hover:bg-white hover:text-black transition-all duration-300"
               >
                 <span>Close</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
 
@@ -125,11 +141,15 @@ const Projects = () => {
                 <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center bg-neutral-900">
                   <div className="mb-8">
                     <div className="flex items-center gap-3 mb-4 opacity-50">
-                      <span className="font-mono text-sm">0{selectedProject.id}</span>
+                      <span className="font-mono text-sm">
+                        0{selectedProject.id}
+                      </span>
                       <div className="h-[1px] w-12 bg-white" />
-                      <span className="font-mono text-sm uppercase">Project Details</span>
+                      <span className="font-mono text-sm uppercase">
+                        Project Details
+                      </span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
                       {selectedProject.title}
                     </h2>
                     <p className="text-lg text-neutral-400 leading-relaxed">
@@ -139,10 +159,15 @@ const Projects = () => {
 
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-500 mb-3">Technologies</h3>
+                      <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-500 mb-3">
+                        Technologies
+                      </h3>
                       <div className="flex flex-wrap gap-2">
                         {selectedProject.technologies.map((tech, i) => (
-                          <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-md text-xs font-medium text-neutral-300">
+                          <span
+                            key={i}
+                            className="px-3 py-1 bg-white/5 border border-white/10 rounded-md text-xs font-medium text-neutral-300"
+                          >
                             {tech}
                           </span>
                         ))}
@@ -151,10 +176,15 @@ const Projects = () => {
 
                     {selectedProject.features && (
                       <div>
-                        <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-500 mb-3">Key Features</h3>
+                        <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-500 mb-3">
+                          Key Features
+                        </h3>
                         <ul className="space-y-2">
                           {selectedProject.features.map((feature, i) => (
-                            <li key={i} className="flex items-start gap-3 text-neutral-400 text-sm">
+                            <li
+                              key={i}
+                              className="flex items-start gap-3 text-neutral-400 text-sm"
+                            >
                               <span className="mt-1.5 w-1 h-1 bg-white rounded-full flex-shrink-0" />
                               <span>{feature}</span>
                             </li>
@@ -198,11 +228,15 @@ const Projects = () => {
   );
 };
 
-const ProjectCard = ({ project, index, setSelectedProject, range, targetScale }) => {
+const ProjectCard = ({
+  project,
+  index,
+  setSelectedProject,
+  range,
+  targetScale,
+}) => {
   const container = useRef(null);
 
-  // Create a slight scale down effect as the card leaves the viewport (next one comes up)
-  // This helps visually separate the cards
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start end", "start start"],
@@ -242,7 +276,6 @@ const ProjectCard = ({ project, index, setSelectedProject, range, targetScale })
       {/* Floating Content Card */}
       <div className="relative z-10 w-full max-w-6xl px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
-
           {/* Visual Preview (Clean) */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -287,17 +320,20 @@ const ProjectCard = ({ project, index, setSelectedProject, range, targetScale })
                 0{index + 1}
               </span>
 
-              <h3 className="text-5xl md:text-7xl font-bold text-white mb-6 relative z-10">
+              <h3 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-bold text-white mb-6 relative z-10 leading-tight">
                 {project.title}
               </h3>
 
-              <p className="text-xl text-neutral-300 font-light leading-relaxed mb-8 max-w-lg">
+              <p className="text-lg text-neutral-300 font-light leading-relaxed mb-8 max-w-lg line-clamp-3">
                 {project.description}
               </p>
 
               <div className="flex flex-wrap gap-2 mb-10">
                 {project.technologies.slice(0, 4).map((tech, i) => (
-                  <span key={i} className="px-4 py-2 border border-white/20 rounded-full text-sm text-neutral-300 bg-white/5 backdrop-blur-sm">
+                  <span
+                    key={i}
+                    className="px-4 py-2 border border-white/20 rounded-full text-sm text-neutral-300 bg-white/5 backdrop-blur-sm"
+                  >
                     {tech}
                   </span>
                 ))}
@@ -310,8 +346,18 @@ const ProjectCard = ({ project, index, setSelectedProject, range, targetScale })
                 <span className="text-lg font-medium tracking-wide border-b border-transparent group-hover:border-white transition-all pb-1">
                   Discover More
                 </span>
-                <svg className="w-6 h-6 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <svg
+                  className="w-6 h-6 transform group-hover:translate-x-2 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
                 </svg>
               </button>
             </motion.div>
