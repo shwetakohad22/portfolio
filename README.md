@@ -23,28 +23,55 @@ This portfolio showcases my skills, projects, certifications, and contact detail
 
 ## Website Sections
 
-- About
-- Skills
-- Projects
-- Certifications
-- Contact
+- About  
+- Skills  
+- Projects  
+- Certifications  
+- Contact  
 
 ---
 
 ## Tech Stack
 
-- React.js
-- Tailwind CSS
-- Framer Motion (Animations)
+- React.js  
+- Tailwind CSS  
+- Framer Motion (Animations)  
 
 ---
 
 ## Key Features
 
-- Responsive and mobile-friendly
-- Smooth animated transitions
-- Clean codebase with reusable components
+- Responsive and mobile-friendly  
+- Smooth animated transitions  
+- Clean codebase with reusable components  
 
 ---
 
-## Project Structure
+
+## Screenshots Preview
+
+Below are screenshots from the portfolio website.  
+**Make sure your images are saved inside the `screenshots` folder as shown above.**
+
+![Home Section](./screenshots/home.png)  
+![About Section](./screenshots/about.png)  
+![Projects Section](./screenshots/projects.png)  
+![Skills Section](./screenshots/skills.png)  
+![Contact Section](./screenshots/contact.png)  
+
+---
+
+## Installation
+
+```bash
+# Clone the repository
+git clone <your-repo-link>
+
+# Navigate to project folder
+cd Portfolio-framerMotion
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
