@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="https://your-live-portfolio-link.com">
+  <a href="https://www.shwetakohad.in/">
     <img src="https://img.shields.io/badge/Portfolio-Live-success?style=for-the-badge" />
   </a>
   <img src="https://img.shields.io/badge/Frontend-React-blue?style=for-the-badge&logo=react" />
@@ -50,16 +50,21 @@ This portfolio showcases my skills, projects, certifications, and contact detail
 
 ## Screenshots Preview
 
-Below are screenshots from the portfolio website.  
-**Make sure your images are saved inside the `screenshots` folder as shown above.**
+Below are screenshots from the portfolio website in a neat collage format:
 
-![Home Section](./screenshots/home.png)  
-![About Section](./screenshots/about.png)  
-![Projects Section](./screenshots/projects.png)  
-![Skills Section](./screenshots/skills.png)  
-![Contact Section](./screenshots/contact.png)  
+<p align="center">
+  <img src="./screenshots/home.png" width="400" />&nbsp;
+  <img src="./screenshots/about.png" width="400" />
+</p>
 
----
+<p align="center">
+  <img src="./screenshots/projects.png" width="400" />&nbsp;
+  <img src="./screenshots/skills.png" width="400" />
+</p>
+
+<p align="center">
+  <img src="./screenshots/contact.png" width="400" />
+</p>
 
 ## Installation
 
