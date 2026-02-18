@@ -1,70 +1,47 @@
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import yourPhoto from "../assets/your-photo.jpg"; // Ensure this path is correct
+import yourPhoto from "../assets/your-photo.jpg";
+import { SiGithub, SiLinkedin } from "react-icons/si";
+import { FiArrowRight } from "react-icons/fi";
+
+/* ─────────────────────────────────────────────
+   CONTACT  —  Dark Split-Screen
+   Matches portfolio theme exactly:
+   - bg: #000 / neutral-900
+   - heading: #e8e3da
+   - accent: white (pure)
+   - borders: white/10
+   - body text: neutral-400
+   - pills: bg-white/5 border-white/10 text-neutral-300
+   - glow: blue-900/10
+───────────────────────────────────────────── */
 
 const Contact = () => {
-  const containerRef = useRef(null);
-  const sectionRef = useRef(null);
-  const contentRef = useRef(null);
   const formRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.7, 1], [0, 1, 1, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.2, 0.7, 1], [100, 0, 0, 0]);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    const serviceId = "service_d5ldgpo";
-    const templateId = "template_8zlsizc";
-    const publicKey = "sTOD1DDmGcS1chEsJ";
-
-    const templateParams = {
-      from_name: formData.name,
-      from_email: formData.email,
-      message: formData.message,
-      to_email: "shwetakohad22@gmail.com",
-    };
-
     emailjs
-      .send(serviceId, templateId, templateParams, publicKey)
+      .send(
+        "service_d5ldgpo",
+        "template_8zlsizc",
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          to_email: "shwetakohad22@gmail.com",
+        },
+        "sTOD1DDmGcS1chEsJ",
+      )
       .then(() => {
         setIsSubmitting(false);
         setSubmitStatus("success");
@@ -78,254 +55,498 @@ const Contact = () => {
       });
   };
 
-  const contactInfo = [
-    {
-      label: "Email",
-      value: "shwetakohad22@gmail.com",
-      href: "mailto:shwetakohad22@gmail.com",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-      )
-    },
-    {
-      label: "Phone",
-      value: "+91 86699 88621",
-      href: "tel:8669988621",
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-      )
-    },
-    {
-      label: "Format",
-      value: "Hybrid / Remote",
-      href: null,
-      icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-      )
-    }
-  ];
-
-  const socialLinks = [
-    { name: "LinkedIn", url: "https://linkedin.com", icon: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286z" },
-    { name: "GitHub", url: "https://github.com", icon: "M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" },
-    { name: "Twitter", url: "https://twitter.com", icon: "M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" },
-  ];
-
   return (
-    <div ref={containerRef} className="relative min-h-screen lg:h-screen w-full bg-black overflow-x-hidden flex flex-col justify-center">
+    <>
+      <style>{`
+        #contact-section {
+          font-family: inherit;
+        }
 
-      {/* Background Ambience */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[10%] left-[20%] w-[40%] h-[40%] bg-purple-900/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-[10%] right-[20%] w-[30%] h-[30%] bg-blue-900/10 rounded-full blur-[80px]" />
-      </div>
+        /* Glass input fields */
+        .cf-field { position: relative; transition: border-color .3s, box-shadow .3s; }
+        .cf-field:focus-within {
+          border-color: rgba(255,255,255,0.22) !important;
+          box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 4px 24px -4px rgba(255,255,255,0.06) !important;
+        }
 
-      {/* Layered Header Text (CERTIFICATIONS Style) */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none flex items-center justify-center opacity-10 select-none z-0">
-        <span className="text-[25vw] md:text-[20vw] font-black text-white/5 whitespace-nowrap tracking-tighter shimmer-text">
-          CONTACT
-        </span>
-      </div>
+        .cf-field input,
+        .cf-field textarea {
+          width: 100%;
+          background: transparent;
+          border: none;
+          border-bottom: none;
+          padding: 22px 12px 10px;
+          font-size: 0.93rem;
+          color: #e8e3da;
+          outline: none;
+          resize: none;
+          font-family: inherit;
+        }
+        .cf-field input::placeholder,
+        .cf-field textarea::placeholder {
+          color: rgba(255,255,255,0.15);
+        }
+        .cf-field label {
+          position: absolute;
+          top: 8px; left: 12px;
+          font-size: 0.6rem;
+          font-weight: 700;
+          letter-spacing: .14em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.28);
+          pointer-events: none;
+          transition: color .3s;
+        }
+        .cf-field:focus-within label {
+          color: rgba(255,255,255,0.6);
+        }
+        .cf-bar {
+          position: absolute;
+          bottom: 0; left: 0; right: 0;
+          height: 1.5px;
+          width: 0;
+          background: linear-gradient(to right, transparent, white, transparent);
+          transition: width .4s cubic-bezier(.4,0,.2,1);
+          border-radius: 0 0 0.75rem 0.75rem;
+        }
+        .cf-field:focus-within .cf-bar {
+          width: 100%;
+        }
 
-      <motion.section
-        ref={sectionRef}
-        style={{ opacity, y }}
+        /* Send button — matches portfolio style: white bg, black text */
+        .cf-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: .5rem;
+          background: white;
+          color: black;
+          font-weight: 700;
+          font-size: .78rem;
+          letter-spacing: .1em;
+          text-transform: uppercase;
+          border: none;
+          cursor: pointer;
+          padding: .85rem 2rem;
+          font-family: inherit;
+          transition: background .2s, transform .2s, opacity .2s;
+        }
+        .cf-btn:hover:not(:disabled) {
+          background: #e8e3da;
+          transform: translateY(-2px);
+        }
+        .cf-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+        /* Social pill — matches cert/skills pill style */
+        .cf-social {
+          display: inline-flex;
+          align-items: center;
+          gap: .4rem;
+          padding: .48rem 1rem;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          color: rgba(255,255,255,0.5);
+          font-size: .73rem;
+          font-weight: 500;
+          text-decoration: none;
+          transition: background .2s, border-color .2s, color .2s;
+          font-family: inherit;
+        }
+        .cf-social:hover {
+          background: rgba(255,255,255,0.1);
+          border-color: rgba(255,255,255,0.3);
+          color: #e8e3da;
+        }
+      `}</style>
+
+      <section
         id="contact-section"
-        className="w-full h-full relative z-10 flex items-center justify-center px-4 md:px-8 lg:px-16 py-20 lg:py-0"
+        style={{
+          position: "relative",
+          height: "100vh",
+          width: "100%",
+          background: "#000",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          overflow: "hidden",
+        }}
       >
-        <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
+        {/* ── BACKGROUND ELEMENTS (matches Skills/Experience exactly) ── */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          {/* Subtle grid */}
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+              backgroundSize: "60px 60px",
+            }}
+          />
+          {/* Radial vignette */}
+          <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/80 to-black" />
+          {/* Blue glow — matches Skills section */}
+          <div className="absolute top-[20%] left-[10%] w-[40%] h-[40%] bg-blue-900/10 rounded-full blur-[120px]" />
+          <div className="absolute bottom-[10%] right-[5%] w-[25%] h-[25%] bg-blue-900/8 rounded-full blur-[100px]" />
+        </div>
 
-          {/* LEFT COLUMN: VISUALS (Image & Info) */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false }}
-            className="w-full lg:w-5/12 flex flex-col gap-8 lg:gap-10 order-2 lg:order-1"
-          >
-            {/* User Image Card */}
-            <motion.div variants={itemVariants} className="relative group mx-auto lg:mx-0 w-64 h-64 md:w-80 md:h-80 lg:w-[340px] lg:h-[340px] xl:w-[400px] xl:h-[400px]">
+        {/* Ghost BG text — matches Experience "HISTORY" watermark */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
+          <h1 className="text-[18vw] font-black text-white/[0.02] leading-none tracking-tighter select-none whitespace-nowrap">
+            CONTACT
+          </h1>
+        </div>
 
-              {/* Tech Halo & Grid Background */}
-              <div className="absolute inset-[-10%] z-0 hidden lg:block">
-                <div className="absolute inset-0 bg-gradient-radial from-white/10 to-transparent opacity-30 blur-2xl" />
+        {/* Vertical divider — white/10 gradient like Experience card borders */}
+        <div
+          className="absolute left-1/2 pointer-events-none z-5"
+          style={{
+            top: "6%",
+            bottom: "6%",
+            width: 1,
+            background:
+              "linear-gradient(to bottom, transparent, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.08) 75%, transparent)",
+          }}
+        />
 
-                {/* Rotating Dashed Ring */}
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 border border-dashed border-white/20 rounded-full opacity-30"
+        {/* ── LEFT PANEL — Photo ── */}
+        <div className="relative overflow-hidden z-10">
+          {/* Photo with dark overlay */}
+          <motion.img
+            src={yourPhoto}
+            alt="Shweta Kohad"
+            initial={{ scale: 1.06 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.6, ease: [0.4, 0, 0.2, 1] }}
+            className="absolute inset-0 w-full h-full object-cover object-top"
+            style={{ filter: "brightness(.75) saturate(1.1) contrast(1.05)" }}
+          />
+
+          {/* Top fade */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 30%)",
+            }}
+          />
+          {/* Bottom fade */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.35) 35%, transparent 60%)",
+            }}
+          />
+
+          {/* Section label — matches Experience heading style */}
+          <div className="absolute top-8 left-8 z-20 flex items-center gap-3">
+            <span className="text-[#e8e3da] text-[2rem] font-black tracking-tight leading-none opacity-80">
+              Contact
+            </span>
+            <div className="h-[2px] w-10 bg-gradient-to-r from-white to-transparent opacity-40" />
+          </div>
+
+          {/* Identity block at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 z-20 p-8">
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              {/* Name — matches h2 heading style */}
+              <h2
+                className="font-black leading-none tracking-tight mb-2"
+                style={{
+                  color: "#e8e3da",
+                  fontSize: "clamp(1.8rem, 2.8vw, 2.6rem)",
+                }}
+              >
+                Shweta Kohad
+              </h2>
+              {/* Divider line — same as section dividers */}
+              <div className="h-[2px] bg-gradient-to-r from-white to-transparent max-w-[100px] mb-3 opacity-30" />
+              <p className="text-neutral-400 text-sm mb-4">
+                Frontend Developer &amp; UI Designer
+              </p>
+
+              {/* Status pill — matches cert date pill style */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/5 backdrop-blur-md rounded-full border border-white/10">
+                <span
+                  className="w-2 h-2 rounded-full bg-green-500 animate-pulse"
+                  style={{ boxShadow: "0 0 6px #22c55e" }}
                 />
-
-                {/* Reverse Rotating Dotted Ring */}
-                <motion.div
-                  animate={{ rotate: -360 }}
-                  transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-[10%] border border-dotted border-white/20 rounded-full opacity-30"
-                />
-
-                {/* Corner Accents */}
-                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-white/20 rounded-tl-3xl opacity-50" />
-                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-white/20 rounded-tr-3xl opacity-50" />
-                <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-white/20 rounded-bl-3xl opacity-50" />
-                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-white/20 rounded-br-3xl opacity-50" />
+                <span className="text-xs font-bold text-neutral-300 uppercase tracking-widest">
+                  Open to Opportunities
+                </span>
               </div>
 
-              <div className="w-full h-full rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl relative z-10 bg-neutral-900 group-hover:border-white/20 transition-colors duration-500">
-                <img
-                  src={yourPhoto}
-                  alt="Shweta Kohad"
-                  className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-                />
-                {/* Status */}
-                <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-2 z-20">
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-                  </span>
-                  <span className="text-[10px] font-bold text-white uppercase tracking-wider">Open to Work</span>
-                </div>
+              {/* Contact details */}
+              <div className="mt-4 space-y-1.5">
+                {[{ label: "shwetakohad22@gmail.com" }, { label: "India" }].map(
+                  ({ label }) => (
+                    <p
+                      key={label}
+                      className="text-neutral-500 text-xs font-medium"
+                    >
+                      {label}
+                    </p>
+                  ),
+                )}
               </div>
             </motion.div>
+          </div>
+        </div>
 
-            {/* Contact Details */}
-            <motion.div variants={itemVariants} className="bg-neutral-900/30 backdrop-blur-sm border border-white/5 rounded-2xl p-6 lg:p-8 space-y-6">
-              {contactInfo.map((item, i) => (
-                <div key={i} className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-neutral-400 group-hover:text-white group-hover:bg-white/10 transition-colors">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <p className="text-neutral-500 text-[10px] uppercase font-bold tracking-widest mb-0.5">{item.label}</p>
-                    {item.href ? (
-                      <a href={item.href} className="text-white text-base md:text-lg font-medium hover:underline decoration-white/30 underline-offset-4 transition-all">
-                        {item.value}
-                      </a>
-                    ) : (
-                      <p className="text-white text-base md:text-lg font-medium">{item.value}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          </motion.div>
+        {/* ── RIGHT PANEL — Form ── */}
+        <div
+          className="relative z-10 flex flex-col justify-center overflow-hidden"
+          style={{ padding: "clamp(1.5rem, 3vw, 2.5rem)" }}
+        >
+          {/* Ghost watermark behind card */}
+          <div className="absolute bottom-2 right-2 pointer-events-none z-0 overflow-hidden">
+            <span className="text-[8rem] font-black leading-none text-white/[0.02] whitespace-nowrap select-none">
+              HELLO
+            </span>
+          </div>
 
-
-          {/* RIGHT COLUMN: ACTION (Header & Form) */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false }}
-            className="w-full lg:w-7/12 flex flex-col justify-center order-1 lg:order-2"
+          {/* Section heading above the card */}
+          {/* <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="relative z-10 flex items-center gap-3 mb-4"
           >
-            {/* Header */}
-            <div className="mb-10 text-center lg:text-left">
-              <motion.h2 variants={itemVariants} className="text-[#e8e3da] text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[0.9] mb-4">
-                Get in Touch
-              </motion.h2>
-              <motion.div variants={itemVariants} className="h-1 w-24 bg-gradient-to-r from-white via-white/50 to-transparent mx-auto lg:mx-0 mb-6" />
-              <motion.p variants={itemVariants} className="text-neutral-400 text-lg font-light max-w-lg mx-auto lg:mx-0">
-                Have a project in mind or just want to say hi? I'm always open to discussing new opportunities and ideas.
-              </motion.p>
+            <h2
+              className="font-black tracking-tight leading-none"
+              style={{ color: "#e8e3da", fontSize: "clamp(2rem, 3vw, 2.8rem)" }}
+            >
+              Contact
+            </h2>
+            <div className="h-[2px] w-16 bg-gradient-to-r from-white to-transparent opacity-30" />
+          </motion.div> */}
+
+          {/* ── GLASS CARD — matches SpotlightCard style ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative z-10 rounded-[2rem] overflow-hidden"
+            style={{
+              background: "rgba(15, 15, 15, 0.65)",
+              backdropFilter: "blur(32px)",
+              WebkitBackdropFilter: "blur(32px)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              boxShadow:
+                "0 0 50px -12px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.06)",
+              padding: "clamp(1.8rem, 3.5vw, 2.8rem)",
+            }}
+          >
+            {/* Top-right corner glow — same as SpotlightCard */}
+            <div
+              className="absolute top-0 right-0 w-[350px] h-[350px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2"
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                filter: "blur(80px)",
+              }}
+            />
+
+            {/* Top-left corner accent lines */}
+            <div className="absolute top-5 left-5 pointer-events-none">
+              <div className="w-6 h-px bg-white/20" />
+              <div className="w-px h-6 bg-white/20 mt-0" />
+            </div>
+            {/* Bottom-right corner accent lines */}
+            <div className="absolute bottom-5 right-5 pointer-events-none flex flex-col items-end">
+              <div className="w-6 h-px bg-white/20" />
+              <div className="w-px h-6 bg-white/20" />
             </div>
 
-            {/* Compact Form */}
-            <motion.div variants={itemVariants}>
-              <form ref={formRef} onSubmit={handleSubmit} className="bg-neutral-900/20 backdrop-blur-md border border-white/10 rounded-3xl p-6 md:p-8 lg:p-10 space-y-6">
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Name */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1">Name</label>
-                    <input
-                      type="text"
-                      name="from_name"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="John Doe"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-neutral-600 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all font-light"
-                    />
-                  </div>
-                  {/* Email */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1">Email</label>
-                    <input
-                      type="email"
-                      name="from_email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="john@example.com"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-neutral-600 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all font-light"
-                    />
-                  </div>
+            <div className="relative z-10">
+              {/* Header */}
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.35 }}
+                className="mb-6"
+              >
+                {/* Label row — matches Experience period pill style */}
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="px-3 py-1 text-xs font-mono text-neutral-300 bg-white/5 rounded-full border border-white/10 tracking-wider">
+                    GET IN TOUCH
+                  </span>
+                  <div className="h-px flex-1 bg-white/10" />
                 </div>
 
-                {/* Message */}
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1">Message</label>
+                <h2
+                  className="font-black tracking-tight leading-none mb-3"
+                  style={{
+                    color: "#e8e3da",
+                    fontSize: "clamp(1.8rem, 2.8vw, 2.6rem)",
+                  }}
+                >
+                  Let's Connect.
+                </h2>
+                <div className="h-[2px] bg-gradient-to-r from-transparent via-white to-transparent max-w-[100px] mb-3 opacity-50" />
+                <p className="text-neutral-400 text-sm leading-relaxed max-w-sm">
+                  Have a project in mind or just want to say hello? My inbox is
+                  always open.
+                </p>
+              </motion.div>
+
+              {/* Form */}
+              <motion.form
+                ref={formRef}
+                onSubmit={handleSubmit}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1.1rem",
+                }}
+              >
+                {/* Name + Email row — each in a glass inset box */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: "1rem",
+                  }}
+                >
+                  {[
+                    {
+                      key: "name",
+                      label: "Your Name",
+                      type: "text",
+                      ph: "John Doe",
+                    },
+                    {
+                      key: "email",
+                      label: "Email Address",
+                      type: "email",
+                      ph: "john@example.com",
+                    },
+                  ].map(({ key, label, type, ph }) => (
+                    <div
+                      key={key}
+                      className="cf-field"
+                      style={{
+                        background: "rgba(255,255,255,0.03)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        borderRadius: "0.75rem",
+                        padding: "0",
+                        transition: "border-color .3s",
+                      }}
+                    >
+                      <input
+                        id={`cf-${key}`}
+                        type={type}
+                        value={formData[key]}
+                        onChange={(e) =>
+                          setFormData({ ...formData, [key]: e.target.value })
+                        }
+                        placeholder={ph}
+                        required
+                      />
+                      <label htmlFor={`cf-${key}`}>{label}</label>
+                      <div
+                        className="cf-bar"
+                        style={{ borderRadius: "0 0 0.75rem 0.75rem" }}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Message — same inset glass box */}
+                <div
+                  className="cf-field"
+                  style={{
+                    background: "rgba(255,255,255,0.03)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    borderRadius: "0.75rem",
+                    padding: "0",
+                  }}
+                >
                   <textarea
-                    name="message"
-                    required
-                    rows="4"
+                    id="cf-message"
+                    rows={4}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
                     placeholder="Tell me about your project..."
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-neutral-600 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all font-light resize-none"
-                  ></textarea>
+                    required
+                  />
+                  <label htmlFor="cf-message">Message</label>
+                  <div
+                    className="cf-bar"
+                    style={{ borderRadius: "0 0 0.75rem 0.75rem" }}
+                  />
                 </div>
 
-                {/* Footer (Submit & Socials) */}
-                <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-2">
-
-                  {/* Socials Row */}
-                  <div className="flex gap-4 order-2 md:order-1">
-                    {socialLinks.map((link, i) => (
-                      <a
-                        key={i}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-neutral-400 hover:bg-white hover:text-black hover:scale-110 transition-all duration-300"
-                      >
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d={link.icon} /></svg>
-                      </a>
-                    ))}
-                  </div>
-
-                  {/* Submit Button */}
+                {/* Bottom row */}
+                <div className="flex items-center justify-between flex-wrap gap-3 pt-1">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full md:w-auto px-8 py-3 bg-white text-black font-bold uppercase tracking-wider rounded-full hover:bg-neutral-200 transition-colors disabled:opacity-50 order-1 md:order-2 flex items-center justify-center gap-2"
+                    className="cf-btn"
                   >
                     {isSubmitting ? (
-                      <>
-                        <svg className="animate-spin h-4 w-4 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                        <span>Sending...</span>
-                      </>
+                      "Sending…"
                     ) : (
-                      <span>Send Message</span>
+                      <>
+                        Send Message
+                        <FiArrowRight size={14} />
+                      </>
                     )}
                   </button>
+
+                  <div className="flex gap-2">
+                    <a
+                      href="https://www.linkedin.com/in/shweta-kohad-b15b54169/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cf-social"
+                    >
+                      <SiLinkedin size={12} /> LinkedIn
+                    </a>
+                    <a
+                      href="https://github.com/shwetakohad22"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cf-social"
+                    >
+                      <SiGithub size={12} /> GitHub
+                    </a>
+                  </div>
                 </div>
 
-                {/* Status Message */}
-                {submitStatus && (
-                  <div className={`text-center text-sm font-bold ${submitStatus === 'success' ? 'text-green-500' : 'text-red-500'}`}>
-                    {submitStatus === 'success' ? "Message sent successfully!" : "Something went wrong. Please try again."}
-                  </div>
-                )}
-
-              </form>
-            </motion.div>
+                {/* Status */}
+                <AnimatePresence>
+                  {submitStatus && (
+                    <motion.p
+                      key="status"
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="text-sm font-bold"
+                      style={{
+                        color:
+                          submitStatus === "success" ? "#4ade80" : "#f87171",
+                      }}
+                    >
+                      {submitStatus === "success"
+                        ? "✓ Message sent! I'll get back to you soon."
+                        : "✗ Something went wrong — please try again."}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
+              </motion.form>
+            </div>
           </motion.div>
-
         </div>
-      </motion.section>
-    </div>
+      </section>
+    </>
   );
 };
 
