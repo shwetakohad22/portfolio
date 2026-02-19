@@ -5,27 +5,11 @@ import yourPhoto from "../assets/your-photo.jpg";
 import { SiGithub, SiLinkedin } from "react-icons/si";
 import { FiArrowRight } from "react-icons/fi";
 
-/* ─────────────────────────────────────────────
-   CONTACT  —  Dark Split-Screen
-   Matches portfolio theme exactly:
-   - bg: #000 / neutral-900
-   - heading: #e8e3da
-   - accent: white (pure)
-   - borders: white/10
-   - body text: neutral-400
-   - pills: bg-white/5 border-white/10 text-neutral-300
-   - glow: blue-900/10
-───────────────────────────────────────────── */
-
 const Contact = () => {
   const formRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,19 +46,28 @@ const Contact = () => {
           font-family: inherit;
         }
 
-        /* Glass input fields */
+        /* ── Layout ── */
+        .cf-layout {
+          position: relative;
+          height: 100vh;
+          width: 100%;
+          background: #000;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          overflow: hidden;
+        }
+
+        /* ── Glass input fields ── */
         .cf-field { position: relative; transition: border-color .3s, box-shadow .3s; }
         .cf-field:focus-within {
           border-color: rgba(255,255,255,0.22) !important;
           box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 4px 24px -4px rgba(255,255,255,0.06) !important;
         }
-
         .cf-field input,
         .cf-field textarea {
           width: 100%;
           background: transparent;
           border: none;
-          border-bottom: none;
           padding: 22px 12px 10px;
           font-size: 0.93rem;
           color: #e8e3da;
@@ -83,9 +76,7 @@ const Contact = () => {
           font-family: inherit;
         }
         .cf-field input::placeholder,
-        .cf-field textarea::placeholder {
-          color: rgba(255,255,255,0.15);
-        }
+        .cf-field textarea::placeholder { color: rgba(255,255,255,0.15); }
         .cf-field label {
           position: absolute;
           top: 8px; left: 12px;
@@ -97,9 +88,7 @@ const Contact = () => {
           pointer-events: none;
           transition: color .3s;
         }
-        .cf-field:focus-within label {
-          color: rgba(255,255,255,0.6);
-        }
+        .cf-field:focus-within label { color: rgba(255,255,255,0.6); }
         .cf-bar {
           position: absolute;
           bottom: 0; left: 0; right: 0;
@@ -109,11 +98,9 @@ const Contact = () => {
           transition: width .4s cubic-bezier(.4,0,.2,1);
           border-radius: 0 0 0.75rem 0.75rem;
         }
-        .cf-field:focus-within .cf-bar {
-          width: 100%;
-        }
+        .cf-field:focus-within .cf-bar { width: 100%; }
 
-        /* Send button — matches portfolio style: white bg, black text */
+        /* ── Send button ── */
         .cf-btn {
           display: inline-flex;
           align-items: center;
@@ -130,13 +117,10 @@ const Contact = () => {
           font-family: inherit;
           transition: background .2s, transform .2s, opacity .2s;
         }
-        .cf-btn:hover:not(:disabled) {
-          background: #e8e3da;
-          transform: translateY(-2px);
-        }
+        .cf-btn:hover:not(:disabled) { background: #e8e3da; transform: translateY(-2px); }
         .cf-btn:disabled { opacity: .35; cursor: not-allowed; }
 
-        /* Social pill — matches cert/skills pill style */
+        /* ── Social pill ── */
         .cf-social {
           display: inline-flex;
           align-items: center;
@@ -156,23 +140,150 @@ const Contact = () => {
           border-color: rgba(255,255,255,0.3);
           color: #e8e3da;
         }
+
+        /* ── Name/email two-col grid ── */
+        .cf-two-col {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+        }
+
+        /* ── Vertical divider (desktop only) ── */
+        .cf-divider {
+          position: absolute;
+          left: 50%;
+          top: 6%; bottom: 6%;
+          width: 1px;
+          background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.08) 75%, transparent);
+          pointer-events: none;
+          z-index: 5;
+        }
+
+        /* ── Left panel ── */
+        .cf-left {
+          position: relative;
+          overflow: hidden;
+          z-index: 10;
+        }
+
+        /* ── Right panel ── */
+        .cf-right {
+          position: relative;
+          z-index: 10;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          overflow: hidden;
+          padding: clamp(1.5rem, 3vw, 2.5rem);
+        }
+
+        /* ── Glass card ── */
+        .cf-card {
+          position: relative;
+          z-index: 10;
+          border-radius: 2rem;
+          overflow: hidden;
+          background: rgba(15,15,15,0.65);
+          backdrop-filter: blur(32px);
+          -webkit-backdrop-filter: blur(32px);
+          border: 1px solid rgba(255,255,255,0.1);
+          box-shadow: 0 0 50px -12px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.06);
+          padding: clamp(1.8rem, 3.5vw, 2.8rem);
+        }
+
+        /* ══════════════════════════════════
+           TABLET  (768px – 1023px)
+        ══════════════════════════════════ */
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .cf-right { padding: 2rem 1.75rem; }
+          .cf-card { padding: 2rem 1.75rem !important; }
+        }
+
+        /* ══════════════════════════════════
+           MOBILE  (≤ 767px)
+        ══════════════════════════════════ */
+        @media (max-width: 767px) {
+          /* Single column, natural scroll */
+          .cf-layout {
+            grid-template-columns: 1fr;
+            height: auto !important;
+            min-height: 100dvh;
+            overflow: visible !important;
+          }
+
+          /* Hide desktop divider */
+          .cf-divider { display: none; }
+
+          /* Photo panel: tall enough to show the photo + all identity info */
+          .cf-left {
+            height: 320px !important;
+          }
+
+          /* Right panel: no fixed height, scrolls naturally */
+          .cf-right {
+            justify-content: flex-start;
+            padding: 1.25rem 1rem 2.5rem;
+            overflow: visible;
+            height: auto;
+          }
+
+          /* Card */
+          .cf-card {
+            border-radius: 1.25rem !important;
+            padding: 1.4rem 1.1rem !important;
+          }
+
+          /* Card header spacing */
+          .cf-card-header { margin-bottom: 1rem !important; }
+
+          /* "Let's Connect" heading */
+          .cf-connect-heading {
+            font-size: clamp(1.5rem, 6vw, 2rem) !important;
+          }
+
+          /* Name/email: single column */
+          .cf-two-col {
+            grid-template-columns: 1fr;
+          }
+
+          /* Full-width send button */
+          .cf-btn {
+            width: 100%;
+            justify-content: center;
+            padding: 1rem;
+          }
+
+          /* Action row: stack button above socials */
+          .cf-action-row {
+            flex-direction: column;
+            align-items: stretch !important;
+          }
+
+          /* Socials: equal width side by side */
+          .cf-socials {
+            display: flex;
+            gap: 0.5rem;
+          }
+          .cf-social {
+            flex: 1;
+            justify-content: center;
+          }
+        }
+
+        /* ══════════════════════════════════
+           EXTRA SMALL  (≤ 390px)
+        ══════════════════════════════════ */
+        @media (max-width: 390px) {
+          .cf-left { height: 300px !important; }
+          .cf-right { padding: 1rem 0.85rem 2rem; }
+          .cf-card { padding: 1.2rem 0.9rem !important; }
+        }
       `}</style>
 
-      <section
-        id="contact-section"
-        style={{
-          position: "relative",
-          height: "100vh",
-          width: "100%",
-          background: "#000",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          overflow: "hidden",
-        }}
-      >
-        {/* ── BACKGROUND ELEMENTS (matches Skills/Experience exactly) ── */}
+      <section id="contact-section" className="cf-layout">
+
+        {/* ── BACKGROUND ELEMENTS ── */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          {/* Subtle grid */}
           <div
             className="absolute inset-0 opacity-[0.03]"
             style={{
@@ -181,180 +292,101 @@ const Contact = () => {
               backgroundSize: "60px 60px",
             }}
           />
-          {/* Radial vignette */}
           <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/80 to-black" />
-          {/* Blue glow — matches Skills section */}
           <div className="absolute top-[20%] left-[10%] w-[40%] h-[40%] bg-blue-900/10 rounded-full blur-[120px]" />
           <div className="absolute bottom-[10%] right-[5%] w-[25%] h-[25%] bg-blue-900/8 rounded-full blur-[100px]" />
         </div>
 
-        {/* Ghost BG text — matches Experience "HISTORY" watermark */}
+        {/* Ghost BG text */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
           <h1 className="text-[18vw] font-black text-white/[0.02] leading-none tracking-tighter select-none whitespace-nowrap">
             CONTACT
           </h1>
         </div>
 
-        {/* Vertical divider — white/10 gradient like Experience card borders */}
-        <div
-          className="absolute left-1/2 pointer-events-none z-5"
-          style={{
-            top: "6%",
-            bottom: "6%",
-            width: 1,
-            background:
-              "linear-gradient(to bottom, transparent, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.08) 75%, transparent)",
-          }}
-        />
+        {/* Vertical divider — desktop only */}
+        <div className="cf-divider" />
 
         {/* ── LEFT PANEL — Photo ── */}
-        <div className="relative overflow-hidden z-10">
-          {/* Photo with dark overlay */}
+        <div className="cf-left" style={{ position: "relative", overflow: "hidden", zIndex: 10 }}>
+          {/* Photo fills the panel */}
           <motion.img
             src={yourPhoto}
             alt="Shweta Kohad"
             initial={{ scale: 1.06 }}
             animate={{ scale: 1 }}
             transition={{ duration: 1.6, ease: [0.4, 0, 0.2, 1] }}
-            className="absolute inset-0 w-full h-full object-cover object-top"
-            style={{ filter: "brightness(.75) saturate(1.1) contrast(1.05)" }}
-          />
-
-          {/* Top fade */}
-          <div
-            className="absolute inset-0"
             style={{
-              background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 30%)",
+              position: "absolute", inset: 0,
+              width: "100%", height: "100%",
+              objectFit: "cover", objectPosition: "top",
+              filter: "brightness(.75) saturate(1.1) contrast(1.05)",
             }}
           />
-          {/* Bottom fade */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.35) 35%, transparent 60%)",
-            }}
-          />
+          {/* Overlays */}
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 30%)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 40%, transparent 65%)" }} />
 
-          {/* Section label — matches Experience heading style */}
-          <div className="absolute top-8 left-8 z-20 flex items-center gap-3">
-            <span className="text-[#e8e3da] text-[2rem] font-black tracking-tight leading-none opacity-80">
+          {/* Section label — top left */}
+          <div className="cf-section-label" style={{ position: "absolute", top: "1.75rem", left: "1.75rem", zIndex: 20, display: "flex", alignItems: "center", gap: "0.75rem" }}>
+            <span style={{ color: "#e8e3da", fontSize: "clamp(1.2rem, 2.5vw, 2rem)", fontWeight: 900, letterSpacing: "-0.02em", lineHeight: 1, opacity: 0.85 }}>
               Contact
             </span>
-            <div className="h-[2px] w-10 bg-gradient-to-r from-white to-transparent opacity-40" />
+            <div style={{ height: 2, width: 36, background: "linear-gradient(to right, white, transparent)", opacity: 0.4 }} />
           </div>
 
-          {/* Identity block at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 z-20 p-8">
-            <motion.div
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              {/* Name — matches h2 heading style */}
+          {/* Identity block — pinned to bottom via absolute, always inside panel */}
+          <div className="cf-identity" style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 20, padding: "clamp(1rem, 3vw, 2rem)" }}>
+            <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
               <h2
-                className="font-black leading-none tracking-tight mb-2"
-                style={{
-                  color: "#e8e3da",
-                  fontSize: "clamp(1.8rem, 2.8vw, 2.6rem)",
-                }}
+                className="font-black leading-none tracking-tight"
+                style={{ color: "#e8e3da", fontSize: "clamp(1.1rem, 3.5vw, 2.4rem)", marginBottom: "0.3rem" }}
               >
                 Shweta Kohad
               </h2>
-              {/* Divider line — same as section dividers */}
-              <div className="h-[2px] bg-gradient-to-r from-white to-transparent max-w-[100px] mb-3 opacity-30" />
-              <p className="text-neutral-400 text-sm mb-4">
+              <div className="cf-divider-line" style={{ height: 2, background: "linear-gradient(to right, white, transparent)", maxWidth: 80, marginBottom: "0.5rem", opacity: 0.3 }} />
+              <p className="cf-role" style={{ color: "rgb(163 163 163)", fontSize: "clamp(0.65rem, 1.5vw, 0.875rem)", marginBottom: "0.6rem" }}>
                 Frontend Developer &amp; UI Designer
               </p>
-
-              {/* Status pill — matches cert date pill style */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/5 backdrop-blur-md rounded-full border border-white/10">
-                <span
-                  className="w-2 h-2 rounded-full bg-green-500 animate-pulse"
-                  style={{ boxShadow: "0 0 6px #22c55e" }}
-                />
-                <span className="text-xs font-bold text-neutral-300 uppercase tracking-widest">
+              <div className="cf-pill" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", padding: "0.3rem 0.75rem", background: "rgba(255,255,255,0.05)", backdropFilter: "blur(12px)", borderRadius: 9999, border: "1px solid rgba(255,255,255,0.1)" }}>
+                <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#22c55e", boxShadow: "0 0 6px #22c55e", flexShrink: 0 }} className="animate-pulse" />
+                <span className="cf-pill-text" style={{ fontSize: "clamp(0.55rem, 1.2vw, 0.75rem)", fontWeight: 700, color: "rgb(212 212 212)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                   Open to Opportunities
                 </span>
               </div>
-
-              {/* Contact details */}
-              <div className="mt-4 space-y-1.5">
-                {[{ label: "shwetakohad22@gmail.com" }, { label: "India" }].map(
-                  ({ label }) => (
-                    <p
-                      key={label}
-                      className="text-neutral-500 text-xs font-medium"
-                    >
-                      {label}
-                    </p>
-                  ),
-                )}
+              <div className="cf-meta" style={{ marginTop: "0.5rem", display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+                {["shwetakohad22@gmail.com", "India"].map((label) => (
+                  <p key={label} style={{ color: "rgb(115 115 115)", fontSize: "clamp(0.6rem, 1.2vw, 0.75rem)", fontWeight: 500 }}>{label}</p>
+                ))}
               </div>
             </motion.div>
           </div>
         </div>
 
         {/* ── RIGHT PANEL — Form ── */}
-        <div
-          className="relative z-10 flex flex-col justify-center overflow-hidden"
-          style={{ padding: "clamp(1.5rem, 3vw, 2.5rem)" }}
-        >
-          {/* Ghost watermark behind card */}
+        <div className="cf-right">
+          {/* Ghost watermark */}
           <div className="absolute bottom-2 right-2 pointer-events-none z-0 overflow-hidden">
-            <span className="text-[8rem] font-black leading-none text-white/[0.02] whitespace-nowrap select-none">
-              HELLO
-            </span>
+            <span className="text-[8rem] font-black leading-none text-white/[0.02] whitespace-nowrap select-none">HELLO</span>
           </div>
 
-          {/* Section heading above the card */}
-          {/* <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="relative z-10 flex items-center gap-3 mb-4"
-          >
-            <h2
-              className="font-black tracking-tight leading-none"
-              style={{ color: "#e8e3da", fontSize: "clamp(2rem, 3vw, 2.8rem)" }}
-            >
-              Contact
-            </h2>
-            <div className="h-[2px] w-16 bg-gradient-to-r from-white to-transparent opacity-30" />
-          </motion.div> */}
-
-          {/* ── GLASS CARD — matches SpotlightCard style ── */}
+          {/* Glass Card */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative z-10 rounded-[2rem] overflow-hidden"
-            style={{
-              background: "rgba(15, 15, 15, 0.65)",
-              backdropFilter: "blur(32px)",
-              WebkitBackdropFilter: "blur(32px)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              boxShadow:
-                "0 0 50px -12px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.06)",
-              padding: "clamp(1.8rem, 3.5vw, 2.8rem)",
-            }}
+            className="cf-card"
           >
-            {/* Top-right corner glow — same as SpotlightCard */}
+            {/* Corner glow */}
             <div
               className="absolute top-0 right-0 w-[350px] h-[350px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2"
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                filter: "blur(80px)",
-              }}
+              style={{ background: "rgba(255,255,255,0.03)", filter: "blur(80px)" }}
             />
-
-            {/* Top-left corner accent lines */}
+            {/* Corner accents */}
             <div className="absolute top-5 left-5 pointer-events-none">
               <div className="w-6 h-px bg-white/20" />
-              <div className="w-px h-6 bg-white/20 mt-0" />
+              <div className="w-px h-6 bg-white/20" />
             </div>
-            {/* Bottom-right corner accent lines */}
             <div className="absolute bottom-5 right-5 pointer-events-none flex flex-col items-end">
               <div className="w-6 h-px bg-white/20" />
               <div className="w-px h-6 bg-white/20" />
@@ -368,27 +400,21 @@ const Contact = () => {
                 transition={{ duration: 0.6, delay: 0.35 }}
                 className="mb-6"
               >
-                {/* Label row — matches Experience period pill style */}
                 <div className="flex items-center gap-3 mb-3">
                   <span className="px-3 py-1 text-xs font-mono text-neutral-300 bg-white/5 rounded-full border border-white/10 tracking-wider">
                     GET IN TOUCH
                   </span>
                   <div className="h-px flex-1 bg-white/10" />
                 </div>
-
                 <h2
-                  className="font-black tracking-tight leading-none mb-3"
-                  style={{
-                    color: "#e8e3da",
-                    fontSize: "clamp(1.8rem, 2.8vw, 2.6rem)",
-                  }}
+                  className="cf-connect-heading font-black tracking-tight leading-none mb-3"
+                  style={{ color: "#e8e3da", fontSize: "clamp(1.8rem, 2.8vw, 2.6rem)" }}
                 >
                   Let's Connect.
                 </h2>
                 <div className="h-[2px] bg-gradient-to-r from-transparent via-white to-transparent max-w-[100px] mb-3 opacity-50" />
                 <p className="text-neutral-400 text-sm leading-relaxed max-w-sm">
-                  Have a project in mind or just want to say hello? My inbox is
-                  always open.
+                  Have a project in mind or just want to say hello? My inbox is always open.
                 </p>
               </motion.div>
 
@@ -399,33 +425,13 @@ const Contact = () => {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1.1rem",
-                }}
+                style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}
               >
-                {/* Name + Email row — each in a glass inset box */}
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr",
-                    gap: "1rem",
-                  }}
-                >
+                {/* Name + Email */}
+                <div className="cf-two-col">
                   {[
-                    {
-                      key: "name",
-                      label: "Your Name",
-                      type: "text",
-                      ph: "John Doe",
-                    },
-                    {
-                      key: "email",
-                      label: "Email Address",
-                      type: "email",
-                      ph: "john@example.com",
-                    },
+                    { key: "name", label: "Your Name", type: "text", ph: "John Doe" },
+                    { key: "email", label: "Email Address", type: "email", ph: "john@example.com" },
                   ].map(({ key, label, type, ph }) => (
                     <div
                       key={key}
@@ -434,88 +440,54 @@ const Contact = () => {
                         background: "rgba(255,255,255,0.03)",
                         border: "1px solid rgba(255,255,255,0.08)",
                         borderRadius: "0.75rem",
-                        padding: "0",
-                        transition: "border-color .3s",
                       }}
                     >
                       <input
                         id={`cf-${key}`}
                         type={type}
                         value={formData[key]}
-                        onChange={(e) =>
-                          setFormData({ ...formData, [key]: e.target.value })
-                        }
+                        onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
                         placeholder={ph}
                         required
                       />
                       <label htmlFor={`cf-${key}`}>{label}</label>
-                      <div
-                        className="cf-bar"
-                        style={{ borderRadius: "0 0 0.75rem 0.75rem" }}
-                      />
+                      <div className="cf-bar" style={{ borderRadius: "0 0 0.75rem 0.75rem" }} />
                     </div>
                   ))}
                 </div>
 
-                {/* Message — same inset glass box */}
+                {/* Message */}
                 <div
                   className="cf-field"
                   style={{
                     background: "rgba(255,255,255,0.03)",
                     border: "1px solid rgba(255,255,255,0.08)",
                     borderRadius: "0.75rem",
-                    padding: "0",
                   }}
                 >
                   <textarea
                     id="cf-message"
                     rows={4}
                     value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Tell me about your project..."
                     required
                   />
                   <label htmlFor="cf-message">Message</label>
-                  <div
-                    className="cf-bar"
-                    style={{ borderRadius: "0 0 0.75rem 0.75rem" }}
-                  />
+                  <div className="cf-bar" style={{ borderRadius: "0 0 0.75rem 0.75rem" }} />
                 </div>
 
-                {/* Bottom row */}
-                <div className="flex items-center justify-between flex-wrap gap-3 pt-1">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="cf-btn"
-                  >
-                    {isSubmitting ? (
-                      "Sending…"
-                    ) : (
-                      <>
-                        Send Message
-                        <FiArrowRight size={14} />
-                      </>
-                    )}
+                {/* Action row */}
+                <div className="cf-action-row flex items-center justify-between flex-wrap gap-3 pt-1">
+                  <button type="submit" disabled={isSubmitting} className="cf-btn">
+                    {isSubmitting ? "Sending…" : (<>Send Message <FiArrowRight size={14} /></>)}
                   </button>
 
-                  <div className="flex gap-2">
-                    <a
-                      href="https://www.linkedin.com/in/shweta-kohad-b15b54169/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="cf-social"
-                    >
+                  <div className="cf-socials flex gap-2">
+                    <a href="https://www.linkedin.com/in/shweta-kohad-b15b54169/" target="_blank" rel="noopener noreferrer" className="cf-social">
                       <SiLinkedin size={12} /> LinkedIn
                     </a>
-                    <a
-                      href="https://github.com/shwetakohad22"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="cf-social"
-                    >
+                    <a href="https://github.com/shwetakohad22" target="_blank" rel="noopener noreferrer" className="cf-social">
                       <SiGithub size={12} /> GitHub
                     </a>
                   </div>
@@ -530,10 +502,7 @@ const Contact = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
                       className="text-sm font-bold"
-                      style={{
-                        color:
-                          submitStatus === "success" ? "#4ade80" : "#f87171",
-                      }}
+                      style={{ color: submitStatus === "success" ? "#4ade80" : "#f87171" }}
                     >
                       {submitStatus === "success"
                         ? "✓ Message sent! I'll get back to you soon."
