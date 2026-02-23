@@ -15,13 +15,12 @@ const Experience = () => {
   return (
     <section
       ref={targetRef}
-      className="relative h-[300vh] md:h-[250vh]" // Increased scroll height for mobile comfort
+      className="relative h-[300vh] md:h-[250vh]"
       id="experience-section"
     >
-      <div className="sticky top-0 h-screen overflow-hidden bg-black text-white flex items-center justify-center">
+      <div className="sticky top-0 h-screen overflow-hidden bg-black text-white flex flex-col">
         {/* Background Elements */}
         <div className="absolute inset-0 pointer-events-none">
-          {/* Subtle Grid */}
           <div
             className="absolute inset-0 opacity-[0.03]"
             style={{
@@ -30,44 +29,37 @@ const Experience = () => {
               backgroundSize: "60px 60px",
             }}
           />
-          {/* Radial Vignette */}
-          <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/80 to-black z-10" />
         </div>
 
-        {/* Massive Background Typography - Subtle Layer */}
+        {/* Massive Background Typography */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center z-0 pointer-events-none">
-          <h1 className="text-[25vw] md:text-[18vw] font-black text-white/[0.02] leading-none tracking-tighter select-none">
+          <h1 className="text-[30vw] md:text-[18vw] font-black text-white/[0.02] leading-none tracking-tighter select-none">
             HISTORY
           </h1>
         </div>
 
-        {/* Content Container */}
-        <div className="container mx-auto px-4 md:px-6 relative z-20 h-full flex flex-col items-center justify-center">
-          {/* Main Heading - Skills Style */}
+        {/* ── HEADING ── */}
+        <motion.div
+          className="flex-shrink-0 flex flex-col items-center text-center z-30 pt-6 sm:pt-8 md:pt-10"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-[#e8e3da] text-3xl sm:text-3xl md:text-5xl lg:text-6xl font-black tracking-tight leading-none">
+            Experience
+          </h2>
           <motion.div
-            className="absolute top-8 sm:top-12 md:top-16 flex flex-col items-center text-center z-30"
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ width: 0 }}
+            whileInView={{ width: "100%" }}
             viewport={{ once: true }}
-          >
-            <h2 className="text-[#e8e3da] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-none">
-              Experience
-            </h2>
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: "100%" }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.8,
-                delay: 0.2,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="h-[2px] bg-gradient-to-r from-transparent via-white to-transparent mx-auto max-w-[100px] sm:max-w-[150px] md:max-w-[180px] mt-3"
-            />
-          </motion.div>
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="h-[2px] bg-gradient-to-r from-transparent via-white to-transparent mx-auto max-w-[80px] sm:max-w-[120px] md:max-w-[180px] mt-2 sm:mt-3"
+          />
+        </motion.div>
 
-          {/* Cards Stack - Adjusted for Mobile Height */}
-          <div className="relative w-full max-w-6xl h-[80vh] md:h-[600px] flex items-center justify-center mt-20 md:mt-24">
+        {/* ── CARDS AREA ── */}
+        <div className="relative flex-1 min-h-0 flex items-center justify-center px-3 sm:px-5 md:px-6 pb-8 md:pb-10 pt-3 sm:pt-4 md:pt-5">
+          <div className="relative w-full max-w-6xl h-full">
             {services.map((service, index) => (
               <SpotlightCard
                 key={index}
@@ -77,36 +69,31 @@ const Experience = () => {
                 total={services.length}
               />
             ))}
-
-            {/* Scroll Indicator */}
-            <motion.div
-              style={{ opacity: arrowOpacity }}
-              className="absolute -bottom-8 md:-bottom-16 right-4 md:-right-4 flex flex-col items-center gap-2 z-30"
-            >
-              <span className="text-[10px] md:text-xs font-bold text-white uppercase tracking-widest writing-vertical-rl">
-                Scroll
-              </span>
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                <FiChevronDown className="text-white text-xl md:text-2xl" />
-              </motion.div>
-            </motion.div>
           </div>
 
-          {/* Pagination / Progress Indicator */}
-          <div className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 md:gap-4 z-30">
+          {/* Scroll Indicator */}
+          <motion.div
+            style={{ opacity: arrowOpacity }}
+            className="absolute bottom-2 sm:bottom-3 md:bottom-4 right-4 sm:right-6 md:right-10 flex flex-col items-center gap-1 sm:gap-2 z-30"
+          >
+            <span
+              className="text-[9px] sm:text-[10px] font-bold text-white/60 uppercase tracking-widest"
+              style={{ writingMode: "vertical-rl" }}
+            >
+              Scroll
+            </span>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <FiChevronDown className="text-white/60 text-lg sm:text-xl md:text-2xl" />
+            </motion.div>
+          </motion.div>
+
+          {/* Pagination Dots */}
+          <div className="absolute right-1.5 sm:right-3 md:right-8 top-1/2 -translate-y-1/2 flex flex-col gap-2 sm:gap-3 md:gap-4 z-30">
             {services.map((_, i) => (
-              <ProgressDot
-                key={i}
-                index={i}
-                scrollYProgress={scrollYProgress}
-              />
+              <ProgressDot key={i} index={i} scrollYProgress={scrollYProgress} />
             ))}
           </div>
         </div>
@@ -125,12 +112,12 @@ const ProgressDot = ({ index, scrollYProgress }) => {
   return (
     <motion.div
       style={{ opacity: isActive }}
-      className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white transition-opacity duration-300"
+      className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white transition-opacity duration-300"
     />
   );
 };
 
-const SpotlightCard = ({ service, index, scrollYProgress, total }) => {
+const SpotlightCard = ({ service, index, scrollYProgress }) => {
   const fadeStart = 0.55;
   const fadeEnd = 0.65;
 
@@ -143,13 +130,13 @@ const SpotlightCard = ({ service, index, scrollYProgress, total }) => {
   const scale = useTransform(
     scrollYProgress,
     [0, fadeStart, fadeEnd, 1],
-    index === 0 ? [1, 1, 0.9, 0.9] : [0.9, 0.9, 1, 1],
+    index === 0 ? [1, 1, 0.95, 0.95] : [0.95, 0.95, 1, 1],
   );
 
   const y = useTransform(
     scrollYProgress,
     [0, fadeStart, fadeEnd, 1],
-    index === 0 ? [0, 0, -50, -50] : [50, 50, 0, 0],
+    index === 0 ? [0, 0, -40, -40] : [40, 40, 0, 0],
   );
 
   const pointerEvents = useTransform(scrollYProgress, (v) => {
@@ -162,72 +149,193 @@ const SpotlightCard = ({ service, index, scrollYProgress, total }) => {
       style={{ opacity, scale, y, pointerEvents }}
       className="absolute inset-0 w-full"
     >
-      <div className="w-full h-full bg-neutral-900/60 backdrop-blur-3xl border border-white/10 rounded-[2rem] md:rounded-[2.5rem] p-6 sm:p-8 md:p-14 flex flex-col justify-between shadow-[0_0_50px_-12px_rgba(255,255,255,0.05)] relative overflow-hidden group">
-        {/* Card Background Glow */}
-        <div className="absolute top-0 right-0 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-white/[0.03] rounded-full blur-[80px] md:blur-[120px] pointer-events-none group-hover:bg-white/[0.05] transition-colors duration-500 -translate-y-1/2 translate-x-1/2" />
+      {/* Glass Card */}
+      <div
+        className="w-full h-full relative overflow-hidden group"
+        style={{
+          borderRadius: "1.5rem",
+          background: "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.05) 100%)",
+          backdropFilter: "blur(40px) saturate(150%)",
+          WebkitBackdropFilter: "blur(40px) saturate(150%)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(255,255,255,0.03)",
+        }}
+      >
+        {/* ── DESKTOP-ONLY DECORATIVE ELEMENTS ── */}
 
-        {/* Numbering - Smaller & Adjusted Position */}
-        <div className="absolute top-4 right-5 md:top-10 md:right-12 z-0">
+        {/* Ambient orb — bottom-left */}
+        <div
+          className="hidden md:block absolute bottom-0 left-0 w-[500px] h-[500px] pointer-events-none"
+          style={{
+            background: "radial-gradient(circle at 30% 80%, rgba(255,255,255,0.04) 0%, transparent 65%)",
+          }}
+        />
+
+        {/* Ambient orb — top-right (distinct from hover glow) */}
+        <div
+          className="hidden md:block absolute top-0 right-0 w-[350px] h-[350px] pointer-events-none"
+          style={{
+            background: "radial-gradient(circle at 70% 20%, rgba(180,180,255,0.05) 0%, transparent 65%)",
+          }}
+        />
+
+        {/* Top edge shimmer */}
+        <div
+          className="absolute top-0 left-0 right-0 h-px pointer-events-none z-10"
+          style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)" }}
+        />
+        {/* Left edge shimmer */}
+        <div
+          className="absolute top-0 left-0 bottom-0 w-px pointer-events-none z-10"
+          style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.15), transparent 60%)" }}
+        />
+        {/* Hover glow */}
+        <div
+          className="absolute top-0 right-0 w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+          style={{
+            background: "radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)",
+            transform: "translate(30%, -30%)",
+          }}
+        />
+
+        {/* Card Number */}
+        <div className="absolute top-3 right-4 sm:top-4 sm:right-5 md:top-5 md:right-8 z-0 select-none">
           <span
-            className="text-4xl sm:text-6xl md:text-8xl font-black text-white/5 stroke-text select-none"
-            style={{ WebkitTextStroke: "1px rgba(255,255,255,0.3)" }}
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black"
+            style={{ color: "transparent", WebkitTextStroke: "1px rgba(255,255,255,0.15)" }}
           >
             0{index + 1}
           </span>
         </div>
 
-        <div className="relative z-10 flex flex-col md:flex-row justify-between gap-6 md:gap-10 h-full overflow-y-auto md:overflow-visible custom-scrollbar">
-          {/* Left: Role & Desc */}
-          <div className="flex-1 flex flex-col justify-center space-y-6 md:space-y-10">
-            <div>
-              <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-                <span className="px-3 py-1.5 md:px-5 md:py-2 text-xs md:text-sm font-mono text-neutral-300 bg-white/5 rounded-full border border-white/10">
-                  {service.period}
-                </span>
-                <div className="h-[1px] flex-1 bg-white/10" />
-              </div>
+        {/* Card Content — flex row on desktop, col on mobile */}
+        <div className="relative z-10 flex flex-col md:flex-row gap-4 sm:gap-5 md:gap-8 h-full p-4 sm:p-5 md:p-7 lg:p-9 overflow-y-auto md:overflow-visible custom-scrollbar">
 
-              <h3 className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-2 md:mb-3 tracking-tight leading-tight">
+          {/* Left: Role & Desc */}
+          <div className="flex-1 flex flex-col justify-start gap-3 sm:gap-4 md:gap-5">
+
+            {/* Period badge */}
+            <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+              <span
+                className="px-2.5 py-1 sm:px-3.5 sm:py-1.5 text-[10px] sm:text-xs font-mono text-neutral-300 whitespace-nowrap"
+                style={{
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(255,255,255,0.13)",
+                  borderRadius: "999px",
+                  backdropFilter: "blur(10px)",
+                }}
+              >
+                {service.period}
+              </span>
+              <div className="h-[1px] flex-1" style={{ background: "rgba(255,255,255,0.08)" }} />
+            </div>
+
+            {/* Title — larger on desktop */}
+            <div>
+              {/* Mobile title (unchanged) */}
+              <h3 className="md:hidden text-xl sm:text-2xl font-bold text-white mb-1 tracking-tight leading-tight">
                 {service.title.split("—")[0].trim()}
               </h3>
-              <p className="text-lg sm:text-xl md:text-3xl text-neutral-400 font-light">
+              {/* Desktop title — bigger */}
+              <h3 className="hidden md:block text-5xl lg:text-7xl font-black text-white mb-1 tracking-tight leading-[1.0]">
+                {service.title.split("—")[0].trim()}
+              </h3>
+
+              <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-neutral-400 font-light">
                 {service.title.split("—")[1]?.trim()}
               </p>
             </div>
 
-            <p className="text-sm sm:text-base md:text-xl text-neutral-300 leading-relaxed font-light max-w-3xl">
+            {/* Description */}
+            <p className="text-xs sm:text-sm md:text-sm lg:text-base text-neutral-300/90 leading-relaxed font-light max-w-3xl">
               {service.description}
             </p>
 
             {/* Tech Tags */}
-            <div className="flex flex-wrap gap-2 md:gap-3">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {service.technologies.slice(0, 6).map((tech, i) => (
                 <span
                   key={i}
-                  className="px-3 py-1.5 md:px-4 md:py-2 bg-white/5 border border-white/10 rounded-lg text-xs md:text-sm font-medium text-neutral-300 hover:bg-white/10 transition-colors"
+                  className="px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-medium text-neutral-300 transition-all duration-300 hover:text-white cursor-default"
+                  style={{
+                    background: "rgba(255,255,255,0.05)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: "0.5rem",
+                    backdropFilter: "blur(8px)",
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.1)"}
+                  onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}
                 >
                   {tech}
                 </span>
               ))}
             </div>
+
+            {/* ── DESKTOP-ONLY: Mini stat strip ── */}
+            {service.stats && (
+              <div className="hidden md:flex items-center gap-6 mt-2">
+                {service.stats.map((stat, i) => (
+                  <div key={i} className="flex flex-col gap-0.5">
+                    <span className="text-2xl lg:text-3xl font-black text-white tracking-tight">
+                      {stat.value}
+                    </span>
+                    <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-medium">
+                      {stat.label}
+                    </span>
+                  </div>
+                ))}
+                {/* Thin separator before stats loop */}
+                {service.stats.length > 0 && (
+                  <div className="h-10 w-px" style={{ background: "rgba(255,255,255,0.08)" }} />
+                )}
+              </div>
+            )}
           </div>
 
-          {/* Right: Achievements / Visuals */}
-          <div className="flex-1 md:max-w-xs flex flex-col justify-end md:justify-center border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0 md:pl-12">
-            <ul className="space-y-4 md:space-y-6">
+          {/* Right: Achievements */}
+          <div
+            className="flex-shrink-0 md:w-64 lg:w-72 flex flex-col justify-start gap-3 sm:gap-4 pt-3 sm:pt-4 md:pt-0 md:pl-7 lg:pl-9"
+            style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
+          >
+            <style>{`
+              @media (min-width: 768px) {
+                .achieve-right {
+                  border-top: none !important;
+                  border-left: 1px solid rgba(255,255,255,0.08) !important;
+                }
+              }
+            `}</style>
+
+            {/* Desktop-only section label */}
+            <span className="hidden md:block text-[10px] uppercase tracking-[0.25em] text-neutral-600 font-semibold mb-1">
+              Key Highlights
+            </span>
+
+            <ul className="achieve-right space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-5 w-full h-full flex flex-col justify-center md:pl-7 lg:pl-9">
               {service.achievements &&
                 service.achievements.map((item, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-3 md:gap-4 group/item"
-                  >
-                    <span className="mt-1.5 md:mt-2 w-1.5 h-1.5 bg-neutral-500 rounded-full flex-shrink-0 group-hover/item:bg-white transition-colors" />
-                    <span className="text-neutral-400 text-sm md:text-base leading-relaxed group-hover/item:text-neutral-200 transition-colors">
+                  <li key={i} className="flex items-start gap-2 sm:gap-3 group/item">
+                    <span
+                      className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-300 group-hover/item:bg-white"
+                      style={{ background: "rgba(255,255,255,0.3)" }}
+                    />
+                    <span className="text-neutral-400 text-[11px] sm:text-sm md:text-sm lg:text-base leading-relaxed group-hover/item:text-neutral-200 transition-colors duration-300">
                       {item}
                     </span>
                   </li>
                 ))}
             </ul>
+
+            {/* Desktop-only decorative corner mark */}
+            <div className="hidden md:flex items-center gap-2 mt-auto pt-4">
+              <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.06)" }} />
+              <span
+                className="text-[9px] font-mono tracking-widest uppercase"
+                style={{ color: "rgba(255,255,255,0.15)" }}
+              >
+                0{index + 1} / 0{2}
+              </span>
+            </div>
           </div>
         </div>
       </div>

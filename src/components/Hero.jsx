@@ -164,10 +164,12 @@ const Hero = () => {
             </a>
 
             <a
-              href="/resume.pdf"
+              href="https://docs.google.com/document/d/1HygF7Ji6KUG9YxCDfi2BTt2Bx9KPhgrZKS_sI391fnU/edit?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group flex items-center gap-2 text-[#1a1a1a] text-[10px] md:text-xs font-bold tracking-[2px] border-b border-[#1a1a1a] pb-1 hover:text-[#555] hover:border-[#555] transition-all duration-300 whitespace-nowrap"
             >
-              <span>DOWNLOAD CV</span>
+              <span>VIEW RESUME</span>
               <FiDownload className="w-3 h-3 md:w-4 md:h-4 transition-transform duration-300 group-hover:translate-y-1" />
             </a>
 
