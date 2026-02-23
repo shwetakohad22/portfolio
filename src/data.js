@@ -1,6 +1,9 @@
 import chromeVideo from "../src/assets/chrome-extension.mp4";
 import fullstackCertificate from "../src/assets/IITMadras.png";
 import bannerImage from "../src/assets/banner-image.png";
+import drAppointment from "../src/assets/drAppointment.png";
+import typingProject from "../src/assets/typingProject.png";
+import extension from "../src/assets/extension.png";
 
 export const navLinks = [
   { id: 1, title: "Home", href: "#hero" },
@@ -101,7 +104,7 @@ export const projects = [
       "Admin dashboard for managing users, doctors, and appointments",
       "Responsive UI built with Tailwind CSS and Ant Design",
     ],
-    media: "../src/assets/drAppointment.png",
+    media: drAppointment,
     type: "image",
     liveLink: "https://appointment.shwetakohad.in/",
     githubLink: "https://github.com/shwetakohad22/dr-appointment-frontend.git",
@@ -123,7 +126,7 @@ export const projects = [
       "Analytics dashboard with hiring metrics",
     ],
     media:
-      "../src/assets/typingProject.png",
+      typingProject,
     type: "image",
     liveLink: "#",
     githubLink: "#",
@@ -144,7 +147,7 @@ export const projects = [
       "SEO optimized for better discoverability",
     ],
     media:
-      "../src/assets/extension.png",
+      extension,
     type: "image",
     type: "image",
     liveLink: "#",
