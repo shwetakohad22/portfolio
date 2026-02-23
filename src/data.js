@@ -101,7 +101,7 @@ export const projects = [
       "Admin dashboard for managing users, doctors, and appointments",
       "Responsive UI built with Tailwind CSS and Ant Design",
     ],
-    media: "../src/assets/project-dr-ai.png",
+    media: "../src/assets/drAppointment.png",
     type: "image",
     liveLink: "https://appointment.shwetakohad.in/",
     githubLink: "https://github.com/shwetakohad22/dr-appointment-frontend.git",
@@ -123,7 +123,7 @@ export const projects = [
       "Analytics dashboard with hiring metrics",
     ],
     media:
-      "../src/assets/project-typing-ai.png",
+      "../src/assets/typingProject.png",
     type: "image",
     liveLink: "#",
     githubLink: "#",
@@ -144,7 +144,7 @@ export const projects = [
       "SEO optimized for better discoverability",
     ],
     media:
-      "../src/assets/chrome-ai.png",
+      "../src/assets/extension.png",
     type: "image",
     type: "image",
     liveLink: "#",
